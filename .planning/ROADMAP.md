@@ -70,7 +70,9 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Each market is "immediately recognisable as its industry" on a Strategist QA pass — a target user identifies the industry without being told.
   4. WCAG AA legibility holds for body and large text in **every one** of the 12 markets across the 4 view-states where markets meaningfully apply (Servicios full + Quiénes somos accents + Home/Contacto neutral fallbacks behaving correctly), totalling 12 × 4 = 48 visual states.
   5. Switching between any two markets is animated, in place, ~600ms, with no reload (CON-003 / CON-008).
-**Plans**: TBD
+**Plans**: 2 plans
+  - [ ] 03-01-PLAN.md — Extend pnpm check:contrast to 12 markets + remediate any sub-AA themes with smallest-tweak edits
+  - [ ] 03-02-PLAN.md — pnpm check:markets (service-list integrity) + 48-state UAT matrix + recognisability sign-off
 **UI hint**: yes
 
 ### Phase 4: Tamaños S y L
