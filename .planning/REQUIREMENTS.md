@@ -12,12 +12,12 @@ Requirements for initial release. Each maps to exactly one roadmap phase.
 
 ### Routing & IA
 
-- [ ] **REQ-routes-five-views**: The site exposes five navigable views, each with its own URL — Home `/`, Servicios `/servicios`, Quiénes somos `/quienes-somos`, Cliente individual `/clientes/[slug]`, Contacto `/contacto`. Footer sticky carries Quiénes somos, Servicios, Contacto. Default visual on first entry is dark mode at level M (Crafted).
+- [x] **REQ-routes-five-views**: The site exposes five navigable views, each with its own URL — Home `/`, Servicios `/servicios`, Quiénes somos `/quienes-somos`, Cliente individual `/clientes/[slug]`, Contacto `/contacto`. Footer sticky carries Quiénes somos, Servicios, Contacto. Default visual on first entry is dark mode at level M (Crafted).
 
 ### Style System
 
-- [ ] **REQ-style-gate**: When a first-time visitor (no `localStorage` flag) clicks any footer link to Servicios, Quiénes somos, or Contacto, the requested view is replaced by a creativity gate prompt (*"¿Cuál es el tamaño de tu creatividad?"*) listing XS · S · M · L · XL. After selection, the user lands on the originally requested view styled with the chosen level. Choosing a market from Home also writes the flag and bypasses the gate forever.
-- [ ] **REQ-style-persistence**: Style persistence uses a single `localStorage` flag named `size-style` of shape `{ type: 'market' | 'size', value, updatedAt }`. Any selection writes this flag; subsequent selections replace the prior value. Last write wins; only one style is active at a time. A reset control (footer "Cambiar estilo") can clear or replace the flag.
+- [x] **REQ-style-gate**: When a first-time visitor (no `localStorage` flag) clicks any footer link to Servicios, Quiénes somos, or Contacto, the requested view is replaced by a creativity gate prompt (*"¿Cuál es el tamaño de tu creatividad?"*) listing XS · S · M · L · XL. After selection, the user lands on the originally requested view styled with the chosen level. Choosing a market from Home also writes the flag and bypasses the gate forever.
+- [x] **REQ-style-persistence**: Style persistence uses a single `localStorage` flag named `size-style` of shape `{ type: 'market' | 'size', value, updatedAt }`. Any selection writes this flag; subsequent selections replace the prior value. Last write wins; only one style is active at a time. A reset control (footer "Cambiar estilo") can clear or replace the flag.
 - [ ] **REQ-progressive-loading**: Sizes XS-M ship with the lightweight bundle. Sizes L and XL lazy-load their respective animation/interactivity stacks (GSAP+Lottie for L; Three.js + Phaser + Tone.js + postprocessing + physics for XL). Style transitions remain ~600ms regardless of level.
 - [ ] **REQ-xl-capability-detection**: Level XL is gated on WebGL2 capability. Devices without WebGL2 fall back to L automatically with a toast/educational message and no crash.
 
@@ -32,7 +32,7 @@ Requirements for initial release. Each maps to exactly one roadmap phase.
 ### Content Surfaces
 
 - [ ] **REQ-services-catalog**: SIZE has exactly 11 services rendered in Servicios, in this order — Estrategia de Marca y Comunicación; Branding & Identidad; Diseño & Contenido Visual; Producción Audiovisual; Desarrollo Web & Software a Medida; Performance & Paid Media; Social Media & Community; Activaciones de Marca & Eventos; SEO & SEM; IA Aplicada & Automatización; Capacitaciones IA. When the active style is a *size*, all 11 render in neutral SIZE styling at that intensity. When the active style is a *market*, only that market's subset renders. A "Cambiar estilo" control is reachable; the view ends with a CTA to Contacto.
-- [ ] **REQ-home-rotating-words**: Home presents the SIZE wordmark at dominant scale, the brand promise *"Publicidad a tu medida."*, and a rotating *"Somos tu [palabra]"* line. The rotating word cycles continuously (typewriter / fade / scramble — to define) on a fixed cadence (~2.5–3s). Tentative list: amigo, ayuda, conciencia, competencia, socio, aliado, partner, voz, fuerza, sombra. Animated text remains in the real DOM with `aria-live="polite"`. Home also exposes a market-entry control that restyles Home in place without redirection.
+- [x] **REQ-home-rotating-words**: Home presents the SIZE wordmark at dominant scale, the brand promise *"Publicidad a tu medida."*, and a rotating *"Somos tu [palabra]"* line. The rotating word cycles continuously (typewriter / fade / scramble — to define) on a fixed cadence (~2.5–3s). Tentative list: amigo, ayuda, conciencia, competencia, socio, aliado, partner, voz, fuerza, sombra. Animated text remains in the real DOM with `aria-live="polite"`. Home also exposes a market-entry control that restyles Home in place without redirection.
 - [ ] **REQ-team-row**: Quiénes somos shows an Equipo grid with the four founders — Javier Ricaurte (Administración y Estrategia), Melissa Gaitán (Creatividad y Estrategia), Rafael Matovelle (Tecnología y Estrategia), Ismael Guerra (Tecnología y Creatividad) — each with 5 photos and 5 comments (one per creative size). Sizes swap photos and comments. Markets fall back to M variants. Layout is a scalable grid.
 - [ ] **REQ-clients-row-and-pages**: Quiénes somos has a horizontal client logos row. Clicking a logo routes to a per-client page at `/clientes/[slug]` with header, description, industry, year of relationship, prominent Back button to Quiénes somos, and a gallery (imagery + Vimeo/YouTube embeds). Initial three: MMA El Valle (`/clientes/mma-el-valle`), Cranial Trading (`/clientes/cranial-trading`), Sin-Cero (`/clientes/sin-cero`). Each client page has SEO basics (meta title, description, structured data).
 - [ ] **REQ-contact-view-layout**: Contacto uses a 40/60 two-column layout. Left column (40%) is a card with direct accesses to Instagram, WhatsApp, corporate email, and Facebook. Right column (60%) hosts a chatbot. A static placeholder ("Conversemos" + WhatsApp/email link) ships first and is swapped in place when the provider is chosen. The view is gate-aware.
@@ -68,11 +68,11 @@ Each v1 requirement maps to exactly one phase. See `ROADMAP.md` for full phase d
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| REQ-routes-five-views | Phase 2 | Pending |
-| REQ-style-gate | Phase 2 | Pending |
-| REQ-style-persistence | Phase 2 | Pending |
+| REQ-routes-five-views | Phase 1 | Complete (01-01 + 01-04) |
+| REQ-style-gate | Phase 1 | Complete (01-03 + 01-04) |
+| REQ-style-persistence | Phase 1 | Complete (01-01 + 01-04) |
 | REQ-services-catalog | Phase 3 | Pending |
-| REQ-home-rotating-words | Phase 2 | Pending |
+| REQ-home-rotating-words | Phase 1 | Complete (01-02 + 01-04) |
 | REQ-sizes-five | Phase 5 | Pending |
 | REQ-markets-twelve | Phase 4 | Pending |
 | REQ-team-row | Phase 8 | Pending |

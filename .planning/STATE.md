@@ -4,14 +4,14 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: "Roadmap restructured prototype-first. New Phase 1 (Paridad prototipo) inherits the 4 plans previously authored under old Phase 2 (Sistema base) — they are unchanged in scope. New Phase 9 (Cierre + Despliegue) holds the 4 plans previously authored under old Phase 1 (Setup); Plan 09-01 (Firebase Hosting bootstrap) is already executed (4 commits in main: 223d496, bd6a792, 6949f44, 5c50b1f) and remains valid foundation for the eventual real deploy."
-last_updated: "2026-05-04T17:38:00.000Z"
-last_activity: 2026-05-04 -- Plan 01-03 complete (gate routing + M-tick reset)
+last_updated: "2026-05-04T17:01:00.000Z"
+last_activity: 2026-05-04 -- Plan 01-04 complete (Vitest smoke layer: store + MarketsGrid + gate-flow + routes)
 progress:
   total_phases: 9
   completed_phases: 0
   total_plans: 8
-  completed_plans: 4
-  percent: 50
+  completed_plans: 5
+  percent: 63
 ---
 
 # Project State
@@ -25,31 +25,31 @@ See: `.planning/PROJECT.md` (updated 2026-05-03)
 
 ## Current Position
 
-Phase: 01 (paridad-prototipo) — EXECUTING
-Plan: 4 of 4
-Status: Executing Phase 01 — Plans 01-01, 01-02, and 01-03 complete
-Last activity: 2026-05-04 -- Plan 01-03 complete (gate routing + M-tick reset)
+Phase: 01 (paridad-prototipo) — COMPLETE
+Plan: 4 of 4 (all plans done)
+Status: Phase 01 complete — Plans 01-01, 01-02, 01-03, and 01-04 all done
+Last activity: 2026-05-04 -- Plan 01-04 complete (Vitest smoke layer: store + MarketsGrid + gate-flow + routes)
 
-Progress: [█████░░░░░] 50%
+Progress: [██████░░░░] 63%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 3
-- Average duration: 16 min
-- Total execution time: 48 min
+- Total plans completed: 4
+- Average duration: 14 min
+- Total execution time: 53 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 09-cierre-deploy | 1/4 done (was 01-setup before restructure) | 15 min | 15 min |
-| 01-paridad-prototipo | 3/4 done | 51 min | 17 min |
+| 01-paridad-prototipo | 4/4 done | 56 min | 14 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 09-01 (firebase hosting bootstrap, 15 min), 01-01 (markets token CSS, 15 min), 01-02 (MarketsGrid + rotator crossfade, 18 min), 01-03 (gate routing + M-tick reset, 18 min)
+- Last 5 plans: 09-01 (firebase hosting bootstrap, 15 min), 01-01 (markets token CSS, 15 min), 01-02 (MarketsGrid + rotator crossfade, 18 min), 01-03 (gate routing + M-tick reset, 18 min), 01-04 (Vitest smoke layer, 5 min)
 - Trend: steady
 
 *Updated after each plan completion*
@@ -95,6 +95,13 @@ Decisions from completed plan 01-03 (gate routing + M-tick reset):
 - **DEC-023** — M-tick no-op guard (s === 'M' && !style.active) is the sole protection against inadvertently writing a localStorage flag on a fresh visit, which would cause the gate to never appear on protected routes.
 - **DEC-024** — src/stores/style.ts required NO modification — setSize/setMarket overwrite active.value in one assignment (LOCKED-002 satisfied by existing store).
 
+Decisions from completed plan 01-04 (Vitest smoke layer):
+
+- **DEC-025** — `await nextTick()` required after store mutations in tests; the style store watcher uses default Vue flush (`'pre'`), which is deferred. The production store is correct — only the specs needed the await.
+- **DEC-026** — `StickyFooter` stubbed in gate-flow integration tests (not under test); `StyleGate` left un-stubbed because the test asserts on `.gate` DOM presence.
+- **DEC-027** — `@vue/compiler-sfc` NOT added as direct devDependency — Vue 3.4+ ships it inside the `vue` package; adding it explicitly causes duplicate-instance warnings.
+- **DEC-028** — Playwright e2e deferred to Phase 9; Vitest layer is the contract surface for all Phase 1 automated acceptance criteria.
+
 ### Pending Todos
 
 None.
@@ -122,5 +129,5 @@ Carried forward from §11 of the brief (acknowledged TBDs):
 ## Session Continuity
 
 Last session: 2026-05-04
-Stopped at: Plan 01-03 complete. App.vue (intended-route capture + router.replace), StickyFooter.vue (M-tick resetMode + no-op guard) committed. StyleGate.vue verified inert. pnpm type-check and build pass. Ready for Plan 01-04 (smoke tests for routing, gate behaviour, persistence).
-Resume file: .planning/phases/01-paridad-prototipo/01-04-PLAN.md
+Stopped at: Plan 01-04 complete. Phase 01 fully done. Vitest smoke layer (4 spec files, 18 tests) passing. pnpm type-check + build + test all green. Ready for Phase 02 planning.
+Resume file: None — Phase 01 complete. Next: /gsd-plan-phase 2

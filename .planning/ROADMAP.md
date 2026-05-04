@@ -14,7 +14,7 @@ The journey is **goal-backward by phase**: each phase delivers a coherent, obser
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Paridad prototipo** - Match the standalone HTML prototype inside Vue: 5 routes + sticky footer + creativity gate + 12 markets + 5 sizes + single Pinia/localStorage flag + Home rotating word + ~600ms in-place restyle, M Crafted dark default, WCAG AA
+- [x] **Phase 1: Paridad prototipo** - Match the standalone HTML prototype inside Vue: 5 routes + sticky footer + creativity gate + 12 markets + 5 sizes + single Pinia/localStorage flag + Home rotating word + ~600ms in-place restyle, M Crafted dark default, WCAG AA
 - [ ] **Phase 2: Tamaño M (Crafted) consolidado** - M as default everywhere on every view (Servicios full 11-service list, Quiénes somos, Contacto 40/60 placeholder, Cliente individual base) with WCAG AA + 600ms transitions verified end-to-end
 - [ ] **Phase 3: Mercados sobre M** - 12 market styles applied on top of M baseline; service-list filtered to canonical subset per market; 12 × 4 = 48-state QA matrix passes
 - [ ] **Phase 4: Tamaños S y L** - S (Clean) and L (Bold) as neutral SIZE expressions; L lazy-loads GSAP + Lottie
@@ -39,10 +39,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   6. M Crafted dark mode is the rendered default for any visitor with no flag, on every view.
   7. Browser-verifiable via `pnpm dev` — no Firebase deploy required to demonstrate the prototype parity.
 **Plans**: 4 plans
-  - [ ] 01-01-PLAN.md — Markets token system (12 market CSS blocks + 600ms body transition + Google Fonts)
-  - [ ] 01-02-PLAN.md — Markets selector grid on Home + rotator crossfade
-  - [ ] 01-03-PLAN.md — M-tick reset semantics + post-gate routing
-  - [ ] 01-04-PLAN.md — Vitest smoke layer (store + MarketsGrid + gate-flow + routes)
+  - [x] 01-01-PLAN.md — Markets token system (12 market CSS blocks + 600ms body transition + Google Fonts)
+  - [x] 01-02-PLAN.md — Markets selector grid on Home + rotator crossfade
+  - [x] 01-03-PLAN.md — M-tick reset semantics + post-gate routing
+  - [x] 01-04-PLAN.md — Vitest smoke layer (store + MarketsGrid + gate-flow + routes)
 **UI hint**: yes
 
 ### Phase 2: Tamaño M (Crafted) consolidado
@@ -163,7 +163,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Paridad prototipo | 0/4 | Not started | - |
+| 1. Paridad prototipo | 4/4 | Complete | 2026-05-04 |
 | 2. Tamaño M (Crafted) consolidado | 0/TBD | Not started | - |
 | 3. Mercados sobre M | 0/TBD | Not started | - |
 | 4. Tamaños S y L | 0/TBD | Not started | - |
