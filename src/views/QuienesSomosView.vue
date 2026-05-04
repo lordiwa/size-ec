@@ -4,6 +4,7 @@ import { RouterLink } from 'vue-router'
 import { useStyleStore } from '@/stores/style'
 import { SIZE_TEAM, SIZE_CLIENTS, type LevelCode } from '@/data/size-data'
 import PortraitPlaceholder from '@/components/PortraitPlaceholder.vue'
+import ChangeStyleControl from '@/components/ChangeStyleControl.vue'
 
 const style = useStyleStore()
 
@@ -14,7 +15,10 @@ const quoteCode = computed<LevelCode>(() => (style.market ? 'm' : style.levelCod
 <template>
   <section class="qn-head">
     <h1 class="size-wordmark med">SIZE</h1>
-    <div class="mono upper qn-eyebrow">Quiénes somos</div>
+    <div class="qn-head-row">
+      <div class="mono upper qn-eyebrow">Quiénes somos</div>
+      <ChangeStyleControl />
+    </div>
   </section>
 
   <section class="qn-team">
@@ -53,7 +57,15 @@ const quoteCode = computed<LevelCode>(() => (style.market ? 'm' : style.levelCod
 
 <style scoped>
 .qn-head { padding: 6vh 6vw 2vh; text-align: center; }
-.qn-eyebrow { font-size: 11px; color: var(--muted); margin-top: 16px; }
+.qn-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.qn-eyebrow { font-size: 11px; color: var(--muted); }
 
 .qn-team { padding: 4vh 6vw; }
 .qn-grid {

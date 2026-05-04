@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import ChangeStyleControl from '@/components/ChangeStyleControl.vue'
 
 interface ChatMsg {
   from: 'bot' | 'user'
@@ -42,7 +43,10 @@ function send() {
 <template>
   <section class="ct-head">
     <h1 class="size-wordmark med">SIZE</h1>
-    <div class="mono upper ct-eyebrow">Contacto</div>
+    <div class="ct-head-row">
+      <div class="mono upper ct-eyebrow">Contacto</div>
+      <ChangeStyleControl />
+    </div>
   </section>
 
   <section class="ct-body">
@@ -94,7 +98,15 @@ function send() {
 
 <style scoped>
 .ct-head { padding: 6vh 6vw 2vh; text-align: center; }
-.ct-eyebrow { font-size: 11px; color: var(--muted); margin-top: 16px; }
+.ct-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.ct-eyebrow { font-size: 11px; color: var(--muted); }
 
 .ct-body { padding: 4vh 6vw 8vh; }
 .ct-grid {
