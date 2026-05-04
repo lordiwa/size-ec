@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Roadmap restructured prototype-first. New Phase 1 (Paridad prototipo) inherits the 4 plans previously authored under old Phase 2 (Sistema base) — they are unchanged in scope. New Phase 9 (Cierre + Despliegue) holds the 4 plans previously authored under old Phase 1 (Setup); Plan 09-01 (Firebase Hosting bootstrap) is already executed (4 commits in main: 223d496, bd6a792, 6949f44, 5c50b1f) and remains valid foundation for the eventual real deploy."
-last_updated: "2026-05-04T17:01:00.000Z"
-last_activity: 2026-05-04 -- Plan 01-04 complete (Vitest smoke layer: store + MarketsGrid + gate-flow + routes)
+stopped_at: Plan 01-04 complete. Phase 01 fully done. Vitest smoke layer (4 spec files, 18 tests) passing. pnpm type-check + build + test all green. Ready for Phase 02 planning.
+last_updated: "2026-05-04T21:07:21.978Z"
+last_activity: 2026-05-04 -- Phase 02 execution started
 progress:
   total_phases: 9
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 8
   completed_plans: 5
   percent: 63
@@ -21,14 +21,14 @@ progress:
 See: `.planning/PROJECT.md` (updated 2026-05-03)
 
 **Core value:** A visitor can pick one of 17 mutually exclusive styles (12 markets + 5 creative sizes) and see the entire site reshape itself — legibly, in place, without reload — to that single style.
-**Current focus:** Phase 01 — paridad-prototipo
+**Current focus:** Phase 02 — tamano-m-consolidado
 
 ## Current Position
 
-Phase: 01 (paridad-prototipo) — COMPLETE
-Plan: 4 of 4 (all plans done)
-Status: Phase 01 complete — Plans 01-01, 01-02, 01-03, and 01-04 all done
-Last activity: 2026-05-04 -- Plan 01-04 complete (Vitest smoke layer: store + MarketsGrid + gate-flow + routes)
+Phase: 02 (tamano-m-consolidado) — EXECUTING
+Plan: 1 of ?
+Status: Executing Phase 02
+Last activity: 2026-05-04 -- Phase 02 execution started
 
 Progress: [██████░░░░] 63%
 
