@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
 import { useStyleStore } from '@/stores/style'
 import { SIZE_SERVICES, SIZE_SERVICE_COPY, type ServiceId } from '@/data/size-data'
+import ChangeStyleControl from '@/components/ChangeStyleControl.vue'
 
 const style = useStyleStore()
 
@@ -43,7 +45,10 @@ function clearMarket() {
   <template v-if="!style.market">
     <section class="srv-head">
       <h1 class="size-wordmark med">SIZE</h1>
-      <div class="mono upper srv-eyebrow">Todo lo que hacemos</div>
+      <div class="srv-head-row">
+        <div class="mono upper srv-eyebrow">Todo lo que hacemos</div>
+        <ChangeStyleControl />
+      </div>
     </section>
     <section class="srv-body">
       <div class="srv-grid">
@@ -51,6 +56,11 @@ function clearMarket() {
           <div class="mono upper srv-card-eyebrow">{{ s.n }} · {{ s.short }}</div>
           <div class="srv-card-name">{{ s.name }}</div>
         </div>
+      </div>
+      <div class="srv-cta-row">
+        <RouterLink :to="{ name: 'contacto' }" class="bright-cta srv-cta-contact">
+          Hablemos <span aria-hidden="true">→</span>
+        </RouterLink>
       </div>
       <p class="srv-foot">
         ¿Quieres ver solo los servicios que aplican a tu industria?
@@ -93,7 +103,25 @@ function clearMarket() {
 
 <style scoped>
 .srv-head { padding: 6vh 6vw 2vh; text-align: center; }
-.srv-eyebrow { font-size: 11px; color: var(--muted); margin-top: 16px; }
+.srv-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.srv-eyebrow { font-size: 11px; color: var(--muted); }
+.srv-cta-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 4vh;
+}
+.srv-cta-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
 
 .srv-body { padding: 4vh 6vw; }
 .srv-grid {
