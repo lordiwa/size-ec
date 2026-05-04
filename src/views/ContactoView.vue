@@ -1,20 +1,114 @@
 <script setup lang="ts"></script>
 
 <template>
-  <section class="mx-auto max-w-6xl px-6 py-20">
-    <p class="mb-2 text-sm uppercase tracking-widest text-neutral-400">SIZE</p>
-    <h1 class="mb-12 text-4xl font-semibold text-neutral-50 sm:text-5xl">Contacto</h1>
-    <div class="grid gap-8 lg:grid-cols-[2fr_3fr]">
-      <aside class="space-y-3 rounded-2xl border border-neutral-800 bg-neutral-900 p-6 text-neutral-200">
-        <p><span class="text-neutral-500">Instagram:</span> @TBD</p>
-        <p><span class="text-neutral-500">WhatsApp:</span> +593 TBD</p>
-        <p><span class="text-neutral-500">Email:</span> TBD@size.ec</p>
-        <p><span class="text-neutral-500">Facebook:</span> TBD</p>
+  <section class="page">
+    <header class="page-head">
+      <p class="mono upper page-eyebrow">SIZE / Contacto</p>
+      <h1 class="page-title">
+        <span class="serif page-italic">Conversemos.</span>
+      </h1>
+    </header>
+
+    <div class="grid">
+      <aside class="card channels">
+        <h2 class="mono upper card-label">Canales directos</h2>
+        <ul class="channel-list">
+          <li><span class="mono channel-key">Instagram</span> @TBD</li>
+          <li><span class="mono channel-key">WhatsApp</span> +593 TBD</li>
+          <li><span class="mono channel-key">Email</span> TBD@size.ec</li>
+          <li><span class="mono channel-key">Facebook</span> TBD</li>
+        </ul>
       </aside>
-      <div class="rounded-2xl border border-neutral-800 bg-neutral-900 p-6">
-        <h2 class="mb-2 text-xl font-medium text-neutral-100">Conversemos</h2>
-        <p class="text-neutral-400">Chatbot pendiente de provider. Mientras tanto escríbenos por WhatsApp o email.</p>
+
+      <div class="card chat">
+        <h2 class="mono upper card-label">Chat</h2>
+        <p class="chat-copy">
+          El chatbot está pendiente de provider. Mientras tanto, escríbenos por WhatsApp o email — respondemos rápido.
+        </p>
       </div>
     </div>
   </section>
 </template>
+
+<style scoped>
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12vh 6vw 12vh;
+}
+
+.page-head {
+  margin-bottom: 80px;
+}
+
+.page-eyebrow {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.page-title {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: clamp(56px, 9vw, 144px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.page-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 2fr 3fr;
+}
+
+@media (max-width: 720px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  border: 1px solid var(--line);
+  padding: 32px;
+}
+
+.card-label {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0 0 24px;
+}
+
+.channel-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+  font-family: var(--font-body);
+  font-size: 16px;
+}
+
+.channel-key {
+  display: inline-block;
+  width: 96px;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+.chat-copy {
+  font-family: var(--font-body);
+  font-size: clamp(16px, 1.4vw, 18px);
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--ink) 80%, transparent);
+  margin: 0;
+}
+</style>

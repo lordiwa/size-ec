@@ -1,26 +1,55 @@
 <script setup lang="ts">
+import { useStyleStore, type SizeId } from '@/stores/style'
 import { RouterLink } from 'vue-router'
+
+const style = useStyleStore()
+
+const navItems = [
+  { to: { name: 'quienes-somos' }, label: 'Quiénes somos' },
+  { to: { name: 'servicios' }, label: 'Servicios' },
+  { to: { name: 'contacto' }, label: 'Contacto' }
+]
+
+const sizes: SizeId[] = ['XS', 'S', 'M', 'L', 'XL']
+
+function isActiveSize(s: SizeId): boolean {
+  if (style.active?.type === 'size') return style.active.value === s
+  return s === 'M' && !style.active
+}
+
+function pickSize(s: SizeId) {
+  style.setSize(s)
+}
 </script>
 
 <template>
-  <footer class="fixed inset-x-0 bottom-4 z-40 flex justify-center pointer-events-none">
-    <nav
-      class="pointer-events-auto flex gap-2 rounded-full border border-neutral-700 bg-neutral-900/80 px-2 py-2 backdrop-blur-md shadow-lg"
-      aria-label="Navegación principal"
-    >
+  <footer class="footer-nav" aria-label="Navegación principal">
+    <RouterLink :to="{ name: 'home' }" class="fn-mark">SIZE</RouterLink>
+
+    <nav class="nav-btns">
       <RouterLink
-        v-for="item in [
-          { to: { name: 'quienes-somos' }, label: 'Quiénes somos' },
-          { to: { name: 'servicios' }, label: 'Servicios' },
-          { to: { name: 'contacto' }, label: 'Contacto' }
-        ]"
+        v-for="item in navItems"
         :key="item.label"
         :to="item.to"
-        class="rounded-full px-4 py-2 text-sm font-medium text-neutral-200 transition hover:bg-neutral-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-        active-class="bg-white text-neutral-950 hover:bg-white"
+        class="nav-btn"
+        active-class="active"
       >
         {{ item.label }}
       </RouterLink>
     </nav>
+
+    <div class="lvl-mini" role="group" aria-label="Tamaño de creatividad">
+      <button
+        v-for="s in sizes"
+        :key="s"
+        type="button"
+        class="tick"
+        :class="{ active: isActiveSize(s) }"
+        :aria-pressed="isActiveSize(s)"
+        @click="pickSize(s)"
+      >
+        {{ s }}
+      </button>
+    </div>
   </footer>
 </template>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
 
 const props = defineProps<{ slug: string }>()
 
@@ -28,21 +29,70 @@ const client = computed(() => clients[props.slug])
 </script>
 
 <template>
-  <section class="mx-auto max-w-4xl px-6 py-20">
-    <RouterLink
-      :to="{ name: 'quienes-somos' }"
-      class="mb-8 inline-flex items-center text-sm text-neutral-400 hover:text-neutral-100"
-    >
+  <section class="page">
+    <RouterLink :to="{ name: 'quienes-somos' }" class="mono upper back">
       ← Volver a Quiénes somos
     </RouterLink>
     <template v-if="client">
-      <p class="mb-2 text-sm uppercase tracking-widest text-neutral-400">{{ client.industry }} · {{ client.year }}</p>
-      <h1 class="mb-6 text-4xl font-semibold text-neutral-50 sm:text-5xl">{{ client.name }}</h1>
-      <p class="text-lg text-neutral-300">{{ client.description }}</p>
+      <p class="mono upper meta">{{ client.industry }} · {{ client.year }}</p>
+      <h1 class="page-title">
+        <span class="serif page-italic">{{ client.name }}</span>
+      </h1>
+      <p class="lede">{{ client.description }}</p>
     </template>
     <template v-else>
-      <h1 class="mb-4 text-3xl font-semibold text-neutral-50">Cliente no encontrado</h1>
-      <p class="text-neutral-400">El slug "{{ slug }}" no existe.</p>
+      <h1 class="page-title">Cliente no encontrado</h1>
+      <p class="lede">El slug "{{ slug }}" no existe.</p>
     </template>
   </section>
 </template>
+
+<style scoped>
+.page {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 12vh 6vw 12vh;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 64px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.back:hover {
+  color: var(--ink);
+}
+
+.meta {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.page-title {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: clamp(40px, 6vw, 96px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin: 0 0 32px;
+}
+
+.page-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+.lede {
+  font-family: var(--font-body);
+  font-size: clamp(18px, 1.6vw, 22px);
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--ink) 80%, transparent);
+  max-width: 60ch;
+  margin: 0;
+}
+</style>

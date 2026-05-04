@@ -3,8 +3,16 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 
 const rotatingWords = [
-  'amigo', 'ayuda', 'conciencia', 'competencia', 'socio',
-  'aliado', 'partner', 'voz', 'fuerza', 'sombra'
+  'amigo',
+  'ayuda',
+  'conciencia',
+  'competencia',
+  'socio',
+  'aliado',
+  'partner',
+  'voz',
+  'fuerza',
+  'sombra'
 ]
 const wordIndex = ref(0)
 let timer: ReturnType<typeof setInterval> | null = null
@@ -21,20 +29,69 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section class="flex min-h-dvh flex-col items-center justify-center px-6 text-center">
-    <h1 class="text-7xl font-bold tracking-tight text-neutral-50 sm:text-9xl md:text-[12rem]">SIZE</h1>
-    <p class="mt-4 text-xl text-neutral-300 sm:text-2xl">Publicidad a tu medida.</p>
-    <p class="mt-8 text-lg text-neutral-400 sm:text-xl">
+  <section class="home">
+    <p class="mono upper home-eyebrow">Publicidad a tu medida</p>
+
+    <h1 class="size-wordmark huge home-mark">SIZE</h1>
+
+    <p class="home-rotator">
       Somos tu
-      <span aria-live="polite" class="ml-2 inline-block min-w-[10ch] text-left text-neutral-50">
-        {{ rotatingWords[wordIndex] }}
-      </span>
+      <span class="serif home-rotator-word" aria-live="polite">{{ rotatingWords[wordIndex] }}</span>.
     </p>
-    <RouterLink
-      :to="{ name: 'servicios' }"
-      class="mt-12 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-base font-semibold text-neutral-950 shadow-lg transition hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-    >
+
+    <RouterLink :to="{ name: 'servicios' }" class="bright-cta home-cta">
       Ver servicios
+      <span aria-hidden="true">→</span>
     </RouterLink>
+
+    <p class="mono upper home-foot">We size up to anything.</p>
   </section>
 </template>
+
+<style scoped>
+.home {
+  min-height: calc(100dvh - 88px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 6vh 6vw;
+  text-align: center;
+}
+
+.home-eyebrow {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.home-mark {
+  margin: 0;
+}
+
+.home-rotator {
+  font-family: var(--font-body);
+  font-size: clamp(20px, 2.4vw, 28px);
+  color: var(--ink);
+  margin: 0;
+}
+
+.home-rotator-word {
+  font-style: italic;
+  color: var(--accent);
+  display: inline-block;
+  min-width: 8ch;
+  text-align: left;
+}
+
+.home-cta {
+  margin-top: 8px;
+}
+
+.home-foot {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 16px;
+}
+</style>

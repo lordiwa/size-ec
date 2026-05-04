@@ -14,33 +14,141 @@ const clients = [
 </script>
 
 <template>
-  <section class="mx-auto max-w-5xl px-6 py-20">
-    <p class="mb-2 text-sm uppercase tracking-widest text-neutral-400">SIZE</p>
-    <h1 class="mb-12 text-4xl font-semibold text-neutral-50 sm:text-5xl">Quiénes somos</h1>
+  <section class="page">
+    <header class="page-head">
+      <p class="mono upper page-eyebrow">SIZE / Quiénes somos</p>
+      <h1 class="page-title">
+        Pequeños en <span class="serif page-italic">tamaño</span>, grandes en alcance.
+      </h1>
+    </header>
 
-    <h2 class="mb-6 text-xl font-medium text-neutral-200">Equipo</h2>
-    <ul class="mb-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      <li
-        v-for="member in team"
-        :key="member.name"
-        class="rounded-2xl border border-neutral-800 bg-neutral-900 p-6"
-      >
-        <div class="mb-3 aspect-square rounded-xl bg-neutral-800" aria-hidden="true" />
-        <p class="font-semibold text-neutral-50">{{ member.name }}</p>
-        <p class="text-sm text-neutral-400">{{ member.role }}</p>
-      </li>
-    </ul>
+    <section class="block">
+      <h2 class="mono upper block-label">Equipo</h2>
+      <ul class="team">
+        <li v-for="member in team" :key="member.name" class="member">
+          <div class="member-photo" aria-hidden="true" />
+          <p class="member-name">{{ member.name }}</p>
+          <p class="member-role mono upper">{{ member.role }}</p>
+        </li>
+      </ul>
+    </section>
 
-    <h2 class="mb-6 text-xl font-medium text-neutral-200">Clientes</h2>
-    <ul class="flex flex-wrap gap-4">
-      <li v-for="client in clients" :key="client.slug">
-        <RouterLink
-          :to="{ name: 'cliente', params: { slug: client.slug } }"
-          class="rounded-full border border-neutral-700 px-5 py-2 text-neutral-200 transition hover:border-white hover:text-white"
-        >
-          {{ client.name }}
-        </RouterLink>
-      </li>
-    </ul>
+    <section class="block">
+      <h2 class="mono upper block-label">Clientes</h2>
+      <ul class="clients">
+        <li v-for="client in clients" :key="client.slug">
+          <RouterLink :to="{ name: 'cliente', params: { slug: client.slug } }" class="client">
+            <span class="client-name">{{ client.name }}</span>
+            <span aria-hidden="true" class="mono client-arrow">→</span>
+          </RouterLink>
+        </li>
+      </ul>
+    </section>
   </section>
 </template>
+
+<style scoped>
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12vh 6vw 12vh;
+}
+
+.page-head {
+  margin-bottom: 96px;
+}
+
+.page-eyebrow {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.page-title {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  margin: 0;
+  max-width: 20ch;
+}
+
+.page-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+.block {
+  margin-top: 80px;
+}
+
+.block-label {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0 0 24px;
+}
+
+.team {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 28px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.member-photo {
+  aspect-ratio: 4 / 5;
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+  border: 1px solid var(--line);
+  margin-bottom: 16px;
+}
+
+.member-name {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 17px;
+  margin: 0 0 4px;
+}
+
+.member-role {
+  font-size: 10px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.clients {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.client {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--line);
+  transition: padding-left 220ms ease;
+}
+
+.client:hover {
+  padding-left: 12px;
+}
+
+.client-name {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: clamp(20px, 2.4vw, 32px);
+  letter-spacing: -0.015em;
+}
+
+.client-arrow {
+  font-size: 14px;
+  color: var(--muted);
+}
+</style>

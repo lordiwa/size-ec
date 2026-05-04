@@ -3,14 +3,43 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-  <section class="flex min-h-dvh flex-col items-center justify-center px-6 text-center">
-    <h1 class="text-7xl font-bold text-neutral-50 sm:text-9xl">SIZE</h1>
-    <p class="mt-6 text-xl text-neutral-300">Esta talla no existe.</p>
-    <RouterLink
-      :to="{ name: 'home' }"
-      class="mt-10 rounded-full bg-white px-6 py-3 font-semibold text-neutral-950 hover:scale-105 transition"
-    >
+  <section class="not-found">
+    <h1 class="size-wordmark huge nf-mark">404</h1>
+    <p class="nf-copy">
+      Esta <span class="serif nf-italic">talla</span> no existe.
+    </p>
+    <RouterLink :to="{ name: 'home' }" class="bright-cta">
       Volver al inicio
+      <span aria-hidden="true">→</span>
     </RouterLink>
   </section>
 </template>
+
+<style scoped>
+.not-found {
+  min-height: calc(100dvh - 88px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 6vh 6vw;
+  text-align: center;
+}
+
+.nf-mark {
+  margin: 0;
+}
+
+.nf-copy {
+  font-family: var(--font-body);
+  font-size: clamp(20px, 2.4vw, 28px);
+  margin: 0;
+}
+
+.nf-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--accent);
+}
+</style>

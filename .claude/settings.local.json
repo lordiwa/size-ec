@@ -1,7 +1,19 @@
 {
   "permissions": {
     "allow": [
-      "Skill(gsd-ingest-docs)"
+      "Skill(gsd-ingest-docs)",
+      "Skill(gsd-discuss-phase)",
+      "Bash(awk '{ print NR\": \"length }' \"ExistingData/SIZE Web Prototype - standalone.html\")",
+      "Bash(awk -F: '$2 > 1000 {print}')",
+      "Bash(pnpm type-check *)",
+      "Bash(pnpm dev *)",
+      "Bash(curl -sS http://localhost:5173/ -o /dev/null -w \"%{http_code}\\\\n\")",
+      "Bash(curl -sS http://localhost:5173/servicios -o /dev/null -w \"%{http_code}\\\\n\")",
+      "Bash(curl -sS http://localhost:5173/contacto -o /dev/null -w \"%{http_code}\\\\n\")",
+      "Bash(curl -sS http://localhost:5173/src/styles/main.css)",
+      "Bash(curl -sS http://localhost:5173/)",
+      "Bash(git add *)",
+      "Bash(git -c commit.gpgsign=false commit -m ' *)"
     ]
   }
 }

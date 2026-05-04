@@ -13,24 +13,114 @@ const style = useStyleStore()
 </script>
 
 <template>
-  <section class="flex min-h-dvh flex-col items-center justify-center px-6 text-center">
-    <p class="mb-6 text-sm uppercase tracking-widest text-neutral-400">SIZE</p>
-    <h1 class="mb-10 text-balance text-3xl font-medium text-neutral-50 sm:text-4xl md:text-5xl">
-      ¿Cuál es el tamaño de tu creatividad?
+  <section class="gate">
+    <p class="mono upper gate-eyebrow">SIZE</p>
+    <h1 class="gate-title">
+      ¿Cuál es el tamaño de
+      <span class="serif gate-italic">tu creatividad</span>?
     </h1>
-    <div class="grid w-full max-w-3xl grid-cols-2 gap-3 sm:grid-cols-5">
+    <div class="gate-grid">
       <button
         v-for="size in sizes"
         :key="size.id"
         type="button"
-        class="group flex flex-col items-center gap-1 rounded-2xl border border-neutral-700 bg-neutral-900 px-4 py-6 transition hover:border-white hover:bg-neutral-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        class="gate-tile"
         @click="style.setSize(size.id)"
       >
-        <span class="text-2xl font-semibold text-neutral-50">{{ size.id }}</span>
-        <span class="text-xs uppercase tracking-wider text-neutral-400 group-hover:text-neutral-200">
-          {{ size.nameB }}
-        </span>
+        <span class="gate-id">{{ size.id }}</span>
+        <span class="gate-nameb mono upper">{{ size.nameB }}</span>
       </button>
     </div>
   </section>
 </template>
+
+<style scoped>
+.gate {
+  min-height: calc(100dvh - 88px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6vh 6vw;
+  text-align: center;
+}
+
+.gate-eyebrow {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+
+.gate-title {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: clamp(40px, 6vw, 84px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  max-width: 16ch;
+  margin-bottom: 56px;
+}
+
+.gate-italic {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+.gate-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(120px, 1fr));
+  gap: 12px;
+  width: 100%;
+  max-width: 880px;
+}
+
+.gate-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 32px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink);
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.gate-tile:hover {
+  border-color: var(--line-strong);
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+  transform: translateY(-2px);
+}
+
+.gate-tile:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.gate-id {
+  font-family: var(--font-display);
+  font-size: 56px;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.gate-nameb {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+@media (max-width: 720px) {
+  .gate-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .gate-grid > :last-child {
+    grid-column: 1 / -1;
+  }
+}
+</style>
