@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: ready_to_plan
-stopped_at: ROADMAP restructured prototype-first; new Phase 1 (Paridad prototipo) inherits old Phase 2 plans (4); old Setup plans moved to new Phase 9 (Cierre + Despliegue). Phase 1 ready_to_plan or ready_to_execute against existing 01-01..01-04 plans.
-last_updated: "2026-05-04T00:30:00Z"
-last_activity: 2026-05-04 -- Roadmap restructured: prototype-first; old Phase 1 (Setup) merged into new Phase 9 (Cierre + Despliegue)
+status: executing
+stopped_at: "Roadmap restructured prototype-first. New Phase 1 (Paridad prototipo) inherits the 4 plans previously authored under old Phase 2 (Sistema base) — they are unchanged in scope. New Phase 9 (Cierre + Despliegue) holds the 4 plans previously authored under old Phase 1 (Setup); Plan 09-01 (Firebase Hosting bootstrap) is already executed (4 commits in main: 223d496, bd6a792, 6949f44, 5c50b1f) and remains valid foundation for the eventual real deploy."
+last_updated: "2026-05-04T16:33:01.599Z"
+last_activity: 2026-05-04 -- Phase 01 execution started
 progress:
   total_phases: 9
   completed_phases: 0
   total_plans: 8
   completed_plans: 1
-  percent: 12
+  percent: 13
 ---
 
 # Project State
@@ -25,10 +25,10 @@ See: `.planning/PROJECT.md` (updated 2026-05-03)
 
 ## Current Position
 
-Phase: 01 (paridad-prototipo) — READY TO EXECUTE (plans inherited from old Phase 2)
-Plan: 0 of 4
-Status: ready_to_execute
-Last activity: 2026-05-04 -- Roadmap restructured prototype-first
+Phase: 01 (paridad-prototipo) — EXECUTING
+Plan: 1 of 4
+Status: Executing Phase 01
+Last activity: 2026-05-04 -- Phase 01 execution started
 
 Progress: [█░░░░░░░░░] 12%
 
