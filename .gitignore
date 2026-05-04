@@ -29,3 +29,7 @@ pnpm-debug.log*
 
 # Firebase runtime cache
 .firebase/
+
+# Vitest
+coverage/
+.vitest-out.log
