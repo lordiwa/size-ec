@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { useStyleStore } from '@/stores/style'
 import { SIZE_HOME_WORDS } from '@/data/size-data'
 import RotatingWord from '@/components/RotatingWord.vue'
 import MarketSelect from '@/components/MarketSelect.vue'
 
 const style = useStyleStore()
-const router = useRouter()
 
 const words = SIZE_HOME_WORDS
 const wIdx = ref(0)
@@ -22,12 +20,11 @@ onBeforeUnmount(() => {
   if (timer) clearInterval(timer)
 })
 
+// Per brief §"Acceso a mercados": picking a market on Home keeps the user on
+// Home with the market style applied live. The flag is set; the gate will not
+// trigger on subsequent protected routes. Do NOT navigate.
 function pickMarket(id: string) {
   style.setMarketId(id)
-  // Navigate to /servicios after the next paint so the theme + state commit first.
-  requestAnimationFrame(() => {
-    router.push({ name: 'servicios' })
-  })
 }
 </script>
 
