@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import MarketsGrid from '@/components/MarketsGrid.vue'
 
 const rotatingWords = [
   'amigo',
@@ -34,10 +35,14 @@ onBeforeUnmount(() => {
 
     <h1 class="size-wordmark huge home-mark">SIZE</h1>
 
-    <p class="home-rotator">
+    <p class="home-rotator" aria-live="polite">
       Somos tu
-      <span class="serif home-rotator-word" aria-live="polite">{{ rotatingWords[wordIndex] }}</span>.
+      <Transition name="word-fade" mode="out-in">
+        <span :key="rotatingWords[wordIndex]" class="serif home-rotator-word">{{ rotatingWords[wordIndex] }}</span>
+      </Transition>.
     </p>
+
+    <MarketsGrid />
 
     <RouterLink :to="{ name: 'servicios' }" class="bright-cta home-cta">
       Ver servicios
@@ -93,5 +98,22 @@ onBeforeUnmount(() => {
   font-size: 11px;
   color: var(--muted);
   margin-top: 16px;
+}
+
+.word-fade-enter-active,
+.word-fade-leave-active {
+  transition: opacity 100ms ease;
+}
+
+.word-fade-enter-from,
+.word-fade-leave-to {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word-fade-enter-active,
+  .word-fade-leave-active {
+    transition-duration: 0ms;
+  }
 }
 </style>
