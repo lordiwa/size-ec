@@ -5,13 +5,13 @@ milestone_name: milestone
 status: executing
 stopped_at: "Roadmap restructured prototype-first. New Phase 1 (Paridad prototipo) inherits the 4 plans previously authored under old Phase 2 (Sistema base) — they are unchanged in scope. New Phase 9 (Cierre + Despliegue) holds the 4 plans previously authored under old Phase 1 (Setup); Plan 09-01 (Firebase Hosting bootstrap) is already executed (4 commits in main: 223d496, bd6a792, 6949f44, 5c50b1f) and remains valid foundation for the eventual real deploy."
 last_updated: "2026-05-04T17:00:00.000Z"
-last_activity: 2026-05-04 -- Plan 01-01 complete (markets token CSS)
+last_activity: 2026-05-04 -- Plan 01-02 complete (MarketsGrid + rotator crossfade)
 progress:
   total_phases: 9
   completed_phases: 0
   total_plans: 8
-  completed_plans: 2
-  percent: 25
+  completed_plans: 3
+  percent: 38
 ---
 
 # Project State
@@ -26,30 +26,30 @@ See: `.planning/PROJECT.md` (updated 2026-05-03)
 ## Current Position
 
 Phase: 01 (paridad-prototipo) — EXECUTING
-Plan: 2 of 4
-Status: Executing Phase 01 — Plan 01-01 complete
-Last activity: 2026-05-04 -- Plan 01-01 complete (markets token CSS)
+Plan: 3 of 4
+Status: Executing Phase 01 — Plans 01-01 and 01-02 complete
+Last activity: 2026-05-04 -- Plan 01-02 complete (MarketsGrid + rotator crossfade)
 
-Progress: [██░░░░░░░░] 25%
+Progress: [███░░░░░░░] 38%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 2
-- Average duration: 15 min
-- Total execution time: 30 min
+- Total plans completed: 3
+- Average duration: 16 min
+- Total execution time: 48 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 09-cierre-deploy | 1/4 done (was 01-setup before restructure) | 15 min | 15 min |
-| 01-paridad-prototipo | 1/4 done | 15 min | 15 min |
+| 01-paridad-prototipo | 2/4 done | 33 min | 16.5 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 09-01 (firebase hosting bootstrap, 15 min), 01-01 (markets token CSS, 15 min)
+- Last 5 plans: 09-01 (firebase hosting bootstrap, 15 min), 01-01 (markets token CSS, 15 min), 01-02 (MarketsGrid + rotator crossfade, 18 min)
 - Trend: steady
 
 *Updated after each plan completion*
@@ -82,6 +82,12 @@ Decisions from completed plan 01-01 (markets token CSS):
 - **DEC-016** — WCAG AA enforced at token-creation time via automated luminance check; all 12 blocks ≥ 4.5:1 (lowest: turismo 13.22:1, highest: moda 18.86:1).
 - **DEC-017** — Source Serif 4 used for market-banca (not deprecated Source Serif Pro); matching string in index.html is Source+Serif+4.
 
+Decisions from completed plan 01-02 (MarketsGrid + rotator crossfade):
+
+- **DEC-018** — MarketsGrid is a no-props component; all state via useStyleStore().setMarket(id); no additional JS plumbing beyond what existed in Pinia store and App.vue watchEffect.
+- **DEC-019** — aria-live="polite" lives on the stable parent <p>, not the <span> replaced by <Transition mode=out-in> — required for screen readers to announce each new rotating word.
+- **DEC-020** — Word rotator crossfade: transition: opacity 100ms ease on word-fade enter/leave-active; prefers-reduced-motion collapses to transition-duration: 0ms with zero added JS.
+
 ### Pending Todos
 
 None.
@@ -109,5 +115,5 @@ Carried forward from §11 of the brief (acknowledged TBDs):
 ## Session Continuity
 
 Last session: 2026-05-04
-Stopped at: Plan 01-01 complete. markets.css (12 blocks), main.css (import + 600ms), index.html (14 fonts) committed. pnpm build passes. Ready for Plan 01-02 (routing + App.vue market wiring).
-Resume file: .planning/phases/01-paridad-prototipo/01-02-PLAN.md
+Stopped at: Plan 01-02 complete. MarketsGrid.vue (12-tile grid), HomeView.vue (rotator crossfade + MarketsGrid mount) committed. pnpm type-check and build pass. Ready for Plan 01-03 (StickyFooter M-tick reset + StyleGate routing wiring).
+Resume file: .planning/phases/01-paridad-prototipo/01-03-PLAN.md
