@@ -33,3 +33,6 @@ pnpm-debug.log*
 # Vitest
 coverage/
 .vitest-out.log
+
+# Prototype extractor output (local-only — derive from ExistingData/SIZE Web Prototype - standalone.html)
+ExistingData/prototype-extracted/

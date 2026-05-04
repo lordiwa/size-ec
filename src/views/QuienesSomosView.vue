@@ -1,154 +1,161 @@
 <script setup lang="ts">
-const team = [
-  { name: 'Javier Ricaurte', role: 'Administración y Estrategia' },
-  { name: 'Melissa Gaitán', role: 'Creatividad y Estrategia' },
-  { name: 'Rafael Matovelle', role: 'Tecnología y Estrategia' },
-  { name: 'Ismael Guerra', role: 'Tecnología y Creatividad' }
-]
+import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
+import { useStyleStore } from '@/stores/style'
+import { SIZE_TEAM, SIZE_CLIENTS, type LevelCode } from '@/data/size-data'
+import PortraitPlaceholder from '@/components/PortraitPlaceholder.vue'
 
-const clients = [
-  { slug: 'mma-el-valle', name: 'MMA El Valle' },
-  { slug: 'cranial-trading', name: 'Cranial Trading' },
-  { slug: 'sin-cero', name: 'Sin-Cero' }
-]
+const style = useStyleStore()
+
+// In market mode the prototype falls back to the M variant for team quotes.
+const quoteCode = computed<LevelCode>(() => (style.market ? 'm' : style.levelCode))
 </script>
 
 <template>
-  <section class="page">
-    <header class="page-head">
-      <p class="mono upper page-eyebrow">SIZE / Quiénes somos</p>
-      <h1 class="page-title">
-        Pequeños en <span class="serif page-italic">tamaño</span>, grandes en alcance.
-      </h1>
-    </header>
+  <section class="qn-head">
+    <h1 class="size-wordmark med">SIZE</h1>
+    <div class="mono upper qn-eyebrow">Quiénes somos</div>
+  </section>
 
-    <section class="block">
-      <h2 class="mono upper block-label">Equipo</h2>
-      <ul class="team">
-        <li v-for="member in team" :key="member.name" class="member">
-          <div class="member-photo" aria-hidden="true" />
-          <p class="member-name">{{ member.name }}</p>
-          <p class="member-role mono upper">{{ member.role }}</p>
-        </li>
-      </ul>
-    </section>
+  <section class="qn-team">
+    <div class="qn-grid">
+      <div class="qn-line" aria-hidden="true"></div>
+      <article v-for="(p, i) in SIZE_TEAM" :key="p.id" class="qn-person">
+        <div class="qn-photo">
+          <PortraitPlaceholder :idx="i" />
+        </div>
+        <div class="qn-dot" aria-hidden="true"></div>
+        <div class="qn-text">
+          <div class="qn-name">{{ p.name }}</div>
+          <div class="mono upper qn-role">{{ p.role }}</div>
+          <p class="qn-quote">"{{ p.quotes[quoteCode] }}"</p>
+        </div>
+      </article>
+    </div>
+  </section>
 
-    <section class="block">
-      <h2 class="mono upper block-label">Clientes</h2>
-      <ul class="clients">
-        <li v-for="client in clients" :key="client.slug">
-          <RouterLink :to="{ name: 'cliente', params: { slug: client.slug } }" class="client">
-            <span class="client-name">{{ client.name }}</span>
-            <span aria-hidden="true" class="mono client-arrow">→</span>
-          </RouterLink>
-        </li>
-      </ul>
-    </section>
+  <section class="qn-clients">
+    <h2 class="qn-clients-title">Clientes</h2>
+    <div class="qn-clients-grid">
+      <RouterLink
+        v-for="c in SIZE_CLIENTS"
+        :key="c.id"
+        :to="{ name: 'cliente', params: { slug: c.id } }"
+        class="qn-client"
+      >
+        <div class="qn-client-name">{{ c.name }}</div>
+        <div class="mono qn-client-tag">{{ c.tagline }}</div>
+        <div class="mono upper qn-client-cta">Ver caso →</div>
+      </RouterLink>
+    </div>
   </section>
 </template>
 
 <style scoped>
-.page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 12vh 6vw 12vh;
-}
+.qn-head { padding: 6vh 6vw 2vh; text-align: center; }
+.qn-eyebrow { font-size: 11px; color: var(--muted); margin-top: 16px; }
 
-.page-head {
-  margin-bottom: 96px;
-}
-
-.page-eyebrow {
-  font-size: 11px;
-  color: var(--muted);
-  margin: 0 0 16px;
-}
-
-.page-title {
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: clamp(36px, 5vw, 72px);
-  line-height: 1.05;
-  letter-spacing: -0.025em;
-  margin: 0;
-  max-width: 20ch;
-}
-
-.page-italic {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 400;
-  color: var(--accent);
-}
-
-.block {
-  margin-top: 80px;
-}
-
-.block-label {
-  font-size: 11px;
-  color: var(--muted);
-  margin: 0 0 24px;
-}
-
-.team {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.qn-team { padding: 4vh 6vw; }
+.qn-grid {
   display: grid;
-  gap: 28px;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  position: relative;
 }
-
-.member-photo {
-  aspect-ratio: 4 / 5;
+.qn-line {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 140px;
+  height: 1px;
+  background: var(--line-strong);
+}
+.qn-person { text-align: center; position: relative; }
+.qn-photo {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  max-width: 200px;
+  margin: 0 auto;
   background: color-mix(in srgb, var(--ink) 8%, transparent);
-  border: 1px solid var(--line);
-  margin-bottom: 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
-
-.member-name {
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 17px;
-  margin: 0 0 4px;
+.qn-dot {
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin: 12px auto 0;
+  position: relative;
+  z-index: 2;
+  border: 3px solid var(--bg);
 }
-
-.member-role {
+.qn-text { margin-top: 16px; }
+.qn-name {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 1.8vw, 24px);
+  line-height: 1.1;
+}
+.qn-role {
   font-size: 10px;
   color: var(--muted);
-  margin: 0;
+  margin-top: 4px;
 }
-
-.clients {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-top: 1px solid var(--line);
-}
-
-.client {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 24px 0;
-  border-bottom: 1px solid var(--line);
-  transition: padding-left 220ms ease;
-}
-
-.client:hover {
-  padding-left: 12px;
-}
-
-.client-name {
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: clamp(20px, 2.4vw, 32px);
-  letter-spacing: -0.015em;
-}
-
-.client-arrow {
-  font-size: 14px;
+.qn-quote {
+  font-size: 13px;
+  line-height: 1.5;
+  margin-top: 12px;
   color: var(--muted);
+  font-style: italic;
+}
+
+.qn-clients {
+  padding: 8vh 6vw 4vh;
+  border-top: 1px solid var(--line);
+  margin-top: 6vh;
+}
+.qn-clients-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6vw, 80px);
+  text-align: center;
+  margin: 0 0 48px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.qn-clients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+.qn-client {
+  padding: 40px 24px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  text-align: center;
+  display: block;
+  transition: transform 200ms;
+}
+.qn-client:hover { transform: translateY(-4px); }
+.qn-client:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.qn-client-name {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+.qn-client-tag { font-size: 11px; opacity: 0.7; }
+.qn-client-cta {
+  font-size: 10px;
+  color: var(--accent);
+  margin-top: 16px;
+}
+
+@media (max-width: 720px) {
+  .qn-grid { grid-template-columns: 1fr 1fr; }
+  .qn-line { display: none; }
 }
 </style>

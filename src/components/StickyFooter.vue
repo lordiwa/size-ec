@@ -1,74 +1,87 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useStyleStore, type SizeId } from '@/stores/style'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute } from 'vue-router'
+import { useStyleStore } from '@/stores/style'
+import { SIZE_LEVELS } from '@/data/size-data'
 
+const route = useRoute()
 const style = useStyleStore()
 
-const navItems = [
-  { to: { name: 'quienes-somos' }, label: 'Quiénes somos' },
-  { to: { name: 'servicios' }, label: 'Servicios' },
-  { to: { name: 'contacto' }, label: 'Contacto' }
-]
+const navs = [
+  { id: 'quienes-somos', label: 'Quiénes somos' },
+  { id: 'servicios',     label: 'Servicios' },
+  { id: 'contacto',      label: 'Contacto' }
+] as const
 
-const sizes: SizeId[] = ['XS', 'S', 'M', 'L', 'XL']
+const activeName = computed(() => String(route.name))
 
-function isActiveSize(s: SizeId): boolean {
-  if (style.active?.type === 'size') return style.active.value === s
-  return s === 'M' && !style.active
-}
-
-// True when a non-M style (any market, or any size != M) is active.
-// In that state, the M tick acts as the reset control and gets a faint accent ring.
-const resetMode = computed<boolean>(() => {
-  if (!style.active) return false
-  if (style.active.type === 'market') return true
-  return style.active.value !== 'M'
-})
-
-function pickSize(s: SizeId): void {
-  // No-op guard: if the visitor is on M-default with no flag and clicks M,
-  // do not write a flag — that would silently bypass the gate on protected routes.
-  if (s === 'M' && !style.active) return
-  style.setSize(s)
+function isActive(id: string) {
+  if (id === 'quienes-somos' && activeName.value === 'cliente') return true
+  return activeName.value === id
 }
 </script>
 
 <template>
-  <footer class="footer-nav" aria-label="Navegación principal">
+  <nav class="footer-nav">
     <RouterLink :to="{ name: 'home' }" class="fn-mark">SIZE</RouterLink>
 
-    <nav class="nav-btns">
+    <div class="nav-btns">
       <RouterLink
-        v-for="item in navItems"
-        :key="item.label"
-        :to="item.to"
+        v-for="n in navs"
+        :key="n.id"
+        :to="{ name: n.id }"
         class="nav-btn"
-        active-class="active"
+        :class="{ active: isActive(n.id) }"
       >
-        {{ item.label }}
+        {{ n.label }}
       </RouterLink>
-    </nav>
+    </div>
 
-    <div class="lvl-mini" role="group" aria-label="Tamaño de creatividad">
+    <button
+      v-if="style.mode === 'market' && style.market"
+      class="market-exit"
+      :title="`Salir de la categoría ${style.market.sub}`"
+      @click="style.setMarketId('')"
+    >
+      {{ style.market.sub }} ✕
+    </button>
+    <div v-else class="lvl-mini" title="Intensidad creativa">
       <button
-        v-for="s in sizes"
-        :key="s"
-        type="button"
+        v-for="l in SIZE_LEVELS"
+        :key="l.n"
         class="tick"
-        :class="{ active: isActiveSize(s), 'reset-active': s === 'M' && resetMode }"
-        :aria-pressed="isActiveSize(s)"
-        :aria-label="s === 'M' && resetMode ? 'Reiniciar al estilo por defecto' : `Tamaño ${s}`"
-        @click="pickSize(s)"
+        :class="{ active: l.n === style.level }"
+        :title="`${l.code} · ${l.label}`"
+        :aria-label="`Nivel ${l.code} (${l.label})`"
+        :aria-pressed="l.n === style.level"
+        @click="style.setLevel(l.n)"
       >
-        {{ s }}
+        {{ l.code }}
       </button>
     </div>
-  </footer>
+  </nav>
 </template>
 
 <style scoped>
-.tick.reset-active {
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 30%, transparent);
+/* All footer-nav styling lives in src/styles/main.css so level-x overrides apply.
+   Only the market-exit button is local. */
+.market-exit {
+  justify-self: end;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: none;
+  border: 0;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 200ms;
+}
+.market-exit:hover { color: var(--ink); }
+.market-exit:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 </style>

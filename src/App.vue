@@ -1,58 +1,63 @@
 <script setup lang="ts">
 import StickyFooter from '@/components/StickyFooter.vue'
-import StyleGate from '@/components/StyleGate.vue'
+import IntensityChooser from '@/components/IntensityChooser.vue'
 import { useStyleStore } from '@/stores/style'
-import { computed, ref, watch, watchEffect } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { computed, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const router = useRouter()
 const style = useStyleStore()
 
-const gateRequired = computed(() => {
-  const protectedRoutes = ['servicios', 'quienes-somos', 'contacto']
-  return !style.active && protectedRoutes.includes(String(route.name))
-})
+const PROTECTED_ROUTES = ['servicios', 'quienes-somos', 'contacto', 'cliente'] as const
 
-const intendedPath = ref<string | null>(null)
+const gateRequired = computed(
+  () => !style.levelChosen && PROTECTED_ROUTES.includes(String(route.name) as never)
+)
 
-watch(gateRequired, (now, prev) => {
-  if (now && !prev && intendedPath.value === null) {
-    intendedPath.value = route.fullPath
-  }
-}, { immediate: true })
+// Apply level class OR market theme tokens to <html>, mirroring the prototype's
+// app.jsx useEffect. Market wins: when a market is active, level class is removed
+// and theme tokens (bg/ink/accent/...) are set inline so any view sees them.
+const BASE_VARS = [
+  '--bg', '--ink', '--accent', '--accent-2', '--font-display', '--font-body',
+  '--mkt-primary', '--mkt-secondary', '--mkt-bg', '--mkt-ink', '--mkt-display', '--mkt-body'
+] as const
 
-watch(() => style.active, (next) => {
-  if (next && intendedPath.value && route.fullPath !== intendedPath.value) {
-    router.replace(intendedPath.value)
-  }
-  if (next) {
-    intendedPath.value = null
-  }
-})
+watch(
+  [() => style.market, () => style.code],
+  ([market, code]) => {
+    if (typeof document === 'undefined') return
+    const root = document.documentElement
+    root.classList.remove('level-xs', 'level-s', 'level-m', 'level-l', 'level-xl', 'has-market')
+    BASE_VARS.forEach((v) => root.style.removeProperty(v))
 
-watchEffect(() => {
-  if (typeof document === 'undefined') return
-  const html = document.documentElement
-  Array.from(html.classList)
-    .filter((c) => c.startsWith('level-') || c.startsWith('market-') || c === 'has-market')
-    .forEach((c) => html.classList.remove(c))
-  const active = style.active
-  if (!active) {
-    html.classList.add('level-m')
-    return
-  }
-  if (active.type === 'size') {
-    html.classList.add(`level-${active.value.toLowerCase()}`)
-  } else {
-    html.classList.add('level-m', 'has-market', `market-${active.value}`)
-  }
-})
+    if (market) {
+      root.classList.add('has-market')
+      const t = market.theme
+      root.style.setProperty('--mkt-primary', t.primary)
+      root.style.setProperty('--mkt-secondary', t.secondary)
+      root.style.setProperty('--mkt-bg', t.bg)
+      root.style.setProperty('--mkt-ink', t.ink)
+      root.style.setProperty('--mkt-display', t.display)
+      root.style.setProperty('--mkt-body', t.body)
+      root.style.setProperty('--bg', t.bg)
+      root.style.setProperty('--ink', t.ink)
+      root.style.setProperty('--accent', t.primary)
+      root.style.setProperty('--accent-2', t.secondary)
+      root.style.setProperty('--font-display', t.display)
+      root.style.setProperty('--font-body', t.body)
+      root.classList.add('reconfiguring')
+      window.setTimeout(() => root.classList.remove('reconfiguring'), 700)
+    } else if (code) {
+      root.classList.add(`level-${code}`)
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
   <main>
-    <StyleGate v-if="gateRequired" />
+    <IntensityChooser v-if="gateRequired" />
     <RouterView v-else />
   </main>
   <StickyFooter />

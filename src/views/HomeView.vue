@@ -1,119 +1,105 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
-import { RouterLink } from 'vue-router'
-import MarketsGrid from '@/components/MarketsGrid.vue'
+import { useRouter } from 'vue-router'
+import { useStyleStore } from '@/stores/style'
+import { SIZE_HOME_WORDS } from '@/data/size-data'
+import RotatingWord from '@/components/RotatingWord.vue'
+import MarketSelect from '@/components/MarketSelect.vue'
 
-const rotatingWords = [
-  'amigo',
-  'ayuda',
-  'conciencia',
-  'competencia',
-  'socio',
-  'aliado',
-  'partner',
-  'voz',
-  'fuerza',
-  'sombra'
-]
-const wordIndex = ref(0)
+const style = useStyleStore()
+const router = useRouter()
+
+const words = SIZE_HOME_WORDS
+const wIdx = ref(0)
 let timer: ReturnType<typeof setInterval> | null = null
 
 onMounted(() => {
   timer = setInterval(() => {
-    wordIndex.value = (wordIndex.value + 1) % rotatingWords.length
-  }, 2800)
+    wIdx.value = (wIdx.value + 1) % words.length
+  }, 1800)
 })
-
 onBeforeUnmount(() => {
   if (timer) clearInterval(timer)
 })
+
+function pickMarket(id: string) {
+  style.setMarketId(id)
+  // Navigate to /servicios after the next paint so the theme + state commit first.
+  requestAnimationFrame(() => {
+    router.push({ name: 'servicios' })
+  })
+}
 </script>
 
 <template>
-  <section class="home">
-    <p class="mono upper home-eyebrow">Publicidad a tu medida</p>
-
+  <!-- Default M (Crafted) home layout: SIZE huge wordmark + 12-col grid with
+       italic serif tagline + display "Somos tu …" + dropdown.
+       Per-level branches (XS / S / L / XL) ship in their respective phases. -->
+  <section class="home" aria-live="polite">
     <h1 class="size-wordmark huge home-mark">SIZE</h1>
 
-    <p class="home-rotator" aria-live="polite">
-      Somos tu
-      <Transition name="word-fade" mode="out-in">
-        <span :key="rotatingWords[wordIndex]" class="serif home-rotator-word">{{ rotatingWords[wordIndex] }}</span>
-      </Transition>.
-    </p>
-
-    <MarketsGrid />
-
-    <RouterLink :to="{ name: 'servicios' }" class="bright-cta home-cta">
-      Ver servicios
-      <span aria-hidden="true">→</span>
-    </RouterLink>
-
-    <p class="mono upper home-foot">We size up to anything.</p>
+    <div class="home-grid">
+      <div class="home-block">
+        <p class="serif home-tag">
+          Publicidad <span class="home-tag-accent">a tu medida.</span>
+        </p>
+        <p class="home-rotator">
+          Somos tu
+          <span class="home-rotator-word">
+            <RotatingWord :words="words" :idx="wIdx" />
+          </span>.
+        </p>
+      </div>
+      <div class="home-block home-cta-block">
+        <MarketSelect :code="style.code" :value="style.marketId" @pick="pickMarket" />
+      </div>
+    </div>
   </section>
 </template>
 
 <style scoped>
 .home {
+  padding: 10vh 6vw 6vh;
   min-height: calc(100dvh - 88px);
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  gap: 32px;
-  padding: 6vh 6vw;
-  text-align: center;
 }
+.home-mark { margin: 0; text-align: left; }
 
-.home-eyebrow {
-  font-size: 11px;
-  color: var(--muted);
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  margin-top: 6vh;
+  align-items: end;
+}
+.home-block { grid-column: 2 / span 8; }
+.home-cta-block { margin-top: 32px; }
+
+.home-tag {
+  font-style: italic;
+  font-size: clamp(28px, 3.5vw, 48px);
+  line-height: 1.05;
   margin: 0;
 }
-
-.home-mark {
-  margin: 0;
-}
+.home-tag-accent { color: var(--accent); }
 
 .home-rotator {
-  font-family: var(--font-body);
-  font-size: clamp(20px, 2.4vw, 28px);
-  color: var(--ink);
-  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5.5vw, 86px);
+  line-height: 1.05;
+  margin: 16px 0 0;
+  white-space: nowrap;
 }
-
 .home-rotator-word {
-  font-style: italic;
   color: var(--accent);
-  display: inline-block;
-  min-width: 8ch;
-  text-align: left;
+  font-style: italic;
 }
 
-.home-cta {
-  margin-top: 8px;
-}
-
-.home-foot {
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 16px;
-}
-
-.word-fade-enter-active,
-.word-fade-leave-active {
-  transition: opacity 100ms ease;
-}
-
-.word-fade-enter-from,
-.word-fade-leave-to {
-  opacity: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .word-fade-enter-active,
-  .word-fade-leave-active {
-    transition-duration: 0ms;
-  }
+@media (max-width: 720px) {
+  .home-grid { grid-template-columns: 1fr; }
+  .home-block { grid-column: 1; }
+  .home-rotator { white-space: normal; }
 }
 </style>
