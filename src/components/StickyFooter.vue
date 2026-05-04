@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useStyleStore, type SizeId } from '@/stores/style'
 import { RouterLink } from 'vue-router'
 
@@ -17,7 +18,18 @@ function isActiveSize(s: SizeId): boolean {
   return s === 'M' && !style.active
 }
 
-function pickSize(s: SizeId) {
+// True when a non-M style (any market, or any size != M) is active.
+// In that state, the M tick acts as the reset control and gets a faint accent ring.
+const resetMode = computed<boolean>(() => {
+  if (!style.active) return false
+  if (style.active.type === 'market') return true
+  return style.active.value !== 'M'
+})
+
+function pickSize(s: SizeId): void {
+  // No-op guard: if the visitor is on M-default with no flag and clicks M,
+  // do not write a flag — that would silently bypass the gate on protected routes.
+  if (s === 'M' && !style.active) return
   style.setSize(s)
 }
 </script>
@@ -44,8 +56,9 @@ function pickSize(s: SizeId) {
         :key="s"
         type="button"
         class="tick"
-        :class="{ active: isActiveSize(s) }"
+        :class="{ active: isActiveSize(s), 'reset-active': s === 'M' && resetMode }"
         :aria-pressed="isActiveSize(s)"
+        :aria-label="s === 'M' && resetMode ? 'Reiniciar al estilo por defecto' : `Tamaño ${s}`"
         @click="pickSize(s)"
       >
         {{ s }}
@@ -53,3 +66,9 @@ function pickSize(s: SizeId) {
     </div>
   </footer>
 </template>
+
+<style scoped>
+.tick.reset-active {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+</style>
