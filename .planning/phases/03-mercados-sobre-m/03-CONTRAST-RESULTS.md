@@ -157,32 +157,32 @@ to the teal primary.
 
 ---
 
-## Remediation status
+## Remediation applied (2026-05-04, user-approved)
 
-| id | verdict | tokens changed | status |
-|----|---------|---------------|--------|
-| cpg | PARTIAL | ink + primary (2) | BLOCKED — awaiting user sign-off |
-| banca | proposed PASS | ink (1) | BLOCKED — awaiting user sign-off (queued) |
-| retail | proposed PASS | ink (1) | BLOCKED — awaiting user sign-off (queued) |
-| automotriz | PASS | — | DONE (no change needed) |
-| salud | proposed PASS | ink (1) | BLOCKED — awaiting user sign-off (queued) |
-| bebidas | PASS | — | DONE (no change needed) |
-| inmobiliario | proposed PASS | ink (1) | BLOCKED — awaiting user sign-off (queued) |
-| educacion | proposed PASS | ink (1) | BLOCKED — awaiting user sign-off (queued) |
-| turismo | PARTIAL | ink + primary (2) | BLOCKED — awaiting user sign-off |
-| tech | PASS | — | DONE (no change needed) |
-| moda | proposed PASS | ink (1) | BLOCKED — awaiting user sign-off (queued) |
-| startups | proposed PASS | ink (1) | BLOCKED — awaiting user sign-off (queued) |
+User approved the full bundle on 2026-05-04, including the 2-token reworks for cpg and turismo.
+Applied to `src/data/size-data.ts` in a single follow-up commit. After the edits,
+`pnpm check:contrast` exits 0 with `OVERALL 13/13 themes pass`.
 
----
+| id | tokens changed | before → after | result |
+|----|----------------|----------------|--------|
+| cpg | ink + primary (2) | ink #1A1A1A → #040404 · primary #FF5A1F → #D23700 | PASS — muted 4.54, CTA 18.39 |
+| banca | ink (1) | #0A2540 → #010304 | PASS — muted 4.53 |
+| retail | ink (1) | #0A0A0A → #060606 | PASS — muted 4.54 |
+| automotriz | — | — | PASS — no change needed (muted 5.81) |
+| salud | ink (1) | #0F2A3F → #000000 | PASS — muted 4.73 (a third pass through `#020609` only reached 4.50, so used #000000) |
+| bebidas | — | — | PASS — no change needed (lowest pair: accent inline 4.93) |
+| inmobiliario | ink (1) | #1F1F1F → #000000 | PASS — muted 4.57 |
+| educacion | ink (1) | #0F1B3D → #03050C | PASS — muted 4.52 |
+| turismo | ink + primary (2) | ink #1A2E2E → #010202 · primary #0E7C7B → #0D7776 | PASS — muted 4.50, CTA passes |
+| tech | — | — | PASS — no change needed (muted 5.35) |
+| moda | ink (1) | #0A0A0A → #020202 | PASS — muted 4.52 |
+| startups | ink (1) | #0F0F0F → #050505 | PASS — muted 4.54 |
 
-## Plan abort reason
+**Total tokens changed:** 11 (7 single-ink darkenings + cpg's 2 + turismo's 2).
 
-Per DEC-018 and the plan's constraint ("if a single market needs more than 1 token change to
-clear all thresholds, STOP and surface to the user"), Task 2 is ABORTED before committing
-any token changes to src/data/size-data.ts.
+**Brand-identity preserved:** the seven `ink`-only tweaks shift body text from a near-black to
+near-pure-black — change is imperceptible to the eye. cpg's primary moves from bright
+cinnamon-orange (#FF5A1F) to deep burnt-orange (#D23700), preserving hue (~16°). turismo's
+primary tweak (#0E7C7B → #0D7776) is a 1-unit HSL-L step, indistinguishable in normal use.
 
-No tokens have been modified. The script (Task 1) is committed. All proposed values above
-are mathematically verified but not yet applied. Once the user approves the cpg and turismo
-2-token reworks (or provides alternative direction), all 12 markets can be fixed in a single
-follow-up commit.
+**Final state:** `pnpm check:contrast` exits 0 with OVERALL 13/13.
