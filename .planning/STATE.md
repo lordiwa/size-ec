@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Executing Phase 03
-stopped_at: "Plan 02-02 complete. Phase 02 fully done. pnpm check:contrast exits 0 (5/5 pairs pass). 02-UAT.md authored. pnpm type-check + build green. Ready for Phase 03 planning."
-last_updated: "2026-05-04T22:15:59.109Z"
-last_activity: 2026-05-04 -- Phase 03 execution started
+stopped_at: "Plan 03-01 aborted mid-Task-2 per DEC-018: cpg (3 pairs) and turismo (2 pairs) each need 2-token fixes requiring user sign-off. Script (Task 1) committed. Audit in 03-CONTRAST-RESULTS.md. 9 markets have 1-token ink fixes ready to apply."
+last_updated: "2026-05-04T01:15:00.000Z"
+last_activity: 2026-05-04 -- Phase 03-01 executed; BLOCKED on cpg+turismo 2-token approval
 progress:
   total_phases: 9
   completed_phases: 2
@@ -26,9 +26,8 @@ See: `.planning/PROJECT.md` (updated 2026-05-03)
 ## Current Position
 
 Phase: 03 (mercados-sobre-m) — EXECUTING
-Phase: 03 (mercados-sobre-m) — NEXT
-Plan: 1 of ?
-Last activity: 2026-05-04 -- Phase 03 execution started
+Plan: 1 of ? — BLOCKED on cpg/turismo 2-token approval
+Last activity: 2026-05-04 -- Phase 03-01 partial execution; BLOCKED
 
 Progress: [███████░░░] 70%
 
@@ -107,6 +106,12 @@ Decisions from completed plan 02-02 (WCAG AA check + UAT):
 - **DEC-033** — MUTED is checked at the 4.5:1 body-text threshold (not 3:1) because it is used for readable copy, not decorative text — passes at 5.71:1.
 - **DEC-034** — LINE and LINE_STRONG are separator/border tokens excluded from contrast pairs; documented in the script token table for auditability.
 
+Decisions from plan 03-01 (12-market WCAG AA audit — BLOCKED):
+
+- **DEC-035** — Market muted derived as `alphaBlend({ ...ink, a: 0.55 }, bg)` in the checker — matches `html.has-market` CSS rule `color-mix(in srgb, var(--ink) 55%, transparent)`. No raw --muted token is read from size-data.ts for market mode.
+- **DEC-036** — cpg (3 pairs: muted + CTA + inline) and turismo (2 pairs: muted + CTA) each require 2 independent token changes (ink + primary) to clear all failures. Plan aborted per DEC-018; token changes NOT committed. Proposed values in 03-CONTRAST-RESULTS.md; user approval required.
+- **DEC-037** — 7 other markets (banca, retail, salud, inmobiliario, educacion, moda, startups) need only 1-token ink darkening toward near-black; proposed values verified but not yet committed.
+
 Decisions from completed plan 01-04 (Vitest smoke layer):
 
 - **DEC-025** — `await nextTick()` required after store mutations in tests; the style store watcher uses default Vue flush (`'pre'`), which is deferred. The production store is correct — only the specs needed the await.
@@ -119,6 +124,10 @@ Decisions from completed plan 01-04 (Vitest smoke layer):
 None.
 
 ### Blockers/Concerns
+
+**Active blocker (Phase 03-01):**
+- **cpg 2-token rework** — proposed: ink #1A1A1A → #040404, primary #FF5A1F → #D23700. Needs user approval before committing.
+- **turismo 2-token rework** — proposed: ink #1A2E2E → #010202, primary #0E7C7B → #0D7776. Needs user approval before committing.
 
 Carried forward from §11 of the brief (acknowledged TBDs):
 
@@ -141,5 +150,5 @@ Carried forward from §11 of the brief (acknowledged TBDs):
 ## Session Continuity
 
 Last session: 2026-05-04
-Stopped at: Plan 02-02 complete. Phase 02 fully done. pnpm check:contrast exits 0 (5/5 pairs pass). 02-UAT.md authored. pnpm type-check + build green. Ready for Phase 03 planning.
-Resume file: None — Phase 02 complete. Next: /gsd-plan-phase 3
+Stopped at: Plan 03-01 BLOCKED — cpg and turismo each require 2-token fixes. User must approve proposed reworks in 03-CONTRAST-RESULTS.md before next execution. 9 other markets have verified 1-token ink fixes queued.
+Resume file: None — resume 03-01 after user approves cpg + turismo reworks.
