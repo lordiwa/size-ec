@@ -1,3 +1,19 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: executing
+stopped_at: Completed 01-01-PLAN.md (Firebase Hosting bootstrap). Plan 2 of 4 in Phase 01 is next.
+last_updated: "2026-05-04T00:15:00Z"
+last_activity: 2026-05-04 -- Phase 01 Plan 01 completed (firebase hosting bootstrap)
+progress:
+  total_phases: 10
+  completed_phases: 0
+  total_plans: 8
+  completed_plans: 1
+  percent: 12
+---
+
 # Project State
 
 ## Project Reference
@@ -5,33 +21,35 @@
 See: `.planning/PROJECT.md` (updated 2026-05-03)
 
 **Core value:** A visitor can pick one of 17 mutually exclusive styles (12 markets + 5 creative sizes) and see the entire site reshape itself — legibly, in place, without reload — to that single style.
-**Current focus:** Phase 1 — Setup
+**Current focus:** Phase 01 — setup
 
 ## Current Position
 
-Phase: 1 of 10 (Setup)
-Plan: 0 of TBD in current phase
-Status: ready_to_plan
-Last activity: 2026-05-03 — initial planning files generated from synthesized intel (new-project-from-ingest)
+Phase: 01 (setup) — EXECUTING
+Plan: 2 of 4
+Status: Executing Phase 01
+Last activity: 2026-05-04 -- Phase 01 Plan 01 completed (firebase hosting bootstrap)
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [█░░░░░░░░░] 12%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: —
-- Total execution time: —
+
+- Total plans completed: 1
+- Average duration: 15 min
+- Total execution time: 15 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 01-setup | 1/4 done | 15 min | 15 min |
 
 **Recent Trend:**
-- Last 5 plans: —
-- Trend: —
+
+- Last 5 plans: 01-01 (15 min)
+- Trend: baseline
 
 *Updated after each plan completion*
 
@@ -50,9 +68,15 @@ Recent accepted decisions affecting Phase 1:
 - DEC-002 hosting on Firebase Spark + Cloudflare, prod-only.
 - DEC-008 Kanban eternal sprint, Jira project SIZE via GSD MCP.
 
+Decisions from Plan 01-01:
+
+- **DEC-011** — firebase-tools installed as devDependency (not globally); invoked via `pnpm exec firebase`.
+- **DEC-012** — Firebase project id `size-ec` declared as forward declaration in .firebaserc; Plan 04 reconciles at first deploy.
+- **DEC-013** — tsconfig.node.json no longer extends @tsconfig/node22 to avoid es2024 lib incompatibility with typescript@5.6.3; inlined equivalent compilerOptions targeting es2022.
+
 ### Pending Todos
 
-None yet.
+None.
 
 ### Blockers/Concerns
 
@@ -76,6 +100,6 @@ Carried forward from §11 of the brief (acknowledged TBDs, not synthesis blocker
 
 ## Session Continuity
 
-Last session: 2026-05-03
-Stopped at: Generated `PROJECT.md`, `REQUIREMENTS.md`, `ROADMAP.md`, and `STATE.md` from synthesized intel. Phase 1 marked `ready_to_plan`.
-Resume file: None — start with `/gsd-plan-phase 1`.
+Last session: 2026-05-04
+Stopped at: Completed 01-01-PLAN.md (Firebase Hosting bootstrap). Plan 2 of 4 in Phase 01 is next.
+Resume file: None — continue with Plan 02 (deploy skill) or Plan 03 as per wave ordering.
