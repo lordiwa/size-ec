@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Plan 01-04 complete. Phase 01 fully done. Vitest smoke layer (4 spec files, 18 tests) passing. pnpm type-check + build + test all green. Ready for Phase 02 planning.
-last_updated: "2026-05-04T21:07:21.978Z"
-last_activity: 2026-05-04 -- Phase 02 execution started
+stopped_at: Plan 02-01 complete. ChangeStyleControl + reopenGate + Hablemos CTA shipped. pnpm type-check + build green. Ready for Plan 02-02.
+last_updated: "2026-05-04T22:00:00Z"
+last_activity: 2026-05-04 -- Plan 02-01 executed (cambiar estilo + hablemos CTA)
 progress:
   total_phases: 9
   completed_phases: 1
-  total_plans: 8
+  total_plans: 10
   completed_plans: 5
-  percent: 63
+  percent: 50
 ---
 
 # Project State
@@ -26,9 +26,9 @@ See: `.planning/PROJECT.md` (updated 2026-05-03)
 ## Current Position
 
 Phase: 02 (tamano-m-consolidado) — EXECUTING
-Plan: 1 of ?
-Status: Executing Phase 02
-Last activity: 2026-05-04 -- Phase 02 execution started
+Plan: 2 of 2
+Status: Plan 02-01 complete. Ready for Plan 02-02 (contrast automation).
+Last activity: 2026-05-04 -- Plan 02-01 executed (cambiar estilo + hablemos CTA)
 
 Progress: [██████░░░░] 63%
 
@@ -94,6 +94,12 @@ Decisions from completed plan 01-03 (gate routing + M-tick reset):
 - **DEC-022** — intendedPath capture uses { immediate: true } so a bookmark deep-link to /servicios on a fresh visit captures the path before any user interaction.
 - **DEC-023** — M-tick no-op guard (s === 'M' && !style.active) is the sole protection against inadvertently writing a localStorage flag on a fresh visit, which would cause the gate to never appear on protected routes.
 - **DEC-024** — src/stores/style.ts required NO modification — setSize/setMarket overwrite active.value in one assignment (LOCKED-002 satisfied by existing store).
+
+Decisions from completed plan 02-01 (cambiar estilo + hablemos CTA):
+
+- **DEC-029** — `reopenGate()` only flips `levelChosen=false`; `level` and `marketId` intentionally untouched so modal reopens with the user's previous level highlighted.
+- **DEC-030** — `ChangeStyleControl` uses `var(--muted)`/`var(--ink)` tokens only; resolves correctly on dark M and all 12 market backgrounds. Level-specific overrides deferred to Phases 4-6.
+- **DEC-031** — "Hablemos →" CTA in no-market branch only (market branch already has "← Cambiar categoría"); centered flex wrapper `srv-cta-row` between `.srv-grid` and `.srv-foot`.
 
 Decisions from completed plan 01-04 (Vitest smoke layer):
 
