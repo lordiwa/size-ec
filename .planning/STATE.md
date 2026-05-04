@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Executing Phase 03 — Plans 01 and 02 complete; UAT sign-off pending
-stopped_at: "Plan 03-02 complete. Awaiting operator walk-through of 03-UAT.md (recognisability + 48-state matrix + transition smoke) before Phase 4 planning."
-last_updated: "2026-05-04T22:45:00.000Z"
-last_activity: 2026-05-04 -- Phase 03-02 complete (check:markets + 03-UAT.md)
+status: Executing Phase 04
+stopped_at: "Plan 03-02 complete. Operator must walk 03-UAT.md before Phase 4 planning. Automated gates: check:contrast 13/13, check:markets 12/12, type-check 0, build 0 — all green."
+last_updated: "2026-05-04T23:00:08.863Z"
+last_activity: 2026-05-04 -- Phase 04 execution started
 progress:
   total_phases: 9
-  completed_phases: 2
-  total_plans: 10
+  completed_phases: 3
+  total_plans: 12
   completed_plans: 9
-  percent: 90
+  percent: 75
 ---
 
 # Project State
@@ -21,13 +21,13 @@ progress:
 See: `.planning/PROJECT.md` (updated 2026-05-03)
 
 **Core value:** A visitor can pick one of 17 mutually exclusive styles (12 markets + 5 creative sizes) and see the entire site reshape itself — legibly, in place, without reload — to that single style.
-**Current focus:** Phase 03 — mercados-sobre-m
+**Current focus:** Phase 04 — tamanos-s-y-l
 
 ## Current Position
 
-Phase: 03 (mercados-sobre-m) — EXECUTING
-Plan: 2 of 2 — COMPLETE (pending operator UAT sign-off)
-Last activity: 2026-05-04 -- Phase 03-02 complete (check:markets + 03-UAT.md)
+Phase: 04 (tamanos-s-y-l) — EXECUTING
+Plan: 1 of ?
+Last activity: 2026-05-04 -- Phase 04 execution started
 
 Progress: [█████████░] 90%
 
@@ -132,6 +132,7 @@ None.
 ### Blockers/Concerns
 
 **Active (Phase 03 — UAT pending):**
+
 - **03-UAT.md operator sign-off** — Sections A (recognisability), B (48-state matrix), and C (transition smoke) require manual walk-through with `pnpm dev`. Once complete, Phase 3 can be marked done and Phase 4 planning begins.
 
 Carried forward from §11 of the brief (acknowledged TBDs):

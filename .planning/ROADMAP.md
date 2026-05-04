@@ -85,8 +85,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. WCAG AA legibility holds in both S and L across all 5 views (body ≥ 4.5:1, large text ≥ 3:1).
   4. Style transitions into S and L complete in ~600ms; `prefers-reduced-motion` attenuates or blocks L animations.
   5. The 60-combination invariant still holds: choosing S or L resets any prior market; no merging of S/L with a market style.
-  6. **L visual treatment is locked to DECISION-LX-LOCKED in PROJECT.md** — match the prototype CSS (`level-l`, `l-l-card`, `l-l-button`, `l-l-marquee`) exactly: `#FFEE00`/`#000`/`#FF00AA`, Archivo Black, 4px borders, 8px+6px chunky shadows with hover translate, 30s marquee.
-**Plans**: TBD
+  6. **L visual treatment is locked to DECISION-LX-LOCKED in PROJECT.md** — match the prototype CSS (`level-l`, `l-l-card`, `l-l-button`, `l-l-marquee`) exactly: `#FFEE00`/`#000`/`#FF00AA`, Archivo Black, 4px borders, 8px+6px chunky shadows with hover translate, 30s marquee. (DEC-019: L ships CSS-only in Phase 4; GSAP+Lottie deferred to Phase 7 polish or later.)
+**Plans**: 3 plans
+  - [ ] 04-01-PLAN.md — Extend pnpm check:contrast to S + L tokens (15/15 WCAG AA)
+  - [ ] 04-02-PLAN.md — HomeView per-level branches + LMarquee + L card treatments across the 4 protected views
+  - [ ] 04-03-PLAN.md — 5×3 view-state UAT matrix + reduced-motion + transition smoke
 **UI hint**: yes
 
 ### Phase 5: Tamaño XS (Plain)
@@ -115,6 +118,8 @@ Decimal phases appear between their surrounding integers in numeric order.
   6. **Phaser 3 is locked to DECISION-XL-PHASER in PROJECT.md** as a first-class capability for embedded mini-games, not just decorative WebGL. Three.js + Tone.js + postprocessing remain auxiliary. Phaser is lazy-loaded only when active style is XL.
 **Plans**: TBD
 **UI hint**: yes
+
+
 
 ### Phase 7: Contenido
 **Goal**: The site is content-complete. The Equipo grid has 20 photos and 20 comments (4 founders × 5 sizes), three full client cases ship at their slugs, and the Home rotating-words list is final.
