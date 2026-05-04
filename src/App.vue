@@ -57,8 +57,10 @@ watch(
 
 <template>
   <main>
-    <IntensityChooser v-if="gateRequired" />
-    <RouterView v-else />
+    <RouterView />
   </main>
   <StickyFooter />
+  <Teleport to="body">
+    <IntensityChooser v-if="gateRequired" />
+  </Teleport>
 </template>
