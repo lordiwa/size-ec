@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Plan 02-01 complete. ChangeStyleControl + reopenGate + Hablemos CTA shipped. pnpm type-check + build green. Ready for Plan 02-02.
-last_updated: "2026-05-04T22:00:00Z"
-last_activity: 2026-05-04 -- Plan 02-01 executed (cambiar estilo + hablemos CTA)
+stopped_at: Plan 02-02 complete. WCAG AA contrast script + UAT checklist shipped. Phase 2 fully done. pnpm check:contrast exits 0 (all 5 pairs pass). Ready for Phase 3 planning.
+last_updated: "2026-05-04T23:00:00Z"
+last_activity: 2026-05-04 -- Plan 02-02 executed (WCAG AA check + UAT doc)
 progress:
   total_phases: 9
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 10
-  completed_plans: 5
-  percent: 50
+  completed_plans: 7
+  percent: 70
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: `.planning/PROJECT.md` (updated 2026-05-03)
 
 ## Current Position
 
-Phase: 02 (tamano-m-consolidado) — EXECUTING
-Plan: 2 of 2
-Status: Plan 02-01 complete. Ready for Plan 02-02 (contrast automation).
-Last activity: 2026-05-04 -- Plan 02-01 executed (cambiar estilo + hablemos CTA)
+Phase: 02 (tamano-m-consolidado) — COMPLETE
+Phase: 03 (mercados-sobre-m) — NEXT
+Plan: Phase 2 done. Ready for Phase 3 planning.
+Last activity: 2026-05-04 -- Plan 02-02 executed (WCAG AA check + UAT doc)
 
-Progress: [██████░░░░] 63%
+Progress: [███████░░░] 70%
 
 ## Performance Metrics
 
@@ -101,6 +101,12 @@ Decisions from completed plan 02-01 (cambiar estilo + hablemos CTA):
 - **DEC-030** — `ChangeStyleControl` uses `var(--muted)`/`var(--ink)` tokens only; resolves correctly on dark M and all 12 market backgrounds. Level-specific overrides deferred to Phases 4-6.
 - **DEC-031** — "Hablemos →" CTA in no-market branch only (market branch already has "← Cambiar categoría"); centered flex wrapper `srv-cta-row` between `.srv-grid` and `.srv-foot`.
 
+Decisions from completed plan 02-02 (WCAG AA check + UAT):
+
+- **DEC-032** — `check-contrast.cjs` hard-codes M token values from `html.level-m` in `main.css`; Phase 3 extends by adding market theme entries to the same THEMES table.
+- **DEC-033** — MUTED is checked at the 4.5:1 body-text threshold (not 3:1) because it is used for readable copy, not decorative text — passes at 5.71:1.
+- **DEC-034** — LINE and LINE_STRONG are separator/border tokens excluded from contrast pairs; documented in the script token table for auditability.
+
 Decisions from completed plan 01-04 (Vitest smoke layer):
 
 - **DEC-025** — `await nextTick()` required after store mutations in tests; the style store watcher uses default Vue flush (`'pre'`), which is deferred. The production store is correct — only the specs needed the await.
@@ -135,5 +141,5 @@ Carried forward from §11 of the brief (acknowledged TBDs):
 ## Session Continuity
 
 Last session: 2026-05-04
-Stopped at: Plan 01-04 complete. Phase 01 fully done. Vitest smoke layer (4 spec files, 18 tests) passing. pnpm type-check + build + test all green. Ready for Phase 02 planning.
-Resume file: None — Phase 01 complete. Next: /gsd-plan-phase 2
+Stopped at: Plan 02-02 complete. Phase 02 fully done. pnpm check:contrast exits 0 (5/5 pairs pass). 02-UAT.md authored. pnpm type-check + build green. Ready for Phase 03 planning.
+Resume file: None — Phase 02 complete. Next: /gsd-plan-phase 3

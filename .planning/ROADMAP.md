@@ -15,7 +15,7 @@ The journey is **goal-backward by phase**: each phase delivers a coherent, obser
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Paridad prototipo** - Match the standalone HTML prototype inside Vue: 5 routes + sticky footer + creativity gate + 12 markets + 5 sizes + single Pinia/localStorage flag + Home rotating word + ~600ms in-place restyle, M Crafted dark default, WCAG AA
-- [ ] **Phase 2: Tamaño M (Crafted) consolidado** - M as default everywhere on every view (Servicios full 11-service list, Quiénes somos, Contacto 40/60 placeholder, Cliente individual base) with WCAG AA + 600ms transitions verified end-to-end
+- [x] **Phase 2: Tamaño M (Crafted) consolidado** - M as default everywhere on every view (Servicios full 11-service list, Quiénes somos, Contacto 40/60 placeholder, Cliente individual base) with WCAG AA + 600ms transitions verified end-to-end
 - [ ] **Phase 3: Mercados sobre M** - 12 market styles applied on top of M baseline; service-list filtered to canonical subset per market; 12 × 4 = 48-state QA matrix passes
 - [ ] **Phase 4: Tamaños S y L** - S (Clean) and L (Bold) as neutral SIZE expressions; L lazy-loads GSAP + Lottie
 - [ ] **Phase 5: Tamaño XS (Plain)** - Web 1999 literal: gris, Times New Roman, links azules, no JS animation
@@ -56,8 +56,8 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. Style transitions into and out of M complete in ~600ms with no full reload (CON-008), respecting `prefers-reduced-motion` (CON-005).
   5. The "abuela test" passes on M: a non-technical reader can identify what SIZE does and read every service name (LOCKED-001 acceptance heuristic).
 **Plans**: 2 plans
-  - [ ] 02-01-PLAN.md — Cambiar estilo control + Hablemos CTA on Servicios (mounted in Quiénes somos and Contacto for symmetry)
-  - [ ] 02-02-PLAN.md — WCAG AA auto-check (M baseline) + 600ms transition smoke + abuela-test UAT
+  - [x] 02-01-PLAN.md — Cambiar estilo control + Hablemos CTA on Servicios (mounted in Quiénes somos and Contacto for symmetry)
+  - [x] 02-02-PLAN.md — WCAG AA auto-check (M baseline) + 600ms transition smoke + abuela-test UAT
 **UI hint**: yes
 
 ### Phase 3: Mercados sobre M
@@ -166,7 +166,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Paridad prototipo | 4/4 | Complete | 2026-05-04 |
-| 2. Tamaño M (Crafted) consolidado | 0/TBD | Not started | - |
+| 2. Tamaño M (Crafted) consolidado | 2/2 | Complete | 2026-05-04 |
 | 3. Mercados sobre M | 0/TBD | Not started | - |
 | 4. Tamaños S y L | 0/TBD | Not started | - |
 | 5. Tamaño XS (Plain) | 0/TBD | Not started | - |
