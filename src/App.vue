@@ -2,15 +2,33 @@
 import StickyFooter from '@/components/StickyFooter.vue'
 import StyleGate from '@/components/StyleGate.vue'
 import { useStyleStore } from '@/stores/style'
-import { computed, watchEffect } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, ref, watch, watchEffect } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
+const router = useRouter()
 const style = useStyleStore()
 
 const gateRequired = computed(() => {
   const protectedRoutes = ['servicios', 'quienes-somos', 'contacto']
   return !style.active && protectedRoutes.includes(String(route.name))
+})
+
+const intendedPath = ref<string | null>(null)
+
+watch(gateRequired, (now, prev) => {
+  if (now && !prev && intendedPath.value === null) {
+    intendedPath.value = route.fullPath
+  }
+}, { immediate: true })
+
+watch(() => style.active, (next) => {
+  if (next && intendedPath.value && route.fullPath !== intendedPath.value) {
+    router.replace(intendedPath.value)
+  }
+  if (next) {
+    intendedPath.value = null
+  }
 })
 
 watchEffect(() => {
