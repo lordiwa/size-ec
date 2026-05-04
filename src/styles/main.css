@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./markets.css";
 
 /*
   SIZE — design tokens
@@ -39,8 +40,8 @@ body {
   overflow-x: hidden;
   padding-bottom: 88px;
   transition:
-    background 500ms ease,
-    color 500ms ease;
+    background 600ms ease,
+    color 600ms ease;
 }
 
 html.has-market {
