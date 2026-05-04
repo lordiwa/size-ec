@@ -55,7 +55,9 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Contacto at M presents the 40/60 layout: left card with placeholder Instagram / WhatsApp / corporate email / Facebook entries, right column with the static "Conversemos" placeholder ready to be replaced.
   4. Style transitions into and out of M complete in ~600ms with no full reload (CON-008), respecting `prefers-reduced-motion` (CON-005).
   5. The "abuela test" passes on M: a non-technical reader can identify what SIZE does and read every service name (LOCKED-001 acceptance heuristic).
-**Plans**: TBD
+**Plans**: 2 plans
+  - [ ] 02-01-PLAN.md — Cambiar estilo control + Hablemos CTA on Servicios (mounted in Quiénes somos and Contacto for symmetry)
+  - [ ] 02-02-PLAN.md — WCAG AA auto-check (M baseline) + 600ms transition smoke + abuela-test UAT
 **UI hint**: yes
 
 ### Phase 3: Mercados sobre M
