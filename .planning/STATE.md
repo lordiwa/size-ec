@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Executing Phase 03
-stopped_at: "Plan 03-01 aborted mid-Task-2 per DEC-018: cpg (3 pairs) and turismo (2 pairs) each need 2-token fixes requiring user sign-off. Script (Task 1) committed. Audit in 03-CONTRAST-RESULTS.md. 9 markets have 1-token ink fixes ready to apply."
-last_updated: "2026-05-04T01:15:00.000Z"
-last_activity: 2026-05-04 -- Phase 03-01 executed; BLOCKED on cpg+turismo 2-token approval
+status: Executing Phase 03 — Plans 01 and 02 complete; UAT sign-off pending
+stopped_at: "Plan 03-02 complete. Awaiting operator walk-through of 03-UAT.md (recognisability + 48-state matrix + transition smoke) before Phase 4 planning."
+last_updated: "2026-05-04T22:45:00.000Z"
+last_activity: 2026-05-04 -- Phase 03-02 complete (check:markets + 03-UAT.md)
 progress:
   total_phases: 9
   completed_phases: 2
   total_plans: 10
-  completed_plans: 7
-  percent: 70
+  completed_plans: 9
+  percent: 90
 ---
 
 # Project State
@@ -26,10 +26,10 @@ See: `.planning/PROJECT.md` (updated 2026-05-03)
 ## Current Position
 
 Phase: 03 (mercados-sobre-m) — EXECUTING
-Plan: 1 of ? — BLOCKED on cpg/turismo 2-token approval
-Last activity: 2026-05-04 -- Phase 03-01 partial execution; BLOCKED
+Plan: 2 of 2 — COMPLETE (pending operator UAT sign-off)
+Last activity: 2026-05-04 -- Phase 03-02 complete (check:markets + 03-UAT.md)
 
-Progress: [███████░░░] 70%
+Progress: [█████████░] 90%
 
 ## Performance Metrics
 
@@ -106,6 +106,12 @@ Decisions from completed plan 02-02 (WCAG AA check + UAT):
 - **DEC-033** — MUTED is checked at the 4.5:1 body-text threshold (not 3:1) because it is used for readable copy, not decorative text — passes at 5.71:1.
 - **DEC-034** — LINE and LINE_STRONG are separator/border tokens excluded from contrast pairs; documented in the script token table for auditability.
 
+Decisions from plan 03-02 (service integrity + UAT):
+
+- **DEC-038** — Task 2 (smoke) requires no commit; it is verification-only per plan spec. 6/6 checks pass from existing code (App.vue + main.css).
+- **DEC-039** — 03-UAT.md Section B uses a fixed-width text grid (not a Markdown table) for the 48-state matrix; 48 cells in a table are unreadable in most editors.
+- **DEC-040** — Copy coverage thresholds: PASS >=80%, WARN 60-80%, FAIL <60%. All 12 markets achieve 100% on first run; no WARN or FAIL triggered.
+
 Decisions from plan 03-01 (12-market WCAG AA audit — BLOCKED):
 
 - **DEC-035** — Market muted derived as `alphaBlend({ ...ink, a: 0.55 }, bg)` in the checker — matches `html.has-market` CSS rule `color-mix(in srgb, var(--ink) 55%, transparent)`. No raw --muted token is read from size-data.ts for market mode.
@@ -125,9 +131,8 @@ None.
 
 ### Blockers/Concerns
 
-**Active blocker (Phase 03-01):**
-- **cpg 2-token rework** — proposed: ink #1A1A1A → #040404, primary #FF5A1F → #D23700. Needs user approval before committing.
-- **turismo 2-token rework** — proposed: ink #1A2E2E → #010202, primary #0E7C7B → #0D7776. Needs user approval before committing.
+**Active (Phase 03 — UAT pending):**
+- **03-UAT.md operator sign-off** — Sections A (recognisability), B (48-state matrix), and C (transition smoke) require manual walk-through with `pnpm dev`. Once complete, Phase 3 can be marked done and Phase 4 planning begins.
 
 Carried forward from §11 of the brief (acknowledged TBDs):
 
@@ -150,5 +155,5 @@ Carried forward from §11 of the brief (acknowledged TBDs):
 ## Session Continuity
 
 Last session: 2026-05-04
-Stopped at: Plan 03-01 BLOCKED — cpg and turismo each require 2-token fixes. User must approve proposed reworks in 03-CONTRAST-RESULTS.md before next execution. 9 other markets have verified 1-token ink fixes queued.
-Resume file: None — resume 03-01 after user approves cpg + turismo reworks.
+Stopped at: Plan 03-02 complete. Operator must walk 03-UAT.md before Phase 4 planning. Automated gates: check:contrast 13/13, check:markets 12/12, type-check 0, build 0 — all green.
+Resume file: None — resume after operator signs off 03-UAT.md.
