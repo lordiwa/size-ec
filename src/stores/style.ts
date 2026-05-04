@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import {
   SIZE_LEVELS,
   findMarket,
@@ -8,34 +8,19 @@ import {
   type Market
 } from '@/data/size-data'
 
-const KEY_LEVEL = 'size-level'
-const KEY_LEVEL_CHOSEN = 'size-level-chosen'
-const KEY_MARKET = 'size-market'
-
 const LEVEL_CODES: LevelCode[] = ['xs', 's', 'm', 'l', 'xl']
 const DEFAULT_LEVEL: LevelNumber = 3 // M
 
-function readInt(key: string, fallback: LevelNumber): LevelNumber {
-  if (typeof window === 'undefined') return fallback
-  const raw = window.localStorage.getItem(key)
-  const n = raw ? parseInt(raw, 10) : NaN
-  return ([1, 2, 3, 4, 5] as LevelNumber[]).find((v) => v === n) ?? fallback
-}
-
-function readBool(key: string): boolean {
-  if (typeof window === 'undefined') return false
-  return window.localStorage.getItem(key) === '1'
-}
-
-function readStr(key: string): string {
-  if (typeof window === 'undefined') return ''
-  return window.localStorage.getItem(key) ?? ''
-}
-
+/**
+ * Session-only store. Per product decision, state is NOT persisted to
+ * localStorage — every visit resets to the default M view with no flag,
+ * so the intensity gate triggers on protected routes and the user has
+ * to re-choose. Picking a level or market only mutates in-memory state.
+ */
 export const useStyleStore = defineStore('style', () => {
-  const level = ref<LevelNumber>(readInt(KEY_LEVEL, DEFAULT_LEVEL))
-  const levelChosen = ref<boolean>(readBool(KEY_LEVEL_CHOSEN))
-  const marketId = ref<string>(readStr(KEY_MARKET))
+  const level = ref<LevelNumber>(DEFAULT_LEVEL)
+  const levelChosen = ref<boolean>(false)
+  const marketId = ref<string>('')
 
   const market = computed<Market | undefined>(() =>
     marketId.value ? findMarket(marketId.value) : undefined
@@ -62,7 +47,7 @@ export const useStyleStore = defineStore('style', () => {
 
   function setMarketId(id: string) {
     marketId.value = id || ''
-    if (id) levelChosen.value = true // picking a market also counts as choosing
+    if (id) levelChosen.value = true
   }
 
   function resetAll() {
@@ -70,20 +55,6 @@ export const useStyleStore = defineStore('style', () => {
     level.value = DEFAULT_LEVEL
     levelChosen.value = false
   }
-
-  // Persist each piece of state to its own localStorage key, mirroring the prototype.
-  watch(level, (n) => {
-    if (typeof window !== 'undefined') window.localStorage.setItem(KEY_LEVEL, String(n))
-  })
-  watch(levelChosen, (b) => {
-    if (typeof window !== 'undefined') {
-      if (b) window.localStorage.setItem(KEY_LEVEL_CHOSEN, '1')
-      else window.localStorage.removeItem(KEY_LEVEL_CHOSEN)
-    }
-  })
-  watch(marketId, (id) => {
-    if (typeof window !== 'undefined') window.localStorage.setItem(KEY_MARKET, id || '')
-  })
 
   return {
     level,

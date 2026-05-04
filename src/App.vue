@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import StickyFooter from '@/components/StickyFooter.vue'
 import IntensityChooser from '@/components/IntensityChooser.vue'
+import ReconfigureOverlay from '@/components/ReconfigureOverlay.vue'
 import { useStyleStore } from '@/stores/style'
-import { computed, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -14,16 +15,30 @@ const gateRequired = computed(
   () => !style.levelChosen && PROTECTED_ROUTES.includes(String(route.name) as never)
 )
 
-// Apply level class OR market theme tokens to <html>, mirroring the prototype's
-// app.jsx useEffect. Market wins: when a market is active, level class is removed
-// and theme tokens (bg/ink/accent/...) are set inline so any view sees them.
+// Reconfigure overlay — fires whenever the active style changes (level or market).
+const reconfiguring = ref(false)
+let reconfigureTimer: ReturnType<typeof setTimeout> | null = null
+const RECONFIGURE_MS = 900
+
+function pulseReconfigure() {
+  reconfiguring.value = true
+  if (reconfigureTimer) clearTimeout(reconfigureTimer)
+  reconfigureTimer = setTimeout(() => {
+    reconfiguring.value = false
+  }, RECONFIGURE_MS)
+}
+
+// Apply level class OR market theme tokens to <html>, mirroring the prototype.
+// Market wins: when a market is active, level class is removed and theme tokens
+// (bg/ink/accent/...) are set inline so any view sees them.
 const BASE_VARS = [
   '--bg', '--ink', '--accent', '--accent-2', '--font-display', '--font-body',
   '--mkt-primary', '--mkt-secondary', '--mkt-bg', '--mkt-ink', '--mkt-display', '--mkt-body'
 ] as const
 
+let firstApply = true
 watch(
-  [() => style.market, () => style.code],
+  [() => style.market, () => style.code, () => style.level],
   ([market, code]) => {
     if (typeof document === 'undefined') return
     const root = document.documentElement
@@ -45,11 +60,15 @@ watch(
       root.style.setProperty('--accent-2', t.secondary)
       root.style.setProperty('--font-display', t.display)
       root.style.setProperty('--font-body', t.body)
-      root.classList.add('reconfiguring')
-      window.setTimeout(() => root.classList.remove('reconfiguring'), 700)
     } else if (code) {
       root.classList.add(`level-${code}`)
     }
+
+    if (firstApply) {
+      firstApply = false
+      return
+    }
+    pulseReconfigure()
   },
   { immediate: true }
 )
@@ -61,6 +80,7 @@ watch(
   </main>
   <StickyFooter />
   <Teleport to="body">
-    <IntensityChooser v-if="gateRequired" />
+    <IntensityChooser v-if="gateRequired && !reconfiguring" />
+    <ReconfigureOverlay v-if="reconfiguring" />
   </Teleport>
 </template>
