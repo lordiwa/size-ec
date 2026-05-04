@@ -156,5 +156,5 @@ The skill is the canonical "push-to-deploy" flow for both human and agent operat
 
 ---
 
-*Phase: 01-setup*
+*Phase: 09-cierre-deploy*
 *Context gathered: 2026-05-03 via /gsd-discuss-phase*

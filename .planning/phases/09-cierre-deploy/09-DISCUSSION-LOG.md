@@ -3,7 +3,7 @@
 **Date:** 2026-05-03
 **Mode:** /gsd-discuss-phase (default, no flags)
 
-This log is for human reference (audits, retrospectives). Downstream agents (researcher, planner, executor) consume `01-CONTEXT.md`, not this file.
+This log is for human reference (audits, retrospectives). Downstream agents (researcher, planner, executor) consume `09-CONTEXT.md`, not this file.
 
 ---
 

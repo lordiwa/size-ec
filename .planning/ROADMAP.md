@@ -2,7 +2,7 @@
 
 ## Overview
 
-This roadmap follows the **10-phase structure prescribed by §10 of the source brief** (`ExistingData/SIZE-design-brief-v4.md`). It moves from infrastructure setup through the token system and default M visual, then layers on the 12 market styles, then the remaining sizes (S+L, XS, XL), then content, then integrations, then SEO/analytics + final QA + production cutover. Phase numbering 1–10 maps to the brief's Fase 0–9.
+This roadmap is **prototype-first**: Phase 1 reaches feature parity with the standalone HTML prototype (`ExistingData/SIZE Web Prototype - standalone.html`) inside the Vue 3 app — 5 routes, sticky footer, creativity gate, 12 markets + 5 sizes selectable, single Pinia/localStorage flag, ~600ms in-place restyle, M Crafted dark-mode default, all WCAG AA. Once that runs locally in the browser, every subsequent phase layers a single concern on top: M consolidation, mercados, S+L, XS, XL, content, integrations. Operational concerns (Firebase Hosting, Cloudflare DNS, GSD MCP wiring, Jira epics, SEO + analytics + final QA + cutover) are deferred to the **last** phase, so we don't ship an empty shell to production before the design system works.
 
 The journey is **goal-backward by phase**: each phase delivers a coherent, observable capability that compounds toward the project-level acceptance criteria in PROJECT.md. Style mutual-exclusivity (LOCKED-002) and WCAG AA legibility (LOCKED-001) are non-negotiable on every phase that touches a view.
 
@@ -14,38 +14,21 @@ The journey is **goal-backward by phase**: each phase delivers a coherent, obser
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Setup** - Firebase Spark + GitHub + Cloudflare DNS + GSD MCP wiring + initial Jira epics
-- [ ] **Phase 2: Sistema base** - Token system (12 markets + 5 sizes), Vue Router 5 routes, Pinia single-flag store, sticky footer, Home with rotating word, gate flow, live style switching
-- [ ] **Phase 3: Tamaño M (Crafted) y default visual** - M rendering on Home / Servicios / Quiénes somos / Contacto in neutral SIZE style, with gate, persistence, legibility, perf
-- [ ] **Phase 4: Mercados sobre M** - 12 market styles in version M; QA matrix 12×4 = 48 visual states
-- [ ] **Phase 5: Tamaños S y L** - S (Clean) and L (Bold) in neutral SIZE style; L lazy-loads GSAP+Lottie
-- [ ] **Phase 6: Tamaño XS (Plain)** - CSS retro 1999 (gris, Times New Roman, links azules)
-- [ ] **Phase 7: Tamaño XL (Unleashed)** - Three.js + Phaser + Tone.js lazy-load + WebGL2 detection + L fallback
-- [ ] **Phase 8: Contenido** - 20 team photos, 20 team comments, 3 client cases, final rotating-words list
-- [ ] **Phase 9: Integraciones** - Firestore contact form + transactional email + chatbot + corporate email
-- [ ] **Phase 10: Cierre** - SEO meta tags + sitemap + structured data + M-level prerender; GA4 analytics; QA across the 17 styles; deploy with definitive domain
+- [ ] **Phase 1: Paridad prototipo** - Match the standalone HTML prototype inside Vue: 5 routes + sticky footer + creativity gate + 12 markets + 5 sizes + single Pinia/localStorage flag + Home rotating word + ~600ms in-place restyle, M Crafted dark default, WCAG AA
+- [ ] **Phase 2: Tamaño M (Crafted) consolidado** - M as default everywhere on every view (Servicios full 11-service list, Quiénes somos, Contacto 40/60 placeholder, Cliente individual base) with WCAG AA + 600ms transitions verified end-to-end
+- [ ] **Phase 3: Mercados sobre M** - 12 market styles applied on top of M baseline; service-list filtered to canonical subset per market; 12 × 4 = 48-state QA matrix passes
+- [ ] **Phase 4: Tamaños S y L** - S (Clean) and L (Bold) as neutral SIZE expressions; L lazy-loads GSAP + Lottie
+- [ ] **Phase 5: Tamaño XS (Plain)** - Web 1999 literal: gris, Times New Roman, links azules, no JS animation
+- [ ] **Phase 6: Tamaño XL (Unleashed)** - Three.js + Phaser + Tone.js + postprocessing + physics, lazy-loaded, WebGL2-gated, L fallback
+- [ ] **Phase 7: Contenido** - 20 team photos, 20 team comments, 3 client cases, final rotating-words list
+- [ ] **Phase 8: Integraciones** - Firestore contact form + transactional email + chatbot + corporate email
+- [ ] **Phase 9: Cierre + Despliegue** - SEO + GA4 analytics + 17-style final QA + Firebase Hosting deploy + Cloudflare DNS + GSD MCP wiring + Jira epics + definitive domain cutover
 
 ## Phase Details
 
-### Phase 1: Setup
-**Goal**: Infrastructure and project plumbing exist so that pushing to `main` deploys to a Cloudflare-fronted Firebase Hosting site, and the agentic team has a Jira project to push tickets into.
-**Depends on**: Nothing (first phase)
-**Requirements**: (foundation only — no v1 REQ owned)
-**Success Criteria** (what must be TRUE):
-  1. A `push to main` on the GitHub repo deploys an empty Vue 3 + Vite shell to Firebase Hosting (Spark) and is reachable through the Cloudflare-proxied DNS (placeholder domain acceptable until definitive domain is confirmed — see PROJECT.md TBD).
-  2. The `SIZE` Jira project at `cranialtrading.atlassian.net` (board 100) is reachable via GSD MCP from Claude Code, with initial epics created (one per remaining roadmap phase).
-  3. The repository builds locally with `vite` and a TypeScript config; Tailwind CSS and Pinia and Vue Router are installed and a `Hello SIZE` page renders.
-  4. A Definition-of-Done note exists in repo (e.g., `AGENTS.md` / `CLAUDE.md`) referencing WCAG AA verification and the 60-combo smoke (CON-013).
-**Plans**: 4 plans
-  - [ ] 01-01-PLAN.md — Firebase Hosting bootstrap (firebase-tools devDep, firebase.json SPA rewrite, .firebaserc, build smoke)
-  - [ ] 01-02-PLAN.md — CLAUDE.md DoD + Atlassian token section, .mcp.json wiring GSD MCP to SIZE Jira
-  - [ ] 01-03-PLAN.md — Author project-local deploy skill at .claude/skills/deploy/SKILL.md
-  - [ ] 01-04-PLAN.md — First smoke deploy + GSD MCP verify + seed 9 Jira epics for Phases 2–10
-**UI hint**: yes
-
-### Phase 2: Sistema base
-**Goal**: The styling and routing skeleton works end-to-end. A user can navigate the 5 routes, see a sticky footer, hit the creativity gate on first visit, pick a size or a market, watch the site re-style in place via a single Pinia store backed by one localStorage flag, and see Home's rotating word animate accessibly.
-**Depends on**: Phase 1
+### Phase 1: Paridad prototipo
+**Goal**: Reach feature parity with the standalone HTML prototype inside the Vue app. A user can navigate the 5 routes locally (`pnpm dev`), see a sticky footer, hit the creativity gate on first visit, pick a size or a market, watch the site re-style in place via a single Pinia store backed by one localStorage flag, and see Home's rotating word animate accessibly. M Crafted dark mode is the working default.
+**Depends on**: Nothing (first phase — there is no deploy to depend on)
 **Requirements**: REQ-routes-five-views, REQ-style-gate, REQ-style-persistence, REQ-home-rotating-words
 **Success Criteria** (what must be TRUE):
   1. All 5 routes (`/`, `/servicios`, `/quienes-somos`, `/clientes/[slug]`, `/contacto`) resolve with their own URLs and reuse a sticky footer that links to Quiénes somos / Servicios / Contacto.
@@ -53,16 +36,18 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Picking a market on Home or a size at the gate writes a single localStorage flag `size-style: { type, value, updatedAt }`, replacing any prior value, and the gate never reappears for that visitor.
   4. The token system supports 12 markets + 5 sizes as **independent** sets (no merging) and a "Cambiar estilo" reset control restores first-time behaviour.
   5. Home renders the SIZE wordmark + brand promise + a *"Somos tu …"* line whose word rotates ~2.5–3s with `aria-live="polite"`; toggling sizes/markets restyles Home in place without redirection in ≤ ~600ms.
+  6. M Crafted dark mode is the rendered default for any visitor with no flag, on every view.
+  7. Browser-verifiable via `pnpm dev` — no Firebase deploy required to demonstrate the prototype parity.
 **Plans**: 4 plans
-  - [ ] 02-01-PLAN.md — Markets token system (12 market CSS blocks + 600ms body transition + Google Fonts)
-  - [ ] 02-02-PLAN.md — Markets selector grid on Home + rotator crossfade
-  - [ ] 02-03-PLAN.md — M-tick reset semantics + post-gate routing
-  - [ ] 02-04-PLAN.md — Vitest smoke layer (store + MarketsGrid + gate-flow + routes)
+  - [ ] 01-01-PLAN.md — Markets token system (12 market CSS blocks + 600ms body transition + Google Fonts)
+  - [ ] 01-02-PLAN.md — Markets selector grid on Home + rotator crossfade
+  - [ ] 01-03-PLAN.md — M-tick reset semantics + post-gate routing
+  - [ ] 01-04-PLAN.md — Vitest smoke layer (store + MarketsGrid + gate-flow + routes)
 **UI hint**: yes
 
-### Phase 3: Tamaño M (Crafted) y default visual
+### Phase 2: Tamaño M (Crafted) consolidado
 **Goal**: M (Crafted) is the working default everywhere. A first-time or recurring visitor with no flag lands on every view in M dark-mode, reads the 11 services, sees the team in M, and reaches Contacto in M — with WCAG AA verified and ~600ms transitions.
-**Depends on**: Phase 2
+**Depends on**: Phase 1
 **Requirements**: REQ-services-catalog (M slice), REQ-contact-view-layout
 **Success Criteria** (what must be TRUE):
   1. With no flag, every one of the 5 views renders in M (Crafted) dark mode and is fully legible per WCAG AA (LOCKED-001) — body ≥ 4.5:1, large text ≥ 3:1, hierarchy clear.
@@ -73,9 +58,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: TBD
 **UI hint**: yes
 
-### Phase 4: Mercados sobre M
+### Phase 3: Mercados sobre M
 **Goal**: All 12 market styles work on top of the M baseline. Each market is immediately recognisable as its industry, filters Servicios to its canonical service subset, and stays WCAG AA legible. The 12 × 4 = 48-state QA matrix passes.
-**Depends on**: Phase 3
+**Depends on**: Phase 2
 **Requirements**: REQ-markets-twelve
 **Success Criteria** (what must be TRUE):
   1. Twelve market token sets exist and apply on demand (CPG, Banca, Retail, Automotriz, Salud, Bebidas, Inmobiliario, Educación, Turismo, Tecnología, Moda, Fintech), each with its specified palette, typography, photography spec, rhythm, and tone.
@@ -86,9 +71,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: TBD
 **UI hint**: yes
 
-### Phase 5: Tamaños S y L
+### Phase 4: Tamaños S y L
 **Goal**: S (Clean) and L (Bold) ship as neutral SIZE expressions. S is corporate clean and flat with zero animation JS; L is contemporary brutalist with full GSAP + Lottie, lazy-loaded, still WCAG AA.
-**Depends on**: Phase 4
+**Depends on**: Phase 3
 **Requirements**: REQ-sizes-five (S+L slice)
 **Success Criteria** (what must be TRUE):
   1. Choosing S from the gate or from a Cambiar-estilo control restyles all 5 views into corporate clean / formal / flat — with zero animation JS — and renders all 11 services neutral.
@@ -100,9 +85,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: TBD
 **UI hint**: yes
 
-### Phase 6: Tamaño XS (Plain)
+### Phase 5: Tamaño XS (Plain)
 **Goal**: XS / Plain is the literal Web 1999 size — gris, Times New Roman, links azules — and is genuinely usable, with the size catalog now complete except for XL.
-**Depends on**: Phase 5
+**Depends on**: Phase 4
 **Requirements**: REQ-sizes-five (XS slice)
 **Success Criteria** (what must be TRUE):
   1. Choosing XS from the gate restyles all 5 views into Web-1999 plain: grey background, Times New Roman, blue links, no JS animations.
@@ -113,9 +98,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: TBD
 **UI hint**: yes
 
-### Phase 7: Tamaño XL (Unleashed)
+### Phase 6: Tamaño XL (Unleashed)
 **Goal**: XL / Unleashed is fully alive — Three.js / Phaser / Tone.js / postprocessing / physics — but it always degrades cleanly to L when WebGL2 is missing, and progressive loading verifies that XS-M ship lightweight bundles end-to-end.
-**Depends on**: Phase 6
+**Depends on**: Phase 5
 **Requirements**: REQ-sizes-five (XL slice), REQ-progressive-loading, REQ-xl-capability-detection
 **Success Criteria** (what must be TRUE):
   1. Choosing XL from the gate lazy-loads Three.js (`@tresjs/core`), Phaser 3, Tone.js (default OFF), `postprocessing`, and a physics library (Cannon-es or Rapier) — none of these libraries are present in the initial bundle when the active style is XS / S / M.
@@ -127,9 +112,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: TBD
 **UI hint**: yes
 
-### Phase 8: Contenido
+### Phase 7: Contenido
 **Goal**: The site is content-complete. The Equipo grid has 20 photos and 20 comments (4 founders × 5 sizes), three full client cases ship at their slugs, and the Home rotating-words list is final.
-**Depends on**: Phase 7
+**Depends on**: Phase 6
 **Requirements**: REQ-team-row, REQ-clients-row-and-pages, REQ-home-rotating-words (final word list slice)
 **Success Criteria** (what must be TRUE):
   1. Quiénes somos renders the four founders (Javier Ricaurte, Melissa Gaitán, Rafael Matovelle, Ismael Guerra) each with name, role, image, and comment; switching sizes (XS/S/M/L/XL) swaps both the image and the comment for every founder; markets fall back to M variants.
@@ -140,45 +125,50 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: TBD
 **UI hint**: yes
 
-### Phase 9: Integraciones
+### Phase 8: Integraciones
 **Goal**: Contacto goes from static placeholder to live: Firestore stores submissions, transactional email notifies the team, the chosen chatbot provider replaces the placeholder, and the corporate email channel is real on the left card.
-**Depends on**: Phase 8
+**Depends on**: Phase 7
 **Requirements**: REQ-contact-form-persistence
 **Success Criteria** (what must be TRUE):
   1. Submitting the contact form creates a Firestore document with the form payload and a server timestamp.
   2. The team receives a transactional email per submission (Firebase Functions if required); on success the user sees a confirmation message; on failure the user sees a clear message with an alternative email channel.
   3. The 40/60 Contacto layout shows real Instagram / WhatsApp / corporate-email / Facebook destinations on the left card (no more placeholders).
-  4. The chatbot UI on the right column is wired to the chosen provider (TBD per §11) and qualifies/routes incoming clients toward Facebook / WhatsApp; if the provider is still pending at this phase, the placeholder remains and the requirement carries the unresolved TBD into Phase 10 closure review.
+  4. The chatbot UI on the right column is wired to the chosen provider (TBD per §11) and qualifies/routes incoming clients toward Facebook / WhatsApp; if the provider is still pending at this phase, the placeholder remains and the requirement carries the unresolved TBD into Phase 9 closure review.
 **Plans**: TBD
 **UI hint**: yes
 
-### Phase 10: Cierre
-**Goal**: The site is launch-ready. SEO + analytics + final QA across the 17 styles + cutover to the definitive domain.
-**Depends on**: Phase 9
+### Phase 9: Cierre + Despliegue
+**Goal**: The site is launch-ready and live. SEO + analytics + final QA across the 17 styles + Firebase Hosting deploy + Cloudflare DNS + GSD MCP wiring + Jira epics + cutover to the definitive domain.
+**Depends on**: Phase 8
 **Requirements**: (cross-cutting closure — verifies all REQs)
 **Success Criteria** (what must be TRUE):
   1. SEO basics are in place: meta title and meta description on every view, a sitemap, structured data on per-client pages, and an M-level prerender for crawlers.
-  2. GA4 analytics is wired with the agreed event taxonomy (market selection, size selection, gate completion, primary CTAs, scroll depth) — per the Phase 10 closure of TBD §11.
+  2. GA4 analytics is wired with the agreed event taxonomy (market selection, size selection, gate completion, primary CTAs, scroll depth) — per the Phase 9 closure of TBD §11.
   3. Final QA passes the 17-style smoke: each of the 12 markets and each of the 5 sizes is exercised on Home / Servicios / Quiénes somos / Contacto / Cliente individual where they apply, with WCAG AA verified and ~600ms transitions intact (LOCKED-001, CON-013).
-  4. The site is deployed to the definitive domain via Firebase Hosting + Cloudflare proxy + SSL; redirects from any prior placeholder domain are configured.
-  5. The Jira board reflects every Phase 1–10 ticket as Done with WCAG AA verified, and the project-level acceptance criteria in PROJECT.md are all satisfied in production.
-**Plans**: TBD
+  4. The site is deployed via Firebase Hosting (Spark) + Cloudflare proxy + SSL to the definitive domain; redirects from any prior placeholder domain are configured.
+  5. The push-to-deploy chain (`.claude/skills/deploy/SKILL.md`) is exercised end-to-end: stage → commit → push → type-check → build → `firebase deploy --only hosting`.
+  6. GSD MCP is reachable from Claude Code in this checkout; nine epics for Phases 1–8 (or remaining work) exist in Jira project SIZE on cranialtrading.atlassian.net (board 100). CLAUDE.md carries the Definition-of-Done note referencing CON-013 plus the Atlassian token setup section.
+  7. The Jira board reflects every Phase 1–9 ticket as Done with WCAG AA verified, and the project-level acceptance criteria in PROJECT.md are all satisfied in production.
+**Plans**: 4 plans (carried from the original Setup phase — operational artifacts that only make sense once the design system ships)
+  - [x] 09-01-PLAN.md — Firebase Hosting bootstrap (firebase-tools devDep, firebase.json SPA rewrite, .firebaserc, build smoke) — **already executed; artifacts are inert until Plan 09-04**
+  - [ ] 09-02-PLAN.md — CLAUDE.md DoD + Atlassian token section, .mcp.json wiring GSD MCP to SIZE Jira
+  - [ ] 09-03-PLAN.md — Author project-local deploy skill at .claude/skills/deploy/SKILL.md
+  - [ ] 09-04-PLAN.md — First real deploy + GSD MCP verify + seed Jira epics + SEO/GA4/17-style QA + definitive domain cutover (will need expansion when planned — currently scoped only to first deploy + epics)
 **UI hint**: yes
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Setup | 0/4 | Not started | - |
-| 2. Sistema base | 0/4 | Not started | - |
-| 3. Tamaño M (Crafted) y default visual | 0/TBD | Not started | - |
-| 4. Mercados sobre M | 0/TBD | Not started | - |
-| 5. Tamaños S y L | 0/TBD | Not started | - |
-| 6. Tamaño XS (Plain) | 0/TBD | Not started | - |
-| 7. Tamaño XL (Unleashed) | 0/TBD | Not started | - |
-| 8. Contenido | 0/TBD | Not started | - |
-| 9. Integraciones | 0/TBD | Not started | - |
-| 10. Cierre | 0/TBD | Not started | - |
+| 1. Paridad prototipo | 0/4 | Not started | - |
+| 2. Tamaño M (Crafted) consolidado | 0/TBD | Not started | - |
+| 3. Mercados sobre M | 0/TBD | Not started | - |
+| 4. Tamaños S y L | 0/TBD | Not started | - |
+| 5. Tamaño XS (Plain) | 0/TBD | Not started | - |
+| 6. Tamaño XL (Unleashed) | 0/TBD | Not started | - |
+| 7. Contenido | 0/TBD | Not started | - |
+| 8. Integraciones | 0/TBD | Not started | - |
+| 9. Cierre + Despliegue | 1/4 | Not started | - |

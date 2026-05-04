@@ -1,5 +1,5 @@
 ---
-phase: 01-setup
+phase: 09-cierre-deploy
 plan: 01
 subsystem: infra
 tags: [firebase, firebase-tools, firebase-hosting, vite, typescript, vue3]
@@ -12,7 +12,7 @@ provides:
   - .firebaserc binding default project to size-ec
   - pnpm build green (dist/index.html confirmed non-empty)
   - .firebase/ runtime cache excluded from git
-affects: [01-03, 01-04, all deploy operations]
+affects: [09-03, 09-04, all deploy operations]
 
 # Tech tracking
 tech-stack:
@@ -121,5 +121,5 @@ None — no external service configuration required for this plan. Firebase logi
 - No blockers for Plan 02 (concurrent wave) or Plan 03 (deploy skill)
 
 ---
-*Phase: 01-setup*
+*Phase: 09-cierre-deploy*
 *Completed: 2026-05-04*

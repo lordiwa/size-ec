@@ -215,5 +215,5 @@ Bundle impact: shared Geist + 12 display fonts ≈ acceptable for v1 because we 
 
 ---
 
-*Phase: 02-sistema-base*
+*Phase: 01-paridad-prototipo*
 *Context gathered: 2026-05-04 (paired with /gsd-plan-phase 1+2)*
