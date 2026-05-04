@@ -1,0 +1,29 @@
+{
+  "source_path": "C:/Users/srpar/WebstormProjects/size-ec/ExistingData/SIZE-design-brief-v4.md",
+  "type": "PRD",
+  "confidence": "high",
+  "manifest_override": true,
+  "title": "SIZE — Brief de proyecto y diseño (v4)",
+  "summary": "Master design brief for SIZE, an Ecuadorian advertising agency website featuring 17 mutually exclusive styles (12 markets + 5 creativity sizes) across 5 views, with stack, agentic ops, and phased roadmap.",
+  "scope": [
+    "SIZE brand and positioning",
+    "17 mutually exclusive site styles (12 markets + 5 creativity sizes)",
+    "5 views (Home, Servicios, Quiénes somos, Cliente individual, Contacto)",
+    "Style gate flow and localStorage persistence",
+    "11 SIZE services catalog",
+    "Tech stack (Vue 3, Vite, Pinia, Tailwind, Firebase Hosting, Cloudflare, Firestore)",
+    "Animation/interactivity per level (GSAP, Lenis, Three.js, Phaser, Tone.js)",
+    "Agentic operating model (Developer, Researcher, QA, Strategist, PM) via GSD MCP + Jira",
+    "Phased roadmap Fase 0 through Fase 9",
+    "WCAG AA legibility rule",
+    "TBDs and gap analysis"
+  ],
+  "cross_refs": [
+    "https://cranialtrading.atlassian.net/jira/software/projects/SIZE/boards/100",
+    "CLAUDE.md",
+    "AGENTS.md"
+  ],
+  "locked": false,
+  "precedence": 1,
+  "notes": "Manifest pinned type=PRD with precedence=1. Document contains two clearly stated 'REGLA INVIOLABLE' rules that the user has flagged as locked decisions (§3 Legibilidad WCAG AA across all styles; §3.bis 17 mutually exclusive styles never combined). Synthesizer should promote those two rules to LOCKED constraints despite this being classified as PRD. The 'locked' field at file level remains false because PRD-class docs do not produce locked decisions by default; the locked content lives inside §3 and §3.bis as inline rules to be hoisted by the synthesizer."
+}
