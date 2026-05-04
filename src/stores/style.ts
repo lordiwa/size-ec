@@ -56,6 +56,16 @@ export const useStyleStore = defineStore('style', () => {
     levelChosen.value = false
   }
 
+  /**
+   * Non-destructive gate reopener. Sets levelChosen to false so the
+   * IntensityChooser modal remounts, but intentionally leaves `level` and
+   * `marketId` untouched so the previously highlighted tick stays active
+   * in the modal (user re-picks intensity; they don't start over).
+   */
+  function reopenGate() {
+    levelChosen.value = false
+  }
+
   return {
     level,
     levelChosen,
@@ -67,6 +77,7 @@ export const useStyleStore = defineStore('style', () => {
     levelMeta,
     setLevel,
     setMarketId,
-    resetAll
+    resetAll,
+    reopenGate
   }
 })
