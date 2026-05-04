@@ -36,7 +36,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. The `SIZE` Jira project at `cranialtrading.atlassian.net` (board 100) is reachable via GSD MCP from Claude Code, with initial epics created (one per remaining roadmap phase).
   3. The repository builds locally with `vite` and a TypeScript config; Tailwind CSS and Pinia and Vue Router are installed and a `Hello SIZE` page renders.
   4. A Definition-of-Done note exists in repo (e.g., `AGENTS.md` / `CLAUDE.md`) referencing WCAG AA verification and the 60-combo smoke (CON-013).
-**Plans**: TBD
+**Plans**: 4 plans
+  - [ ] 01-01-PLAN.md — Firebase Hosting bootstrap (firebase-tools devDep, firebase.json SPA rewrite, .firebaserc, build smoke)
+  - [ ] 01-02-PLAN.md — CLAUDE.md DoD + Atlassian token section, .mcp.json wiring GSD MCP to SIZE Jira
+  - [ ] 01-03-PLAN.md — Author project-local deploy skill at .claude/skills/deploy/SKILL.md
+  - [ ] 01-04-PLAN.md — First smoke deploy + GSD MCP verify + seed 9 Jira epics for Phases 2–10
 **UI hint**: yes
 
 ### Phase 2: Sistema base
@@ -49,7 +53,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Picking a market on Home or a size at the gate writes a single localStorage flag `size-style: { type, value, updatedAt }`, replacing any prior value, and the gate never reappears for that visitor.
   4. The token system supports 12 markets + 5 sizes as **independent** sets (no merging) and a "Cambiar estilo" reset control restores first-time behaviour.
   5. Home renders the SIZE wordmark + brand promise + a *"Somos tu …"* line whose word rotates ~2.5–3s with `aria-live="polite"`; toggling sizes/markets restyles Home in place without redirection in ≤ ~600ms.
-**Plans**: TBD
+**Plans**: 4 plans
+  - [ ] 02-01-PLAN.md — Markets token system (12 market CSS blocks + 600ms body transition + Google Fonts)
+  - [ ] 02-02-PLAN.md — Markets selector grid on Home + rotator crossfade
+  - [ ] 02-03-PLAN.md — M-tick reset semantics + post-gate routing
+  - [ ] 02-04-PLAN.md — Vitest smoke layer (store + MarketsGrid + gate-flow + routes)
 **UI hint**: yes
 
 ### Phase 3: Tamaño M (Crafted) y default visual
@@ -88,6 +96,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. WCAG AA legibility holds in both S and L across all 5 views (body ≥ 4.5:1, large text ≥ 3:1).
   4. Style transitions into S and L complete in ~600ms; `prefers-reduced-motion` attenuates or blocks L animations.
   5. The 60-combination invariant still holds: choosing S or L resets any prior market; no merging of S/L with a market style.
+  6. **L visual treatment is locked to DECISION-LX-LOCKED in PROJECT.md** — match the prototype CSS (`level-l`, `l-l-card`, `l-l-button`, `l-l-marquee`) exactly: `#FFEE00`/`#000`/`#FF00AA`, Archivo Black, 4px borders, 8px+6px chunky shadows with hover translate, 30s marquee.
 **Plans**: TBD
 **UI hint**: yes
 
@@ -100,6 +109,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. XS renders all 11 services in the canonical order, the team grid (Quiénes somos), and the Contacto layout — all reachable, all readable.
   3. XS works in legacy environments down to IE11 (ironic intent per CON-006), and the size never breaks the gate flow on any modern browser.
   4. WCAG AA legibility holds in XS (body ≥ 4.5:1, large text ≥ 3:1) — the 1999 aesthetic does not become an accessibility regression.
+  5. **XS is locked to DECISION-XS-RETRO in PROJECT.md** — full 1999, not a retro accent. Times New Roman everywhere, raised/inset bevels, `<table>` layouts, `<hr>` rules, blue underlined links.
 **Plans**: TBD
 **UI hint**: yes
 
@@ -113,6 +123,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. WCAG AA legibility holds in XL: all visual effects live in background or decorative layers, and functional content (services, copy, CTAs) is always readable (LOCKED-001).
   4. Style transitions into XL complete in ~600ms perceived (heavy assets stream in afterwards), and `prefers-reduced-motion` blocks or attenuates motion in XL.
   5. End-to-end bundle audit confirms aggressive code-splitting per intensity level and per market (CON-004): an XS / S / M visitor never downloads L or XL stacks.
+  6. **Phaser 3 is locked to DECISION-XL-PHASER in PROJECT.md** as a first-class capability for embedded mini-games, not just decorative WebGL. Three.js + Tone.js + postprocessing remain auxiliary. Phaser is lazy-loaded only when active style is XL.
 **Plans**: TBD
 **UI hint**: yes
 
@@ -161,8 +172,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Setup | 0/TBD | Not started | - |
-| 2. Sistema base | 0/TBD | Not started | - |
+| 1. Setup | 0/4 | Not started | - |
+| 2. Sistema base | 0/4 | Not started | - |
 | 3. Tamaño M (Crafted) y default visual | 0/TBD | Not started | - |
 | 4. Mercados sobre M | 0/TBD | Not started | - |
 | 5. Tamaños S y L | 0/TBD | Not started | - |

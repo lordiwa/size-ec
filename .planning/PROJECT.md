@@ -106,6 +106,9 @@ else fails, that experience must work.
 | DEC-008 | Kanban eternal sprint, Jira project SIZE via GSD MCP | Solo+agentic flow; ceremonies have no value here. | — Pending |
 | DEC-009 | Definition of Done includes WCAG AA verification | Anchors LOCKED-001 in the QA gate. | — Pending |
 | DEC-010 | SEO and analytics deferred to Fase 9 (Phase 10 in roadmap) | MVP-functional first; instrumentation last. | — Pending |
+| **DECISION-LX-LOCKED** | L (Bold) treatment is the prototype's brutalist Memphis: `#FFEE00` bg / `#000` ink / `#FF00AA` accent; display font Archivo Black; cards `border:4px solid #000; background:#fff; box-shadow:8px 8px 0 #000`; buttons `background:#000; color:var(--accent); border:4px solid #000; box-shadow:6px 6px 0 var(--accent)` with hover `transform:translate(-2px,-2px)` + shadow growth to `10px 10px 0 var(--accent)`; 30s linear marquee. | The user explicitly anchored Phase 5 to this exact prototype treatment. Source: `ExistingData/SIZE Web Prototype - standalone.html` (`level-l`, `l-l-card`, `l-l-button`, `l-l-marquee`). | 🔒 Locked — implemented in Phase 5 |
+| **DECISION-XS-RETRO** | XS is a faithful 1999 web page (Times New Roman everything, gray `#c0c0c0` chrome, blue underlined links, raised/inset bevels, `<table>` layouts, `<hr>` rules), not a retro accent. | Brief §6 + prototype CSS treat XS as "Web 1999 literal". The user re-affirmed: full 1999, 100%. | 🔒 Locked — implemented in Phase 6 |
+| **DECISION-XL-PHASER** | XL ships **Phaser 3** as a first-class capability for embedded mini-games, not just decorative WebGL. Three.js + Tone.js + postprocessing + physics remain auxiliary. Phaser is lazy-loaded with the rest of the XL stack only when active style is XL. | Brief §6/§8 list Phaser; the user upgraded it to centerpiece (mini-games, not decoration). | 🔒 Locked — implemented in Phase 7 |
 
 ## Open Questions / TBD
 
