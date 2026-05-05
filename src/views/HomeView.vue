@@ -66,6 +66,23 @@ function pickMarket(id: string) {
     </div>
   </section>
 
+  <!-- XL (Unleashed) — gradient wordmark + rotator on dark bg.
+       Phase 6 ships the visual identity (CSS-only); Phase 7 wires the Three.js scene
+       underneath this layer (Three.js / Phaser / Tone.js stacks deferred per DEC-060). -->
+  <section v-else-if="style.code === 'xl'" class="home-xl" aria-live="polite">
+    <div class="mono upper home-xl-runtime">[ home.scene · runtime ]</div>
+    <h1 class="size-wordmark huge xl-grad-text home-xl-mark">SIZE</h1>
+    <div class="home-xl-block">
+      <p class="home-xl-tag">Publicidad a tu medida.</p>
+      <p class="home-xl-rotator">
+        Somos tu <span class="xl-grad-text"><RotatingWord :words="words" :idx="wIdx" /></span>.
+      </p>
+      <div class="home-xl-cta">
+        <MarketSelect :code="style.code" :value="style.marketId" @pick="pickMarket" />
+      </div>
+    </div>
+  </section>
+
   <!-- XS (Plain) — Web 1999 literal: <center>, <marquee>, <hr>, Times New Roman.
        Verbatim port of prototype home.jsx XS branch (00021082_04 lines 23-37).
        DO NOT add Tailwind classes, flex/grid, border-radius, or box-shadow here. -->
@@ -261,5 +278,45 @@ function pickMarket(id: string) {
 }
 .home-xs-cta {
   margin-top: 16px;
+}
+
+/* ─────────── XL (Unleashed) — verbatim port of prototype 00021082_04 lines 62-76 ─────────── */
+/* Phase 6 ships the CSS-only identity; xl-grad-text + size-wordmark live in main.css. */
+/* Three.js scene + Phaser mini-game land in Phase 7 per DEC-060. */
+.home-xl {
+  padding: 8vh 6vw;
+  min-height: 100vh;
+}
+.home-xl-runtime {
+  font-size: 11px;
+  color: var(--accent);
+  margin-bottom: 32px;
+}
+.home-xl-mark {
+  font-family: var(--font-display);
+  margin: 0;
+}
+.home-xl-block {
+  text-align: center;
+  margin-top: 48px;
+}
+.home-xl-tag {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 56px);
+  margin-bottom: 16px;
+}
+.home-xl-rotator {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5.5vw, 72px);
+  white-space: nowrap;
+}
+.home-xl-cta {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 720px) {
+  .home-xl-rotator { white-space: normal; }
 }
 </style>
