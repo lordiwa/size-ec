@@ -8,15 +8,16 @@
  *   - 12 market themes       — parsed from src/data/size-data.ts    SIZE_MARKETS array
  *   - S (Clean) level        — parsed from src/styles/main.css      html.level-s block
  *   - L (Bold)  level        — parsed from src/styles/main.css      html.level-l block
+ *   - XS (Plain) level       — parsed from src/styles/main.css      html.level-xs block
  *
- * Total: 15 themes (M + 12 markets + S + L).
+ * Total: 16 themes (M + 12 markets + S + L + XS).
  *
  * Pure Node — no third-party dependencies.
  *
  * Usage:
- *   node scripts/check-contrast.cjs                # M + 12 markets + S + L (15 themes)
+ *   node scripts/check-contrast.cjs                # M + 12 markets + S + L + XS (16 themes)
  *   node scripts/check-contrast.cjs --markets-only # 12 markets only
- *   node scripts/check-contrast.cjs --levels-only  # M + S + L only (3 themes)
+ *   node scripts/check-contrast.cjs --levels-only  # M + S + L + XS only (4 themes)
  *   pnpm check:contrast
  *
  * Exit 0 if all required pairs in every theme meet their thresholds; non-zero otherwise.
@@ -680,6 +681,68 @@ if (!MARKETS_ONLY) {
     lWithOverrides
   );
   themeResults.push({ id: 'L', failCount });
+  console.log('');
+}
+
+// ── XS (Plain) level block ────────────────────────────────────────────────────
+// Skipped with --markets-only.
+if (!MARKETS_ONLY) {
+  const xsTokens = parseLevelTokens(cssSrc, 'xs');
+  // DECISION-XS-RETRO + DEC-050: XS is the literal Web 1999 size. The locked
+  // palette is --bg: #c0c0c0;  --ink: #000;  --muted: #444;  --accent: #ff0000;
+  // links: #0000ee (html.level-xs a in main.css); visited: #551a8b.
+  //
+  // Verified against the prototype's HomeView XS branch (00021082_04 lines
+  // 23-37) and the global .l-xs-button rule:
+  //
+  //   - Buttons (.l-xs-button): background:linear-gradient(#fff,#c0c0c0);
+  //     color:#000 — INK on near-BG, ~12.6:1 PASS. NOT the .bright-cta rule.
+  //     Interactive CTAs are plain <a> links (#0000ee underlined).
+  //   - Marquee: <marquee style="background:#FFFF00; border:2px solid #000">
+  //     containing ✦-decorated text and the bold rotator word — INK on
+  //     #FFFF00 = 19.56:1 PASS. The actual "inline emphasis at large size"
+  //     surface in XS.
+  //   - --accent #ff0000 is declared in the level-xs token block for token
+  //     system completeness but is NOT consumed as a colour by any rendered
+  //     XS surface in the prototype: no .bright-cta button, no inline accent
+  //     text, no <hr> red rule (the XS <hr> is black bevel #888/#fff).
+  //
+  // Two per-level overrides (mirror DEC-041's L pattern — audit measures the
+  // rendered composition, not a default rule the level does not ship):
+  //
+  //   1. accent CTA override -> LINK on BG (#0000ee on #c0c0c0 = 5.17:1).
+  //      Reflects the actual interactive CTA surface in 1999 vocabulary.
+  //   2. accent inline override -> INK on marquee yellow (#000 on #FFFF00 =
+  //      19.56:1). Reflects the marquee — the only large-size "inline
+  //      accent" surface XS ships.
+  //
+  // Tokens stay LOCKED per DECISION-XS-RETRO. DEC-018's >1-token escalation
+  // gate is not triggered because zero tokens are tweaked. See
+  // 05-CONTRAST-RESULTS.md "DEC-052" for the full rationale.
+  const xsWithOverrides = {
+    ...xsTokens,
+    ctaOverride: {
+      label: 'LINK on BG — XS link override',
+      fg: '#0000ee',
+      bg: xsTokens.BG,
+      note:
+        'DECISION-XS-RETRO + DEC-050: XS uses plain <a> links as the interactive CTA, not .bright-cta. ' +
+        'CTA pair reflects rendered composition (blue link on gray), not default BG-on-ACCENT.',
+    },
+    inlineOverride: {
+      label: 'INK on marquee #FFFF00 — XS marquee override',
+      fg: xsTokens.INK,
+      bg: '#ffff00',
+      note:
+        'DECISION-XS-RETRO + DEC-050: XS does not render --accent (#ff0000) inline on body bg in any view. ' +
+        'The decorative inline-emphasis surface is the <marquee style="background:#FFFF00"> — black ink on yellow.',
+    },
+  };
+  const { failCount } = runLevel(
+    'SIZE — XS Plain      | WCAG AA contrast check',
+    xsWithOverrides
+  );
+  themeResults.push({ id: 'XS', failCount });
   console.log('');
 }
 
