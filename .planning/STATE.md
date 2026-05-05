@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Executing Phase 06
-stopped_at: "Plan 06-03 complete. HomeView XL branch shipped — verbatim CSS-only port of prototype 00021082_04 lines 62-76: v-else-if=\"style.code === 'xl'\" inserted between S and XS branches (final chain L → S → XL → XS → M-default). Renders animated xl-grad-text SIZE wordmark + runtime-scene placeholder label `[ home.scene · runtime ]` + display-font tagline + xl-grad-text rotator + MarketSelect. Reuses every existing main.css atom (xl-grad-text, size-wordmark, huge, mono, upper) — zero new global CSS, zero new keyframes, zero new tokens. Three.js scene + Phaser mini-game deferred to Phase 7 per DEC-060. type-check + build + check:contrast all green (17/17). 5/5 sizes now visually functional."
-last_updated: "2026-05-05T04:39:41Z"
-last_activity: 2026-05-05 -- Plan 06-03 complete
+status: Phase 06 complete — operator UAT pending
+stopped_at: "Plan 06-04 complete. 06-UAT.md authored (201 lines, 20 checkboxes across 6 sections — A Home-XL visual check, B WebGL2 fallback test, C bundle audit, D reduced-motion sweep, E M↔XL transition smoke, F sign-off + automated gates). Mirrors 05-UAT.md format with a DevTools-driven WebGL2-disabled procedure (Chrome Rendering panel + Firefox about:config) replacing Phase 5's multi-cell visual matrix because XL only ships a Home branch by design (DEC-061). Footnotes pin DEC-060 (Three.js + Phaser deferred to Phase 7) and DEC-061 (4 protected views inherit M-default in XL) as expected-not-bug deferrals — anchored from Section A's runtime-label sub-check and Section E's transition smoke respectively. References 06-CONTRAST-RESULTS.md (17/17 closed) and 06-02-SUMMARY.md (capability contract). Verify gate passed `ok 20 boxes` on first run. Phase 6 plan deck is now complete (4/4); operator UAT walk-through is the only remaining gate before Phase 7 (Contenido — Three.js / @tresjs/core / Phaser 3 / Tone.js / postprocessing / physics installation) unblocks."
+last_updated: "2026-05-05T04:47:19Z"
+last_activity: 2026-05-05 -- Plan 06-04 complete (Phase 06 plan deck closed)
 progress:
   total_phases: 9
   completed_phases: 3
-  total_plans: 18
-  completed_plans: 18
+  total_plans: 19
+  completed_plans: 19
   percent: 100
 ---
 
@@ -25,9 +25,9 @@ See: `.planning/PROJECT.md` (updated 2026-05-03)
 
 ## Current Position
 
-Phase: 06 (tamano-xl-unleashed) — IN PROGRESS
-Plan: 3 of 4 complete (1 remaining: 06-04 UAT)
-Last activity: 2026-05-05 -- Plan 06-03 complete (HomeView XL branch shipped — verbatim CSS-only port of prototype lines 62-76; v-else-if="style.code === 'xl'" between S and XS; reuses xl-grad-text + size-wordmark + huge atoms exclusively; zero new global CSS; type-check + build + check:contrast all green; 5/5 sizes now visually functional)
+Phase: 06 (tamano-xl-unleashed) — PLAN DECK COMPLETE (operator UAT pending)
+Plan: 4 of 4 complete (deck closed; operator walk-through of 06-UAT.md is the final gate)
+Last activity: 2026-05-05 -- Plan 06-04 complete (06-UAT.md authored — 201 lines, 20 checkboxes, 6 sections A/B/C/D/E/F + DEC-060 / DEC-061 footnotes; mirrors 05-UAT.md format with DevTools-driven WebGL2 negative path; verify gate `ok 20 boxes` on first run; Phase 6 plan deck closed)
 
 Progress: [██████████] 100%
 
@@ -35,9 +35,9 @@ Progress: [██████████] 100%
 
 **Velocity:**
 
-- Total plans completed: 18
-- Average duration: ~9.5 min
-- Total execution time: ~172 min
+- Total plans completed: 19
+- Average duration: ~9.2 min
+- Total execution time: ~175 min
 
 **By Phase:**
 
@@ -49,12 +49,12 @@ Progress: [██████████] 100%
 | 03-mercados-sobre-m | 2/2 done | ~24 min | ~12 min |
 | 04-tamanos-s-y-l | 3/3 done | ~24 min | ~8 min |
 | 05-tamano-xs-plain | 3/3 done | ~22 min | ~7.3 min |
-| 06-tamano-xl-unleashed | 3/4 done | ~14 min | ~4.7 min |
+| 06-tamano-xl-unleashed | 4/4 done | ~17 min | ~4.3 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 05-03 (05-UAT.md sign-off doc, ~3 min), 06-01 (check:contrast → XL, 17/17 default contract, zero overrides, ~9 min), 06-02 (WebGL2 capability gate end-to-end, ~3 min), 06-03 (HomeView XL branch, ~2 min)
-- Trend: verbatim prototype-port plans run fastest of all — 06-03 at ~2 min because the markup translation is mechanical (JSX → Vue 1:1) and zero new global CSS was needed (every atom already lived in main.css from Phase 1's port). Phase 6 is now 3/4 complete; only 06-04 (operator UAT) remains. 5/5 sizes are visually functional end-to-end.
+- Last 5 plans: 06-01 (check:contrast → XL, 17/17 default contract, zero overrides, ~9 min), 06-02 (WebGL2 capability gate end-to-end, ~3 min), 06-03 (HomeView XL branch, ~2 min), 06-04 (06-UAT.md authored — 20 checkboxes across A/B/C/D/E/F + DEC-060 / DEC-061 footnotes, ~3 min)
+- Trend: Phase 6 plan deck is now closed (4/4). Documentation plans (UAT sign-off docs) consistently run ~3 min when the format mirror is established (Phase 5's 05-UAT.md → Phase 6's 06-UAT.md). Phase 6 mirrors Phase 5's discipline with a single section-shape variation (B replaces multi-cell visual matrix with a WebGL2-disabled DevTools procedure) — operator can walk Phase 6 with the muscle memory built by Phase 4 and Phase 5. 5/5 sizes now visually + functionally + accessibly verified end-to-end (engineering side); operator UAT walk-throughs are the only remaining closure gate across Phases 3 / 4 / 5 / 6.
 
 *Updated after each plan completion*
 
@@ -127,6 +127,11 @@ Decisions from completed plan 04-03 (5×3 view-state UAT + reduced-motion + tran
 
 - **DEC-047** — `04-UAT.md` Section E (Sign-off) includes a DEC-041 escalation flag as the last checkbox: *"During the L walk-through, magenta accent text was observed rendering directly on the yellow body bg…"*. This closes the validation loop Plan 04-01 deferred — at sign-off, an unchecked flag validates DEC-041 (rendered surfaces match DECISION-LX-LOCKED); a checked flag activates the escalation path documented in `04-CONTRAST-RESULTS.md` (remove offending surface OR unlock magenta token for darkening).
 
+Decisions from completed plan 06-04 (operator UAT — 06-UAT.md sign-off doc):
+
+- **Mirror discipline (Phase 6) (2026-05-05)** — `06-UAT.md` follows `05-UAT.md`'s section structure verbatim (header + cheat-sheet + A/B/C/D/E/F + automated gates + footnotes). Section shape variation: **Section B** introduces the WebGL2 fallback negative path as a first-class operator gate (Chrome DevTools Rendering panel + Firefox `about:config` procedures) because REQ-xl-capability-detection is Phase 6's signature requirement; Phases 4/5 had no equivalent capability-gated negative path. Sections A (1 cell, 6 sub-checks for the XL Home view) and B (5 sub-checks for the fallback) replace Phases 4/5's multi-cell matrices (5×3 in `04-UAT.md`, 5×1 in `05-UAT.md`) since XL only ships a Home branch by design (DEC-061). Final checkbox total: 20 (lower bound was ≥10 per the plan's verify gate).
+- **Footnote-as-decision-anchor pattern (2026-05-05)** — DEC-060 (Three.js + Phaser deferred to Phase 7) and DEC-061 (4 protected views inherit M-default in XL) are pinned as numbered footnotes (`[^1]` / `[^2]`) at the bottom of `06-UAT.md`, with superscript references at the natural moment in the doc — DEC-060 on Section A's runtime-label sub-check (where the operator might wonder where the 3D scene is), DEC-061 on Section E's transition smoke (where the operator might wonder why Servicios / Quiénes / Cliente / Contacto don't get a per-view XL treatment). Both call out the deferral as **"expected, not a bug"** to prevent false-positive bug reports against Phase 7-scoped work. This pattern replaces Phase 4's DEC-041 escalation flag and Phase 5's DEC-052 escalation flag (both sign-off-time validation loops for rendered-surface contracts) — Phase 6 has no rendered-surface escalation contract because DEC-062 confirmed the default 5-pair contract suffices for XL with zero per-level overrides.
+
 Decisions from completed plan 06-03 (HomeView XL branch — verbatim CSS-only port):
 
 - **DEC-068 (2026-05-05)** — XL branch insertion point: between the existing S branch and the XS branch in `src/views/HomeView.vue`. Final per-level chain: **L → S → XL → XS → M-default**. Honours D-01 (06-CONTEXT.md) and the visual-weight ordering convention established by Phase 4 / Phase 5 — each new per-level branch slots ahead of M-default but in a position that reads naturally relative to its neighbours. M-default keeps its triple role (M Crafted, market mode, unknown level) per DEC-046.
@@ -184,12 +189,12 @@ None.
 
 ### Blockers/Concerns
 
-**Active (Phase 03 + Phase 04 + Phase 05 — operator UATs pending across all three; plan decks complete):**
+**Active (Phase 03 + Phase 04 + Phase 05 + Phase 06 — operator UATs pending across all four; plan decks complete):**
 
 - **03-UAT.md operator sign-off** — Sections A (recognisability), B (48-state matrix), and C (transition smoke) require manual walk-through with `pnpm dev`. Once complete, Phase 3 can be marked fully done.
 - **04-UAT.md operator sign-off** — Sections A (5×3 view-state matrix), B (per-level highlights), C (reduced-motion sweep), D (transition smoke), and E (sign-off + DEC-041 escalation flag) require manual walk-through with `pnpm dev`. Once complete, Phase 4 is fully closed.
 - **05-UAT.md operator sign-off** — Sections A (5-cell XS view-state matrix), B (9 1999-vocab DevTools-verifiable highlights), C (reduced-motion sweep), D (M ↔ XS transition smoke), and E (sign-off + DEC-052 escalation flag) require manual walk-through with `pnpm dev`. Once complete, Phase 5 is fully closed and 16 of 17 styles will be visually validated — only XL (Phase 6) remains. Verified during 05-02: zero red-on-gray accent surfaces in the shipped XS markup, so DEC-052's escalation flag should remain unchecked at sign-off.
-- **06-UAT.md operator sign-off (pending plan 06-04)** — Phase 6 visual UAT can now be authored (06-04). 06-01's contrast contract is closed automatically; 06-02's WebGL2 fallback is implemented and ready for the operator's DevTools-emulation walk-through; 06-03's XL Home view is shipped (verbatim port of prototype 00021082_04 lines 62-76 — animated CSS gradient on dark bg, runtime-scene placeholder, MarketSelect). Only the operator UAT walk-through remains.
+- **06-UAT.md operator sign-off** — Sections A (Home-XL visual check, 6 checkboxes), B (WebGL2 fallback test via DevTools — Chrome Rendering panel or Firefox `about:config`, 5 checkboxes), C (bundle audit, 1), D (reduced-motion sweep, 1), E (M ↔ XL transition smoke, 1), and F (sign-off + 4 automated gates) require manual walk-through with `pnpm dev`. DEC-060 (Three.js + Phaser deferred to Phase 7) and DEC-061 (4 protected views inherit M-default in XL) are documented as expected-not-bug deferrals via footnotes — operator should not file bugs against either. Once complete, Phase 6 is fully closed and **17/17 styles will be visually + functionally + accessibly validated end-to-end**; Phase 7 (Contenido — Three.js / Phaser / Tone.js installation + team photos + client cases) unblocks.
 
 Carried forward from §11 of the brief (acknowledged TBDs):
 
@@ -212,5 +217,5 @@ Carried forward from §11 of the brief (acknowledged TBDs):
 ## Session Continuity
 
 Last session: 2026-05-05
-Stopped at: Plan 06-03 complete — HomeView XL branch shipped. `src/views/HomeView.vue` now has a `v-else-if="style.code === 'xl'"` branch inserted between the existing S branch and the XS branch (final per-level chain: L → S → XL → XS → M-default per DEC-068). Markup is a verbatim 1:1 Vue port of prototype `00021082_04_a353c98e-7080-4c7c-859d-e8ebafc9597d.js` lines 62-76: runtime placeholder label `[ home.scene · runtime ]` (mono + upper, neon-green via `var(--accent)`), animated `xl-grad-text` SIZE wordmark (composed with existing `size-wordmark huge` atoms), display-font tagline ("Publicidad a tu medida."), `xl-grad-text` rotator span (`Somos tu <RotatingWord/>`), and the `MarketSelect` dropdown. Scoped CSS translates the prototype's inline styles to class rules (`.home-xl` padding `8vh 6vw` + `min-height: 100vh`, `.home-xl-runtime` 11px + accent + 32px margin-bottom, `.home-xl-block` text-align center + 48px margin-top, `.home-xl-tag` `clamp(28px, 4vw, 56px)`, `.home-xl-rotator` `clamp(32px, 5.5vw, 72px)` + nowrap, `.home-xl-cta` 40px margin + flex center, `@media (max-width: 720px)` flips rotator to `white-space: normal`). Reuses `xl-grad-text` (main.css 161-168), `size-wordmark` + `huge` (172-186), `mono` + `upper` (71-83) exclusively — zero new global CSS, zero new keyframes, zero new tokens (DEC-069). Three.js scene + Phaser mini-game deferred to Phase 7 per DEC-060; the runtime label is the visible placeholder for that future layer (DEC-070). `pnpm type-check` exits 0; `pnpm build` exits 0 (built in 2.65 s; 79 modules; no XL-stack chunks); `pnpm check:contrast` exits 0 with OVERALL 17/17 (XL: body 20.38:1, muted 8.77:1, large heading 20.38:1, accent CTA 15.42:1, accent inline 15.42:1 — unchanged from 06-01 since this plan adds no new tokens). XL-stack import audit on `src/`: zero genuine imports. 5/5 sizes (XS / S / M / L / XL) are now visually functional end-to-end. Phase 6 next: 06-04 (operator UAT — 5×1 XL view-state matrix + DevTools WebGL2-disabled negative path + reduced-motion sweep + transition smoke + sign-off).
-Resume file: .planning/phases/06-tamano-xl-unleashed/06-04-PLAN.md (last plan in the Phase 6 deck)
+Stopped at: Plan 06-04 complete — Phase 06 plan deck closed. `06-UAT.md` authored at `.planning/phases/06-tamano-xl-unleashed/06-UAT.md` (201 lines, 20 checkboxes across 6 sections: A Home-XL visual check (6 checkboxes — Reconfigurando overlay, runtime label `[ home.scene · runtime ]` neon-green rendering, animated SIZE wordmark gradient cycle, display-font tagline, gradient rotator, MarketSelect dropdown), B WebGL2 fallback test (5 checkboxes — auto-flip to L, educational toast with WebGL2-specific copy, dismiss button, no console errors / black screen, 3.5 s auto-dismiss; procedures for Chrome DevTools Rendering panel + Firefox `about:config` both documented), C bundle audit (1 checkbox — confirms zero `three / phaser / tone / postprocessing / @tresjs / cannon-es / rapier` chunks in `dist/assets/`; Phase 6 ships the contract, Phase 7 will install the libraries), D reduced-motion sweep (1 checkbox — confirms global `prefers-reduced-motion: reduce` rule freezes `xl-grad` 6s linear infinite while preserving Reconfigurando overlay status feedback and rotating-word text replacement), E M↔XL transition smoke (1 checkbox — ~600ms body bg/ink fade + ~900ms Reconfigurando mask + no full reload contract; explicit DEC-061 callout that 4 protected views fall back to M-default), F sign-off (table row + 4 automated-gate checkboxes for `pnpm check:contrast` 17/17 / `check:markets` 12/12 / `type-check` / `build`)). Footnotes pin DEC-060 (Three.js scene + Phaser mini-game intentionally deferred to Phase 7; "Phase 6 LOCKS the contract; Phase 7 ships the implementation") and DEC-061 (4 protected views inherit M-default in XL — explicit decision, not a missing piece) as expected-not-bug deferrals, anchored from Section A's runtime-label sub-check and Section E's transition smoke respectively. Mirrors 05-UAT.md format verbatim with one section-shape variation: B (WebGL2 fallback test) replaces Phase 5's multi-cell visual matrix because XL only ships a Home branch by design. Verify gate `node -e "..."` passed `ok 20 boxes` on first run — all 9 required keywords (`06-CONTRAST-RESULTS`, `XL`, `Home`, `WebGL2`, `Reconfigurando`, `prefers-reduced-motion`, `xl-grad`, `DEC-060`, `DEC-061`) present, 20 ≥ 10 checkbox lower bound. References `06-CONTRAST-RESULTS.md` (17/17 closed) and `06-02-SUMMARY.md` (capability contract). Commit `deff793` (docs). 5/5 sizes (XS / S / M / L / XL) are now visually + functionally + accessibly verified end-to-end at the engineering level; operator UAT walk-throughs across Phases 3 / 4 / 5 / 6 are the only remaining closure gates before Phase 7 (Contenido) unblocks.
+Resume file: None — Phase 6 plan deck is complete (4/4). Operator UAT walk-throughs (03-UAT.md / 04-UAT.md / 05-UAT.md / 06-UAT.md) are the only remaining gates across Phases 3 / 4 / 5 / 6. Once all four UATs sign off, Phase 7 (Contenido — Three.js / @tresjs/core / Phaser 3 / Tone.js / postprocessing / physics installation + team photos + client cases + final rotating-words list) is the next plannable phase.
