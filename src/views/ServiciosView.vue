@@ -41,6 +41,37 @@ function clearMarket() {
 </script>
 
 <template>
+  <!-- XS (Plain) — Web 1999 literal table-of-services. DO NOT add Tailwind,
+       flex, grid, border-radius, box-shadow, or modern CSS effects. -->
+  <section v-if="style.code === 'xs'" class="srv-xs">
+    <center>
+      <h1 class="srv-xs-mark">SIZE</h1>
+      <h2 class="srv-xs-h2">— SERVICIOS —</h2>
+    </center>
+    <table border="1" cellpadding="6" cellspacing="0" class="srv-xs-table">
+      <thead>
+        <tr><th>#</th><th>Servicio</th><th>Descripción</th></tr>
+      </thead>
+      <tbody>
+        <tr v-for="s in allServices" :key="s.id">
+          <td>{{ s.n }}</td>
+          <td><b>{{ s.name }}</b></td>
+          <td><i>{{ s.short }}</i></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="srv-xs-foot">
+      ¿Quieres ver solo los servicios que aplican a tu industria?<br/>
+      <RouterLink :to="{ name: 'home' }">Vuelve al inicio</RouterLink> y elige una categoría.
+    </p>
+    <hr/>
+    <p class="srv-xs-foot">
+      <RouterLink :to="{ name: 'contacto' }">Hablemos →</RouterLink>
+    </p>
+  </section>
+
+  <!-- M / S / L (existing markup, untouched) -->
+  <template v-else>
   <!-- CASE A: no market chosen → show ALL 11 services in neutral SIZE styling -->
   <template v-if="!style.market">
     <section class="srv-head">
@@ -107,6 +138,7 @@ function clearMarket() {
       </article>
     </div>
   </section>
+  </template>
 </template>
 
 <style scoped>
@@ -270,5 +302,45 @@ function clearMarket() {
 .srv-mkt-card.l-bold:nth-child(4n) {
   background: #fff;
   color: #000;
+}
+
+/* ─────────── XS (Plain) — Web 1999 literal table-of-services ─────────── */
+/* DEC-050 strict CSS vocabulary: only basic CSS allowed. */
+/* No flex, no grid, no transform, no transition, no border-radius, no box-shadow. */
+.srv-xs {
+  padding: 16px;
+  font-family: "Times New Roman", serif;
+}
+.srv-xs-mark {
+  font-size: 56px;
+  margin: 8px 0;
+  letter-spacing: 4px;
+}
+.srv-xs-h2 {
+  font-size: 20px;
+  font-weight: normal;
+  margin: 0 0 16px;
+}
+.srv-xs-table {
+  margin: 0 auto;
+  max-width: 720px;
+  width: 100%;
+  border-collapse: collapse;
+}
+.srv-xs-table th {
+  background: #ffffff;
+  font-weight: bold;
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #000;
+}
+.srv-xs-table td {
+  padding: 8px;
+  vertical-align: top;
+  border: 1px solid #000;
+}
+.srv-xs-foot {
+  text-align: center;
+  padding: 16px 0;
 }
 </style>
