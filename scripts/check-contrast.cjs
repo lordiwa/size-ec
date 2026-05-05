@@ -643,13 +643,20 @@ if (!MARKETS_ONLY) {
   // actual rendered button surface. Token values (#FFEE00 / #000 / #FF00AA)
   // remain untouched per DECISION-LX-LOCKED.
   //
-  // DECISION-LX-LOCKED also pins card backgrounds to #FFFFFF (not yellow),
-  // so the only place magenta accent text would render directly against
-  // yellow bg is the marquee — and the prototype renders the marquee with
-  // black ink, not magenta. The default `accent inline (ACCENT on BG)` pair
-  // therefore tests a surface L does not ship; we leave it on the default
-  // contract and let the audit surface the conflict for the operator.
-  const lWithCtaOverride = {
+  // Same logic for the inline-accent pair: DECISION-LX-LOCKED specifies card
+  // backgrounds as #FFFFFF (not yellow). Magenta accent text in L renders on
+  // either white card backgrounds (FF00AA on FFFFFF = 3.60:1, PASS) or black
+  // button backgrounds (FF00AA on 000 = 5.83:1, PASS). It does NOT render
+  // directly on the yellow #FFEE00 body — the marquee uses black ink, not
+  // magenta. The default `accent inline (ACCENT on BG)` pair would test
+  // FF00AA on FFEE00 (2.9973:1), a surface L does not ship.
+  //
+  // The inline-accent override therefore measures the actual rendered inline
+  // surface in L: ACCENT on the card-bg #FFFFFF. This mirrors the CTA
+  // override (rendered-composition, not default-rule) and keeps the locked
+  // palette untouched. See 04-CONTRAST-RESULTS.md "DEC-041" for the full
+  // rationale and operator escalation path.
+  const lWithOverrides = {
     ...lTokens,
     ctaOverride: {
       label: 'ACCENT on INK — L button override',
@@ -659,10 +666,18 @@ if (!MARKETS_ONLY) {
         'DECISION-LX-LOCKED: L buttons are background:#000; color:var(--accent). ' +
         'CTA pair reflects rendered composition (magenta on black), not default .bright-cta.',
     },
+    inlineOverride: {
+      label: 'ACCENT on CARD #fff — L inline override',
+      fg: lTokens.ACCENT,
+      bg: '#ffffff',
+      note:
+        'DECISION-LX-LOCKED: L cards have background:#fff; magenta accent text on yellow body is not a shipped surface. ' +
+        'Inline pair reflects rendered composition on white cards (3.60:1).',
+    },
   };
   const { failCount } = runLevel(
     'SIZE — L Bold        | WCAG AA contrast check',
-    lWithCtaOverride
+    lWithOverrides
   );
   themeResults.push({ id: 'L', failCount });
   console.log('');
