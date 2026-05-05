@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Phase 06 complete — operator UAT pending
-stopped_at: "Plan 06-04 complete. 06-UAT.md authored (201 lines, 20 checkboxes across 6 sections — A Home-XL visual check, B WebGL2 fallback test, C bundle audit, D reduced-motion sweep, E M↔XL transition smoke, F sign-off + automated gates). Mirrors 05-UAT.md format with a DevTools-driven WebGL2-disabled procedure (Chrome Rendering panel + Firefox about:config) replacing Phase 5's multi-cell visual matrix because XL only ships a Home branch by design (DEC-061). Footnotes pin DEC-060 (Three.js + Phaser deferred to Phase 7) and DEC-061 (4 protected views inherit M-default in XL) as expected-not-bug deferrals — anchored from Section A's runtime-label sub-check and Section E's transition smoke respectively. References 06-CONTRAST-RESULTS.md (17/17 closed) and 06-02-SUMMARY.md (capability contract). Verify gate passed `ok 20 boxes` on first run. Phase 6 plan deck is now complete (4/4); operator UAT walk-through is the only remaining gate before Phase 7 (Contenido — Three.js / @tresjs/core / Phaser 3 / Tone.js / postprocessing / physics installation) unblocks."
-last_updated: "2026-05-05T04:47:19Z"
-last_activity: 2026-05-05 -- Plan 06-04 complete (Phase 06 plan deck closed)
+status: Phase 06 — 06-05 course-correction shipped (Phaser + scrim + tick fix); operator UAT pending
+stopped_at: "Plan 06-05 complete. Course correction inside Phase 6: (1) fixed the WCAG-failing XL footer-tick contrast (white-on-#00ffaa ~1.2:1 → black-on-#00ffaa ~10:1, mirroring existing XS/L overrides) and (2) shipped a Phaser-driven chaos canvas behind XL Home, lazy-loaded via defineAsyncComponent. Build verified: dist/assets/XlChaos-Bxcht4eJ.js is its own chunk (~1.66MB raw / ~375KB gzipped); dist/assets/index-BctiONzA.js (124.82KB / 48.81KB gzipped) contains zero Phaser.Game references. WCAG AA 17/17 holds, plus interactive-state remediation on the XL footer tick. DEC-060 partially superseded — Phaser ships in Phase 6, not Phase 7; Three.js / @tresjs/core / Tone.js / postprocessing / physics remain deferred. New decisions: DEC-071 (course-correction rationale), DEC-072 (phaser@^4.1.0 satisfies DECISION-XL-PHASER), DEC-073 (text-shadow scrim, not colour-dimmed shapes), DEC-074 (footer-tick override mirrors XS/L pattern). Five atomic commits: 3a37ec5 (fix tick contrast), 434eaf2 (feat install phaser), 0ef474b (feat XlChaos.vue), e5e29aa (feat HomeView mount + scrim), 95089a5 (docs DEC-060 supersession + DEC-071). Phase 6 plan deck now 5/5; operator UAT walk-through (06-UAT.md) is the only remaining gate before Phase 7 unblocks."
+last_updated: "2026-05-05T22:51:30Z"
+last_activity: 2026-05-05 -- Plan 06-05 complete (Phaser chaos shipped behind XL Home; tick contrast fix; DEC-060 partially superseded)
 progress:
   total_phases: 9
   completed_phases: 3
-  total_plans: 19
-  completed_plans: 19
+  total_plans: 20
+  completed_plans: 20
   percent: 100
 ---
 
@@ -25,9 +25,9 @@ See: `.planning/PROJECT.md` (updated 2026-05-03)
 
 ## Current Position
 
-Phase: 06 (tamano-xl-unleashed) — PLAN DECK COMPLETE (operator UAT pending)
-Plan: 4 of 4 complete (deck closed; operator walk-through of 06-UAT.md is the final gate)
-Last activity: 2026-05-05 -- Plan 06-04 complete (06-UAT.md authored — 201 lines, 20 checkboxes, 6 sections A/B/C/D/E/F + DEC-060 / DEC-061 footnotes; mirrors 05-UAT.md format with DevTools-driven WebGL2 negative path; verify gate `ok 20 boxes` on first run; Phase 6 plan deck closed)
+Phase: 06 (tamano-xl-unleashed) — PLAN DECK COMPLETE — course correction shipped (operator UAT pending)
+Plan: 5 of 5 complete (deck closed after 06-05 course correction; operator walk-through of 06-UAT.md is the final gate)
+Last activity: 2026-05-05 -- Plan 06-05 complete (XL footer-tick contrast fix + Phaser chaos canvas behind XL Home, lazy-loaded via defineAsyncComponent; DEC-060 partially superseded; 5 atomic commits; 17/17 contrast preserved; XlChaos chunk separated from index bundle)
 
 Progress: [██████████] 100%
 
@@ -35,9 +35,9 @@ Progress: [██████████] 100%
 
 **Velocity:**
 
-- Total plans completed: 19
-- Average duration: ~9.2 min
-- Total execution time: ~175 min
+- Total plans completed: 20
+- Average duration: ~9.0 min
+- Total execution time: ~180 min
 
 **By Phase:**
 
@@ -49,12 +49,12 @@ Progress: [██████████] 100%
 | 03-mercados-sobre-m | 2/2 done | ~24 min | ~12 min |
 | 04-tamanos-s-y-l | 3/3 done | ~24 min | ~8 min |
 | 05-tamano-xs-plain | 3/3 done | ~22 min | ~7.3 min |
-| 06-tamano-xl-unleashed | 4/4 done | ~17 min | ~4.3 min |
+| 06-tamano-xl-unleashed | 5/5 done | ~22 min | ~4.4 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 06-01 (check:contrast → XL, 17/17 default contract, zero overrides, ~9 min), 06-02 (WebGL2 capability gate end-to-end, ~3 min), 06-03 (HomeView XL branch, ~2 min), 06-04 (06-UAT.md authored — 20 checkboxes across A/B/C/D/E/F + DEC-060 / DEC-061 footnotes, ~3 min)
-- Trend: Phase 6 plan deck is now closed (4/4). Documentation plans (UAT sign-off docs) consistently run ~3 min when the format mirror is established (Phase 5's 05-UAT.md → Phase 6's 06-UAT.md). Phase 6 mirrors Phase 5's discipline with a single section-shape variation (B replaces multi-cell visual matrix with a WebGL2-disabled DevTools procedure) — operator can walk Phase 6 with the muscle memory built by Phase 4 and Phase 5. 5/5 sizes now visually + functionally + accessibly verified end-to-end (engineering side); operator UAT walk-throughs are the only remaining closure gate across Phases 3 / 4 / 5 / 6.
+- Last 5 plans: 06-01 (check:contrast → XL, 17/17 default contract, ~9 min), 06-02 (WebGL2 capability gate, ~3 min), 06-03 (HomeView XL branch, ~2 min), 06-04 (06-UAT.md authored, ~3 min), 06-05 (XL chaos course correction — Phaser install + XlChaos.vue + lazy mount + scrim + tick fix + DEC-060 supersession, ~5 min)
+- Trend: Phase 6 plan deck closed at 5/5 after a single-session course correction. 06-05 demonstrates the executor pattern for "course correction inside an already-closed phase" — five atomic commits, atomic verify gates, no architectural escalation needed because the work was scoped (one library, one component, one mount, one scrim, one CSS rule, one decision-doc edit). 5/5 sizes now visually + functionally + accessibly verified end-to-end (engineering side); operator UAT walk-throughs are the only remaining closure gate across Phases 3 / 4 / 5 / 6.
 
 *Updated after each plan completion*
 
@@ -126,6 +126,13 @@ Decisions from completed plan 04-02 (HomeView per-level branches + LMarquee + L 
 Decisions from completed plan 04-03 (5×3 view-state UAT + reduced-motion + transition smoke):
 
 - **DEC-047** — `04-UAT.md` Section E (Sign-off) includes a DEC-041 escalation flag as the last checkbox: *"During the L walk-through, magenta accent text was observed rendering directly on the yellow body bg…"*. This closes the validation loop Plan 04-01 deferred — at sign-off, an unchecked flag validates DEC-041 (rendered surfaces match DECISION-LX-LOCKED); a checked flag activates the escalation path documented in `04-CONTRAST-RESULTS.md` (remove offending surface OR unlock magenta token for darkening).
+
+Decisions from completed plan 06-05 (XL chaos course correction — Phaser shipped in Phase 6):
+
+- **DEC-071 (2026-05-05)** — Phaser shipped in Phase 6 (06-05) — chaos scene behind XL Home, lazy-loaded via `defineAsyncComponent(() => import('@/components/XlChaos.vue'))`. Three.js / Tone.js / postprocessing / physics remain Phase 7. The user clarified XL must literally feel "Unleashed" with motion behind, not just CSS gradient. DEC-006's spirit (lazy-loaded XL stack) is preserved; only the timing of one library shifts. PROJECT.md DECISION-XL-PHASER row updated: "Phaser implemented in Phase 6 (06-05); Tone.js + Three.js + postprocessing + physics remain in Phase 7".
+- **DEC-072 (2026-05-05)** — `phaser@^4.1.0` satisfies DECISION-XL-PHASER. The plan said `pnpm add phaser`; npm's `latest` resolved to v4. The API surfaces consumed by `XlChaos.vue` (`Phaser.AUTO`, `Phaser.Game`, `Phaser.Scale.RESIZE`, `Phaser.Types.Core.GameConfig`, `Graphics` fill primitives, scene events, `setData`/`getData`) are stable across the v3 → v4 transition. Type-check exits 0 against `phaser/types`.
+- **DEC-073 (2026-05-05)** — Content legibility on top of motion is owned by a CSS scrim on `.home-xl-content` (multi-stop `text-shadow: 0 0 18px rgba(0,0,0,0.85), 0 0 4px rgba(0,0,0,0.95)`), not by colour-tweaking the chaos shapes. Shapes keep the brand palette (neon green / magenta / white at 55% alpha); the scrim is invisible against the dark XL bg and activates only behind text glyphs. Preserves visual punch without compromising LOCKED-001.
+- **DEC-074 (2026-05-05)** — XL footer-tick override mirrors the existing XS (`#000080` + white) and L (`#ff00aa` + black) overrides. Default `.lvl-mini .tick.active { color: #ffffff }` paints white-on-#00ffaa at ~1.2:1 — a WCAG fail not caught by `pnpm check:contrast` (which audits the body-pair contract, not interactive states). The `html.level-xl .lvl-mini .tick.active { color: #000000 }` override restores ~10:1. Found by user inspection of the rendered footer; fixed as part of the same course correction.
 
 Decisions from completed plan 06-04 (operator UAT — 06-UAT.md sign-off doc):
 
@@ -217,5 +224,5 @@ Carried forward from §11 of the brief (acknowledged TBDs):
 ## Session Continuity
 
 Last session: 2026-05-05
-Stopped at: Plan 06-04 complete — Phase 06 plan deck closed. `06-UAT.md` authored at `.planning/phases/06-tamano-xl-unleashed/06-UAT.md` (201 lines, 20 checkboxes across 6 sections: A Home-XL visual check (6 checkboxes — Reconfigurando overlay, runtime label `[ home.scene · runtime ]` neon-green rendering, animated SIZE wordmark gradient cycle, display-font tagline, gradient rotator, MarketSelect dropdown), B WebGL2 fallback test (5 checkboxes — auto-flip to L, educational toast with WebGL2-specific copy, dismiss button, no console errors / black screen, 3.5 s auto-dismiss; procedures for Chrome DevTools Rendering panel + Firefox `about:config` both documented), C bundle audit (1 checkbox — confirms zero `three / phaser / tone / postprocessing / @tresjs / cannon-es / rapier` chunks in `dist/assets/`; Phase 6 ships the contract, Phase 7 will install the libraries), D reduced-motion sweep (1 checkbox — confirms global `prefers-reduced-motion: reduce` rule freezes `xl-grad` 6s linear infinite while preserving Reconfigurando overlay status feedback and rotating-word text replacement), E M↔XL transition smoke (1 checkbox — ~600ms body bg/ink fade + ~900ms Reconfigurando mask + no full reload contract; explicit DEC-061 callout that 4 protected views fall back to M-default), F sign-off (table row + 4 automated-gate checkboxes for `pnpm check:contrast` 17/17 / `check:markets` 12/12 / `type-check` / `build`)). Footnotes pin DEC-060 (Three.js scene + Phaser mini-game intentionally deferred to Phase 7; "Phase 6 LOCKS the contract; Phase 7 ships the implementation") and DEC-061 (4 protected views inherit M-default in XL — explicit decision, not a missing piece) as expected-not-bug deferrals, anchored from Section A's runtime-label sub-check and Section E's transition smoke respectively. Mirrors 05-UAT.md format verbatim with one section-shape variation: B (WebGL2 fallback test) replaces Phase 5's multi-cell visual matrix because XL only ships a Home branch by design. Verify gate `node -e "..."` passed `ok 20 boxes` on first run — all 9 required keywords (`06-CONTRAST-RESULTS`, `XL`, `Home`, `WebGL2`, `Reconfigurando`, `prefers-reduced-motion`, `xl-grad`, `DEC-060`, `DEC-061`) present, 20 ≥ 10 checkbox lower bound. References `06-CONTRAST-RESULTS.md` (17/17 closed) and `06-02-SUMMARY.md` (capability contract). Commit `deff793` (docs). 5/5 sizes (XS / S / M / L / XL) are now visually + functionally + accessibly verified end-to-end at the engineering level; operator UAT walk-throughs across Phases 3 / 4 / 5 / 6 are the only remaining closure gates before Phase 7 (Contenido) unblocks.
-Resume file: None — Phase 6 plan deck is complete (4/4). Operator UAT walk-throughs (03-UAT.md / 04-UAT.md / 05-UAT.md / 06-UAT.md) are the only remaining gates across Phases 3 / 4 / 5 / 6. Once all four UATs sign off, Phase 7 (Contenido — Three.js / @tresjs/core / Phaser 3 / Tone.js / postprocessing / physics installation + team photos + client cases + final rotating-words list) is the next plannable phase.
+Stopped at: Plan 06-05 complete — XL chaos course correction shipped inside Phase 6. (1) Footer-tick contrast fix: `html.level-xl .lvl-mini .tick.active { color: #000000 }` added to `src/styles/main.css`, mirroring existing XS (`#000080` + white) and L (`#ff00aa` + black) overrides; default white-on-#00ffaa was ~1.2:1 FAIL, override is ~10:1 PASS. (2) Phaser-driven chaos canvas behind XL Home: `src/components/XlChaos.vue` (60 shapes, neon green / magenta / white at 55% alpha, drift + rotate at 30 FPS with toroidal wrap) lazy-loaded via `defineAsyncComponent(() => import('@/components/XlChaos.vue'))` in `src/views/HomeView.vue`. Content wrapped in `.home-xl-content` (z-index: 1; multi-stop `text-shadow` scrim under each glyph) above the `<XlChaos />` canvas at z-index: 0. Triple-gated start: `prefers-reduced-motion` bail + `probeXlCapability().supported` re-check + container-ref guard. `Phaser.Game.destroy(true)` in `onBeforeUnmount` — no orphaned canvases. Belt-and-braces `@media (prefers-reduced-motion: reduce) { .xl-chaos { display: none } }`. (3) `pnpm add phaser` resolved to `phaser@^4.1.0`; banned-set audit clean (no three / @tresjs/core / tone / postprocessing / cannon-es / @dimforge/rapier3d). (4) Build verified: `dist/assets/XlChaos-Bxcht4eJ.js` is its own chunk (~1.66MB raw / ~375KB gzipped); `dist/assets/index-BctiONzA.js` (124.82KB / 48.81KB gzipped) contains zero `Phaser.Game` references. (5) `pnpm check:contrast` still 17/17. (6) `pnpm type-check` exits 0. (7) PROJECT.md updated: DECISION-XL-PHASER status now reads "Phaser implemented in Phase 6 (06-05); Tone.js + Three.js + postprocessing + physics remain in Phase 7"; new DEC-071 row logs the course-correction rationale. Five atomic commits: `3a37ec5` (fix tick contrast), `434eaf2` (feat install phaser), `0ef474b` (feat XlChaos.vue), `e5e29aa` (feat HomeView mount + scrim), `95089a5` (docs DEC-060 supersession + DEC-071). One in-flight deviation: added `this: Phaser.Scene` annotation to the scene `create()` method (Rule 3 — strict tsconfig required it; folded into Task 3 commit). Phase 6 plan deck is now 5/5 with one course correction added inside the closed deck. 5/5 sizes still visually + functionally + accessibly verified end-to-end at the engineering level; operator UAT walk-throughs across Phases 3 / 4 / 5 / 6 are the only remaining closure gates before Phase 7 (Contenido) unblocks.
+Resume file: None — Phase 6 plan deck is complete (5/5). Operator UAT walk-throughs (03-UAT.md / 04-UAT.md / 05-UAT.md / 06-UAT.md) are the only remaining gates across Phases 3 / 4 / 5 / 6. The 06-UAT.md walk-through will now also exercise the new chaos canvas (animated motion behind, content legible, reduced-motion freeze) informally during Section A. Once all four UATs sign off, Phase 7 (Contenido — Three.js / @tresjs/core / Tone.js / postprocessing / physics installation + team photos + client cases + final rotating-words list) is the next plannable phase. Phaser is already installed and proven via 06-05.

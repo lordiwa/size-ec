@@ -119,11 +119,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. Style transitions into XL complete in ~600ms perceived (heavy assets stream in afterwards), and `prefers-reduced-motion` blocks or attenuates motion in XL.
   5. End-to-end bundle audit confirms aggressive code-splitting per intensity level and per market (CON-004): an XS / S / M visitor never downloads L or XL stacks.
   6. **Phaser 3 is locked to DECISION-XL-PHASER in PROJECT.md** as a first-class capability for embedded mini-games, not just decorative WebGL. Three.js + Tone.js + postprocessing remain auxiliary. Phaser is lazy-loaded only when active style is XL.
-**Plans**: 4 plans (4/4 complete; operator UAT walk-through pending)
+**Plans**: 5 plans (5/5 complete; operator UAT walk-through pending)
   - [x] 06-01-PLAN.md — Extend pnpm check:contrast to XL tokens (17/17 WCAG AA via default contract; --accent-2 decorative-only per DEC-063)
   - [x] 06-02-PLAN.md — useXlCapability composable + L fallback + toast (WebGL2 gate; DEC-064/065/066/067)
   - [x] 06-03-PLAN.md — HomeView XL branch (verbatim port of prototype lines 62-76, CSS-only; DEC-068/069/070)
   - [x] 06-04-PLAN.md — UAT sign-off + WebGL2-disabled negative path (06-UAT.md authored, 20 checkboxes, A/B/C/D/E/F + DEC-060 / DEC-061 footnotes)
+  - [x] 06-05-PLAN.md — XL footer-tick contrast fix + Phaser chaos canvas behind XL Home (lazy chunk via defineAsyncComponent; DEC-060 partially superseded; DEC-071/072/073/074)
 **UI hint**: yes
 
 
@@ -184,7 +185,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 3. Mercados sobre M | 0/TBD | Not started | - |
 | 4. Tamaños S y L | 3/3 | Code complete (UAT pending) | - |
 | 5. Tamaño XS (Plain) | 3/3 | Code complete (UAT pending) | - |
-| 6. Tamaño XL (Unleashed) | 4/4 | Code complete (UAT pending) | - |
+| 6. Tamaño XL (Unleashed) | 5/5 | Code complete (UAT pending) | - |
 | 7. Contenido | 0/TBD | Not started | - |
 | 8. Integraciones | 0/TBD | Not started | - |
 | 9. Cierre + Despliegue | 1/4 | Not started | - |
