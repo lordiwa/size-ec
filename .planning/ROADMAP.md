@@ -86,10 +86,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. Style transitions into S and L complete in ~600ms; `prefers-reduced-motion` attenuates or blocks L animations.
   5. The 60-combination invariant still holds: choosing S or L resets any prior market; no merging of S/L with a market style.
   6. **L visual treatment is locked to DECISION-LX-LOCKED in PROJECT.md** — match the prototype CSS (`level-l`, `l-l-card`, `l-l-button`, `l-l-marquee`) exactly: `#FFEE00`/`#000`/`#FF00AA`, Archivo Black, 4px borders, 8px+6px chunky shadows with hover translate, 30s marquee. (DEC-019: L ships CSS-only in Phase 4; GSAP+Lottie deferred to Phase 7 polish or later.)
-**Plans**: 3 plans (2/3 complete)
+**Plans**: 3 plans (3/3 complete; operator UAT walkthrough pending)
   - [x] 04-01-PLAN.md — Extend pnpm check:contrast to S + L tokens (15/15 WCAG AA via DEC-041)
   - [x] 04-02-PLAN.md — HomeView per-level branches + LMarquee + L card treatments across the 4 protected views
-  - [ ] 04-03-PLAN.md — 5×3 view-state UAT matrix + reduced-motion + transition smoke
+  - [x] 04-03-PLAN.md — 5×3 view-state UAT matrix + reduced-motion + transition smoke (04-UAT.md authored, 31 checkboxes)
 **UI hint**: yes
 
 ### Phase 5: Tamaño XS (Plain)
@@ -175,7 +175,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 1. Paridad prototipo | 4/4 | Complete | 2026-05-04 |
 | 2. Tamaño M (Crafted) consolidado | 2/2 | Complete | 2026-05-04 |
 | 3. Mercados sobre M | 0/TBD | Not started | - |
-| 4. Tamaños S y L | 2/3 | In progress | - |
+| 4. Tamaños S y L | 3/3 | Code complete (UAT pending) | - |
 | 5. Tamaño XS (Plain) | 0/TBD | Not started | - |
 | 6. Tamaño XL (Unleashed) | 0/TBD | Not started | - |
 | 7. Contenido | 0/TBD | Not started | - |

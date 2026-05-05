@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Executing Phase 04
-stopped_at: "Plan 04-02 complete. HomeView now branches on style.code (L brutalist with LMarquee + 2-col grid + magenta rotator; S Apple-clean centered with blue accent; M as v-else fallback). The 4 protected views (Servicios / Quiénes / Cliente / Contacto) carry .l-bold class bindings + scoped CSS that match the prototype's brutalist treatment. All gates green: type-check 0, build 0, check:contrast 15/15. Ready for plan 04-03 (5x3 view-state UAT + reduced-motion smoke + transition smoke)."
-last_updated: "2026-05-04T00:00:00Z"
-last_activity: 2026-05-04 -- Plan 04-02 complete
+status: Phase 04 complete — operator UAT pending
+stopped_at: "Plan 04-03 complete. Phase 4 ships at the code level: 04-01 (15/15 WCAG AA via DEC-041), 04-02 (HomeView per-level branches + LMarquee + L card treatments × 4 views), 04-03 (04-UAT.md sign-off doc — 5×3 matrix + 7 highlights + reduced-motion + transition smoke + DEC-041 escalation flag = 31 checkboxes). Operator UAT walkthrough pending; Phase 5 (XS) planning can begin in parallel."
+last_updated: "2026-05-05T01:16:16Z"
+last_activity: 2026-05-05 -- Plan 04-03 complete
 progress:
   total_phases: 9
   completed_phases: 3
   total_plans: 12
-  completed_plans: 11
-  percent: 92
+  completed_plans: 12
+  percent: 100
 ---
 
 # Project State
@@ -25,19 +25,19 @@ See: `.planning/PROJECT.md` (updated 2026-05-03)
 
 ## Current Position
 
-Phase: 04 (tamanos-s-y-l) — EXECUTING
-Plan: 2 of 3 complete
-Last activity: 2026-05-04 -- Plan 04-02 complete (HomeView per-level branches + LMarquee + L card treatments across 4 views)
+Phase: 04 (tamanos-s-y-l) — CODE COMPLETE (operator UAT pending)
+Plan: 3 of 3 complete
+Last activity: 2026-05-05 -- Plan 04-03 complete (04-UAT.md sign-off doc: 5×3 matrix + 7 highlights + reduced-motion + transition smoke + DEC-041 escalation flag, 31 checkboxes)
 
-Progress: [█████████░] 92%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 11
-- Average duration: ~12 min
-- Total execution time: ~134 min
+- Total plans completed: 12
+- Average duration: ~11 min
+- Total execution time: ~136 min
 
 **By Phase:**
 
@@ -47,12 +47,12 @@ Progress: [█████████░] 92%
 | 01-paridad-prototipo | 4/4 done | 56 min | 14 min |
 | 02-mensaje-y-contacto | 2/2 done | ~25 min | ~12 min |
 | 03-mercados-sobre-m | 2/2 done | ~24 min | ~12 min |
-| 04-tamanos-s-y-l | 2/3 done | ~22 min | ~11 min |
+| 04-tamanos-s-y-l | 3/3 done | ~24 min | ~8 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 03-02 (service integrity + UAT, 3 min), 04-01 (check:contrast → S+L, 15/15 via DEC-041, 8 min), 04-02 (HomeView per-level branches + LMarquee + L card treatments, ~14 min)
-- Trend: tooling-only plans clear in single-digit minutes; view-touching plans (like 04-02 across 6 files) settle around ~14 min when the prototype is verbatim-extracted upstream
+- Last 5 plans: 03-02 (service integrity + UAT, 3 min), 04-01 (check:contrast → S+L, 15/15 via DEC-041, 8 min), 04-02 (HomeView per-level branches + LMarquee + L card treatments, ~14 min), 04-03 (04-UAT.md sign-off doc, ~2 min)
+- Trend: docs-only plans (like 04-03) clear in ≤3 min; tooling plans in single digits; view-touching plans (04-02 across 6 files) settle around ~14 min when the prototype is verbatim-extracted upstream
 
 *Updated after each plan completion*
 
@@ -121,6 +121,10 @@ Decisions from completed plan 04-02 (HomeView per-level branches + LMarquee + L 
 - **DEC-045** — `@keyframes l-marquee` was NOT actually present in `src/styles/main.css` despite Plan 04-02's read_first and 04-CONTEXT.md D-01 both stating it lived "at line ~140 from the Phase 1 port." Added inline as Rule 3 auto-fix during Task 1; the keyframe is `from { transform: translateX(0) } to { transform: translateX(-50%) }` and lives just before the `@media (prefers-reduced-motion: reduce)` block.
 - **DEC-046** — HomeView's M `v-else` branch intentionally serves three roles: (a) the M (Crafted) default, (b) the fallback for XS / XL until their phases own per-level branches (Phase 5 / Phase 6), and (c) the active-market mode where `style.code === null` (picking a market on Home keeps the user on Home with the M structural layout but the market token block applied to `<body>`).
 
+Decisions from completed plan 04-03 (5×3 view-state UAT + reduced-motion + transition smoke):
+
+- **DEC-047** — `04-UAT.md` Section E (Sign-off) includes a DEC-041 escalation flag as the last checkbox: *"During the L walk-through, magenta accent text was observed rendering directly on the yellow body bg…"*. This closes the validation loop Plan 04-01 deferred — at sign-off, an unchecked flag validates DEC-041 (rendered surfaces match DECISION-LX-LOCKED); a checked flag activates the escalation path documented in `04-CONTRAST-RESULTS.md` (remove offending surface OR unlock magenta token for darkening).
+
 Decisions from plan 03-02 (service integrity + UAT):
 
 - **DEC-038** — Task 2 (smoke) requires no commit; it is verification-only per plan spec. 6/6 checks pass from existing code (App.vue + main.css).
@@ -146,9 +150,10 @@ None.
 
 ### Blockers/Concerns
 
-**Active (Phase 03 — UAT pending):**
+**Active (Phase 03 + Phase 04 — UATs pending):**
 
-- **03-UAT.md operator sign-off** — Sections A (recognisability), B (48-state matrix), and C (transition smoke) require manual walk-through with `pnpm dev`. Once complete, Phase 3 can be marked done and Phase 4 planning begins.
+- **03-UAT.md operator sign-off** — Sections A (recognisability), B (48-state matrix), and C (transition smoke) require manual walk-through with `pnpm dev`. Once complete, Phase 3 can be marked fully done.
+- **04-UAT.md operator sign-off** — Sections A (5×3 view-state matrix), B (per-level highlights), C (reduced-motion sweep), D (transition smoke), and E (sign-off + DEC-041 escalation flag) require manual walk-through with `pnpm dev`. Once complete, Phase 4 is fully closed and Phase 5 (XS) merge unblocks (Phase 5 *planning* can proceed in parallel with the walkthrough — XS doesn't touch S or L surfaces).
 
 Carried forward from §11 of the brief (acknowledged TBDs):
 
@@ -170,6 +175,6 @@ Carried forward from §11 of the brief (acknowledged TBDs):
 
 ## Session Continuity
 
-Last session: 2026-05-04
-Stopped at: Plan 04-02 complete. HomeView now renders three distinct per-level layouts (L brutalist with LMarquee + 2-col grid + magenta rotator; S Apple-clean centered with blue accent; M as v-else fallback covering XS/XL/active-market). The 4 protected views (Servicios / Quiénes / Cliente / Contacto) carry .l-bold class bindings + scoped CSS that match the prototype's brutalist treatment verbatim — alternating yellow/black/white cards on Servicios with per-card rotation, 4px+6px-accent photo borders + alternating yellow/white client cards on Quiénes, alternating yellow/white work cards on Cliente, yellow channels card + accent-shadowed chatbot on Contacto. Three new decisions: DEC-044 (LMarquee duplicates row for seamless 50%-translate loop), DEC-045 (added missing @keyframes l-marquee), DEC-046 (M branch is the catch-all for XS/XL/market mode). All gates green: check:contrast 15/15, type-check 0, build 0. Ready for plan 04-03 (5×3 view-state UAT + reduced-motion + transition smoke).
-Resume file: .planning/phases/04-tamanos-s-y-l/04-03-PLAN.md (when authored)
+Last session: 2026-05-05
+Stopped at: Plan 04-03 complete — Phase 4 ships at the code level. `04-UAT.md` authored: 5×3 view-state matrix (15 cells across Home / Servicios / Quiénes / Cliente / Contacto × S / M / L) + 7 per-level highlights (5 L surfaces from DECISION-LX-LOCKED, 2 S clean-spec surfaces) + reduced-motion sweep (L marquee freeze, hover transform mute, rotator freeze, Reconfigurando preserved) + M → S → L → M transition smoke (~600ms body fade + ~900ms overlay) + 4 automated-gate checkboxes + DEC-041 escalation flag = 31 checkboxes total (≥21 required). One new decision: DEC-047 (escalation flag closes Plan 04-01's deferred validation loop). Verify regex passes (`ok 31 boxes`). All Phase 4 plans done; operator UAT walkthrough is the only remaining work in Phase 4. Phase 5 (XS) planning unblocked.
+Resume file: .planning/phases/05-tamano-xs/ (Phase 5 planning) OR `.planning/phases/04-tamanos-s-y-l/04-UAT.md` (operator walkthrough)
