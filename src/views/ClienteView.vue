@@ -1,16 +1,52 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
-import { findClient } from '@/data/size-data'
+import { findClient, SIZE_CLIENTS } from '@/data/size-data'
 import { useStyleStore } from '@/stores/style'
 
 const props = defineProps<{ slug: string }>()
 const client = computed(() => findClient(props.slug))
 const style = useStyleStore()
+
+// XS branch lists every client when the slug doesn't resolve a single one,
+// otherwise it shows only the requested cliente. Keeps the 1999 directory
+// flavour: one <table> per cliente listing trabajos as rows.
+const xsClients = computed(() => (client.value ? [client.value] : SIZE_CLIENTS))
 </script>
 
 <template>
-  <section v-if="!client" class="cl-missing">
+  <!-- XS (Plain) — Web 1999 literal: per-cliente <table> of trabajos.
+       DO NOT add Tailwind classes, flex, grid, or modern CSS effects here. -->
+  <section v-if="style.code === 'xs'" class="cl-xs">
+    <center>
+      <h1 class="cl-xs-mark">— CLIENTE —</h1>
+    </center>
+    <div v-for="c in xsClients" :key="c.id" class="cl-xs-block">
+      <h3 class="cl-xs-name">{{ c.name }}</h3>
+      <p class="cl-xs-tag"><i>{{ c.tagline }}</i></p>
+      <p class="cl-xs-desc">{{ c.desc }}</p>
+      <table border="1" cellpadding="6" cellspacing="0" class="cl-xs-table" align="center">
+        <thead>
+          <tr><th>#</th><th>Trabajo</th><th>Detalle</th></tr>
+        </thead>
+        <tbody>
+          <tr v-for="(w, i) in c.work" :key="i">
+            <td>{{ String(i + 1).padStart(2, '0') }}</td>
+            <td><b>{{ w.t }}</b></td>
+            <td><i>{{ w.d }}</i></td>
+          </tr>
+        </tbody>
+      </table>
+      <hr/>
+    </div>
+    <center>
+      <p>
+        <RouterLink :to="{ name: 'quienes-somos' }">← Volver a Quiénes somos</RouterLink>
+      </p>
+    </center>
+  </section>
+
+  <section v-else-if="!client" class="cl-missing">
     <h1 class="cl-missing-title">Cliente no encontrado</h1>
     <RouterLink :to="{ name: 'quienes-somos' }" class="bright-cta">← Volver</RouterLink>
   </section>
@@ -121,4 +157,52 @@ const style = useStyleStore()
 }
 .cl-work-card.l-bold:nth-child(odd)  { background: #FFEE00; }
 .cl-work-card.l-bold:nth-child(even) { background: #fff; }
+
+/* ─────────── XS (Plain) — Web 1999 literal per-cliente tables ─────────── */
+/* DEC-050 strict CSS vocabulary: only basic CSS allowed. */
+/* No flex, no grid, no transform, no transition, no border-radius, no box-shadow. */
+.cl-xs {
+  padding: 16px;
+  font-family: "Times New Roman", serif;
+}
+.cl-xs-mark {
+  font-size: 32px;
+  margin: 8px 0 16px;
+  letter-spacing: 4px;
+}
+.cl-xs-block {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px 0;
+}
+.cl-xs-name {
+  font-size: 28px;
+  margin: 8px 0;
+  text-align: center;
+}
+.cl-xs-tag {
+  text-align: center;
+  margin: 0 0 12px;
+}
+.cl-xs-desc {
+  margin: 0 0 16px;
+  text-align: justify;
+}
+.cl-xs-table {
+  margin: 0 auto;
+  width: 100%;
+  border-collapse: collapse;
+}
+.cl-xs-table th {
+  background: #ffffff;
+  font-weight: bold;
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #000;
+}
+.cl-xs-table td {
+  padding: 8px;
+  vertical-align: top;
+  border: 1px solid #000;
+}
 </style>

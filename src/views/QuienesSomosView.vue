@@ -10,9 +10,51 @@ const style = useStyleStore()
 
 // In market mode the prototype falls back to the M variant for team quotes.
 const quoteCode = computed<LevelCode>(() => (style.market ? 'm' : style.levelCode))
+
+// XS branch: split the team into rows of 4 for a <table> layout (1999 spirit).
+const teamRows = computed(() => {
+  const rows: { idx: number; members: typeof SIZE_TEAM }[] = []
+  for (let i = 0; i < SIZE_TEAM.length; i += 4) {
+    rows.push({ idx: i, members: SIZE_TEAM.slice(i, i + 4) })
+  }
+  return rows
+})
 </script>
 
 <template>
+  <!-- XS (Plain) — Web 1999 literal: <table>-driven team grid + clients table.
+       DO NOT add Tailwind classes, flex, grid, or modern CSS effects here. -->
+  <section v-if="style.code === 'xs'" class="qn-xs">
+    <center>
+      <h1 class="qn-xs-mark">SIZE</h1>
+      <h2 class="qn-xs-h2">— EL EQUIPO —</h2>
+    </center>
+    <table cellpadding="8" cellspacing="0" class="qn-xs-team" align="center">
+      <tr v-for="row in teamRows" :key="row.idx">
+        <td v-for="(member, j) in row.members" :key="member.id" class="qn-xs-cell">
+          <table cellpadding="0" cellspacing="0" class="qn-xs-photo-frame" align="center">
+            <tr><td><PortraitPlaceholder :idx="row.idx + j" /></td></tr>
+          </table>
+          <i>{{ member.name }}</i>
+          <br/><small>{{ member.role }}</small>
+        </td>
+      </tr>
+    </table>
+    <hr/>
+    <center><h2 class="qn-xs-h2">— CLIENTES —</h2></center>
+    <table border="1" cellpadding="6" cellspacing="0" class="qn-xs-clients" align="center">
+      <tr v-for="c in SIZE_CLIENTS" :key="c.id">
+        <td>[ LOGO ]</td>
+        <td>
+          <b>
+            <RouterLink :to="{ name: 'cliente', params: { slug: c.id } }">{{ c.name }}</RouterLink>
+          </b>
+        </td>
+      </tr>
+    </table>
+  </section>
+
+  <template v-else>
   <section class="qn-head">
     <h1 class="size-wordmark med">SIZE</h1>
     <div class="qn-head-row">
@@ -54,6 +96,7 @@ const quoteCode = computed<LevelCode>(() => (style.market ? 'm' : style.levelCod
       </RouterLink>
     </div>
   </section>
+  </template>
 </template>
 
 <style scoped>
@@ -187,4 +230,46 @@ const quoteCode = computed<LevelCode>(() => (style.market ? 'm' : style.levelCod
 }
 .qn-client.l-bold:nth-child(2n+1) { background: #FFEE00; }
 .qn-client.l-bold:nth-child(2n)   { background: #fff; }
+
+/* ─────────── XS (Plain) — Web 1999 literal team + clients tables ─────────── */
+/* DEC-050 strict CSS vocabulary: only basic CSS allowed. */
+/* No flex, no grid, no transform, no transition, no border-radius, no box-shadow. */
+.qn-xs {
+  padding: 16px;
+  font-family: "Times New Roman", serif;
+}
+.qn-xs-mark {
+  font-size: 56px;
+  margin: 8px 0;
+  letter-spacing: 4px;
+}
+.qn-xs-h2 {
+  font-size: 20px;
+  font-weight: normal;
+  margin: 0 0 16px;
+}
+.qn-xs-team {
+  border-collapse: collapse;
+}
+.qn-xs-cell {
+  text-align: center;
+  vertical-align: top;
+  width: 160px;
+  padding: 8px;
+}
+.qn-xs-photo-frame {
+  margin: 0 auto 8px;
+}
+.qn-xs-photo-frame td {
+  width: 120px;
+  height: 160px;
+  padding: 0;
+}
+.qn-xs-clients {
+  border-collapse: collapse;
+}
+.qn-xs-clients td {
+  padding: 6px 12px;
+  border: 1px solid #000;
+}
 </style>
