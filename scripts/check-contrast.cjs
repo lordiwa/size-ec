@@ -1,18 +1,22 @@
 /**
  * scripts/check-contrast.cjs
  *
- * WCAG 2.1 AA contrast checker for the SIZE M (Crafted) dark-mode baseline
- * PLUS all 12 market themes.
+ * WCAG 2.1 AA contrast checker for SIZE.
  *
- * Sources:
- *   M baseline  — hard-coded from src/styles/main.css  html.level-m block
- *   12 markets  — parsed from src/data/size-data.ts  SIZE_MARKETS array
+ * Coverage:
+ *   - M (Crafted) baseline   — hard-coded from src/styles/main.css  html.level-m block
+ *   - 12 market themes       — parsed from src/data/size-data.ts    SIZE_MARKETS array
+ *   - S (Clean) level        — parsed from src/styles/main.css      html.level-s block
+ *   - L (Bold)  level        — parsed from src/styles/main.css      html.level-l block
+ *
+ * Total: 15 themes (M + 12 markets + S + L).
  *
  * Pure Node — no third-party dependencies.
  *
  * Usage:
- *   node scripts/check-contrast.cjs               # M + 12 markets
- *   node scripts/check-contrast.cjs --markets-only # skip M block
+ *   node scripts/check-contrast.cjs                # M + 12 markets + S + L (15 themes)
+ *   node scripts/check-contrast.cjs --markets-only # 12 markets only
+ *   node scripts/check-contrast.cjs --levels-only  # M + S + L only (3 themes)
  *   pnpm check:contrast
  *
  * Exit 0 if all required pairs in every theme meet their thresholds; non-zero otherwise.
@@ -25,6 +29,12 @@ const path = require('path');
 
 // ─── CLI flags ────────────────────────────────────────────────────────────────
 const MARKETS_ONLY = process.argv.includes('--markets-only');
+const LEVELS_ONLY  = process.argv.includes('--levels-only');
+
+if (MARKETS_ONLY && LEVELS_ONLY) {
+  console.error('ERROR: --markets-only and --levels-only are mutually exclusive.');
+  process.exit(2);
+}
 
 // ─── M (Crafted) dark-mode token table ───────────────────────────────────────
 // Values are hard-coded from html.level-m in src/styles/main.css.
@@ -231,18 +241,93 @@ function buildPairs(tokens) {
   ];
 }
 
+/**
+ * Build the 5 required contrast pairs for a level theme (level-m, level-s,
+ * level-l, etc.). Levels expose all four tokens explicitly: BG, INK, MUTED,
+ * ACCENT. The has-market 55% derivation does NOT apply.
+ *
+ * Per-level CTA override:
+ *   Some levels use a custom button composition that does NOT match the
+ *   default `.bright-cta` rule (BG on ACCENT). When the level overrides the
+ *   button background to INK and text to ACCENT (DECISION-LX-LOCKED for L),
+ *   the CTA pair must reflect the actual rendered colours, not the default.
+ *   Pass an optional `ctaOverride: { fg, bg }` to switch the CTA pair.
+ *
+ * @param {{ BG: string, INK: string, MUTED: string, ACCENT: string,
+ *           ctaOverride?: { fg: string, bg: string, note?: string } }} tokens
+ */
+function buildLevelPairs(tokens) {
+  const { BG, INK, MUTED, ACCENT, ctaOverride, inlineOverride } = tokens;
+
+  const ctaPair = ctaOverride
+    ? {
+        label:     'accent CTA    (' + (ctaOverride.label || 'override') + ')',
+        fg:        ctaOverride.fg,
+        bg:        ctaOverride.bg,
+        threshold: 4.5,
+        note:      ctaOverride.note || 'Per-level button override (custom .bright-cta rule)',
+      }
+    : {
+        label:     'accent CTA    (BG on ACCENT)',
+        fg:        BG,
+        bg:        ACCENT,
+        threshold: 4.5,
+        note:      '.bright-cta uses var(--bg) text on var(--accent) background',
+      };
+
+  const inlinePair = inlineOverride
+    ? {
+        label:     'accent inline (' + (inlineOverride.label || 'override') + ')',
+        fg:        inlineOverride.fg,
+        bg:        inlineOverride.bg,
+        threshold: 3.0,
+        note:      inlineOverride.note || 'Per-level inline-accent override (level does not render accent on bg directly)',
+      }
+    : {
+        label:     'accent inline (ACCENT on BG)',
+        fg:        ACCENT,
+        bg:        BG,
+        threshold: 3.0,
+        note:      'Accent words in body copy at large sizes',
+      };
+
+  return [
+    {
+      label:     'body text     (INK on BG)',
+      fg:        INK,
+      bg:        BG,
+      threshold: 4.5,
+      note:      'WCAG AA normal text',
+    },
+    {
+      label:     'muted text    (MUTED on BG)',
+      fg:        MUTED,
+      bg:        BG,
+      threshold: 4.5,
+      note:      'MUTED token read verbatim from html.level-* block in main.css',
+    },
+    {
+      label:     'large heading (INK on BG)',
+      fg:        INK,
+      bg:        BG,
+      threshold: 3.0,
+      note:      'WCAG AA large text (>= 18pt / 14pt bold)',
+    },
+    ctaPair,
+    inlinePair,
+  ];
+}
+
 // ─── Print one theme block ────────────────────────────────────────────────────
 
 const COL_LABEL = 36;
 const COL_RATIO = 8;
 
 /**
- * Run and print the 5-pair contract for a named theme.
+ * Run and print a precomputed pair set for a named theme.
  * Returns { passCount, failCount, results }.
  */
-function runTheme(title, tokens) {
-  const pairs = buildPairs(tokens);
-
+function runPairs(title, pairs) {
   console.log('');
   console.log(`${title}`);
   console.log('─'.repeat(70));
@@ -279,7 +364,7 @@ function runTheme(title, tokens) {
 
   console.log('─'.repeat(70));
 
-  const lowestResult  = results.reduce((a, b) => a.ratio < b.ratio ? a : b);
+  const lowestResult = results.reduce((a, b) => a.ratio < b.ratio ? a : b);
   const lowestFormatted = lowestResult.ratio.toFixed(2);
 
   if (failCount === 0) {
@@ -295,6 +380,20 @@ function runTheme(title, tokens) {
   }
 
   return { passCount, failCount, results };
+}
+
+/**
+ * Build the market 5-pair contract and run it. (has-market mode — derived muted)
+ */
+function runTheme(title, tokens) {
+  return runPairs(title, buildPairs(tokens));
+}
+
+/**
+ * Build the level 5-pair contract and run it. (level mode — explicit muted)
+ */
+function runLevel(title, tokens) {
+  return runPairs(title, buildLevelPairs(tokens));
 }
 
 // ─── Parse market themes from src/data/size-data.ts ──────────────────────────
@@ -362,14 +461,92 @@ function parseMarkets() {
   return markets;
 }
 
+// ─── Parse a level token block from src/styles/main.css ──────────────────────
+
+/**
+ * Extract the four required tokens (--bg, --ink, --muted, --accent) from a
+ * `html.level-{name}` CSS rule block.
+ *
+ * The block format we expect (verbatim from main.css):
+ *
+ *   html.level-s {
+ *     --bg: #ffffff;
+ *     --ink: #1d1d1f;
+ *     --muted: #6e6e73;
+ *     --line: #00000010;
+ *     --line-strong: #00000022;
+ *     --accent: #0066cc;
+ *     ...
+ *   }
+ *
+ * We grep for the rule block by name, then pull out each `--prop: <hex>;`.
+ *
+ * Returns { BG, INK, MUTED, ACCENT } as 6/8-digit hex strings (verbatim from CSS).
+ * Aborts with a clear message if the block or any token is missing.
+ *
+ * @param {string} cssSrc full CSS source
+ * @param {string} levelName 's' | 'l' | 'm' | etc.
+ */
+function parseLevelTokens(cssSrc, levelName) {
+  const blockRe = new RegExp(
+    `html\\.level-${levelName}\\s*\\{([^}]+)\\}`,
+    'i'
+  );
+  const blockMatch = blockRe.exec(cssSrc);
+  if (!blockMatch) {
+    console.error(
+      `ERROR: Cannot find 'html.level-${levelName}' rule in src/styles/main.css.`
+    );
+    process.exit(1);
+  }
+
+  const block = blockMatch[1];
+
+  const propRe = (prop) =>
+    new RegExp(`--${prop}\\s*:\\s*(#[0-9A-Fa-f]{3,8})\\s*;`);
+
+  const get = (prop) => {
+    const m = propRe(prop).exec(block);
+    if (!m) {
+      console.error(
+        `ERROR: Cannot find '--${prop}' in html.level-${levelName} block.`
+      );
+      process.exit(1);
+    }
+    return m[1];
+  };
+
+  return {
+    BG:     get('bg'),
+    INK:    get('ink'),
+    MUTED:  get('muted'),
+    ACCENT: get('accent'),
+  };
+}
+
+/**
+ * Read src/styles/main.css once and return its source text.
+ */
+function readMainCss() {
+  const p = path.resolve(__dirname, '../src/styles/main.css');
+  try {
+    return fs.readFileSync(p, 'utf8');
+  } catch (e) {
+    console.error(`ERROR: Cannot read ${p}: ${e.message}`);
+    process.exit(1);
+  }
+}
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
+const cssSrc  = readMainCss();
 const markets = parseMarkets();
 
 // Track per-theme pass/fail for the OVERALL line
 const themeResults = [];
 
-// ── M baseline block (skipped with --markets-only) ────────────────────────────
+// ── M baseline block ────────────────────────────────────────────────────────
+// Skipped with --markets-only.
 if (!MARKETS_ONLY) {
   // M uses a fixed MUTED token rather than the derived color-mix rule.
   // In html.level-m the global has-market rule does NOT apply because the
@@ -413,63 +590,81 @@ if (!MARKETS_ONLY) {
     },
   ];
 
-  console.log('');
-  console.log('SIZE — M Crafted dark-mode | WCAG AA contrast check');
-  console.log('─'.repeat(70));
-  console.log(
-    padRight('Pair', COL_LABEL) +
-    padRight('Ratio', COL_RATIO) +
-    padRight('Required', 10) +
-    'Result'
+  const { failCount: mFail } = runPairs(
+    'SIZE — M Crafted dark-mode | WCAG AA contrast check',
+    mPairs
   );
-  console.log('─'.repeat(70));
-
-  let mAllPass = true;
-  let mLowest = Infinity;
-  let mLowestLabel = '';
-  const mResults = [];
-
-  for (const pair of mPairs) {
-    const { ratio, alphaNote } = checkPair(pair.fg, pair.bg);
-    const pass = ratio >= pair.threshold;
-    if (!pass) mAllPass = false;
-    if (ratio < mLowest) { mLowest = ratio; mLowestLabel = pair.label.trim(); }
-    mResults.push({ ...pair, ratio, pass, alphaNote });
-
-    console.log(
-      padRight(pair.label, COL_LABEL) +
-      padRight(ratio.toFixed(2) + ':1', COL_RATIO) +
-      padRight('>= ' + pair.threshold.toFixed(1), 10) +
-      (pass ? 'PASS' : 'FAIL')
-    );
-    if (alphaNote) console.log('  ' + alphaNote);
-  }
-
-  console.log('─'.repeat(70));
+  themeResults.push({ id: 'M', failCount: mFail });
   console.log('');
-
-  const summaryPart = mAllPass
-    ? `all >= ${Math.min(...mPairs.map(p => p.threshold)).toFixed(1)} (lowest: ${mLowestLabel.replace(/\s+/g, ' ')} = ${mLowest.toFixed(2)}:1)`
-    : `FAILING — see details above`;
-
-  console.log(`M Crafted dark-mode | ${mPairs.length} pairs checked | ${summaryPart}`);
-
-  themeResults.push({ id: 'M', failCount: mAllPass ? 0 : mResults.filter(r => !r.pass).length });
 }
 
 // ── 12 market blocks ──────────────────────────────────────────────────────────
+// Skipped with --levels-only.
+if (!LEVELS_ONLY) {
+  for (const mkt of markets) {
+    const tokens = {
+      BG:     mkt.bg,
+      INK:    mkt.ink,
+      ACCENT: mkt.primary,  // primary drives the CTA and inline accent pairs
+    };
 
-for (const mkt of markets) {
-  const tokens = {
-    BG:     mkt.bg,
-    INK:    mkt.ink,
-    ACCENT: mkt.primary,  // primary drives the CTA and inline accent pairs
+    const title = `SIZE — ${mkt.id.padEnd(12)} | WCAG AA contrast check`;
+    const { failCount } = runTheme(title, tokens);
+
+    themeResults.push({ id: mkt.id, failCount });
+    console.log('');
+  }
+}
+
+// ── S (Clean) level block ─────────────────────────────────────────────────────
+// Skipped with --markets-only.
+if (!MARKETS_ONLY) {
+  const sTokens = parseLevelTokens(cssSrc, 's');
+  // S uses the default .bright-cta rule (BG on ACCENT) — no override needed.
+  const { failCount } = runLevel(
+    'SIZE — S Clean       | WCAG AA contrast check',
+    sTokens
+  );
+  themeResults.push({ id: 'S', failCount });
+  console.log('');
+}
+
+// ── L (Bold) level block ──────────────────────────────────────────────────────
+// Skipped with --markets-only.
+if (!MARKETS_ONLY) {
+  const lTokens = parseLevelTokens(cssSrc, 'l');
+  // DECISION-LX-LOCKED: L's button is NOT the default .bright-cta rule.
+  // Per PROJECT.md, L buttons use:
+  //   background: #000 (= var(--ink));  color: var(--accent) (= #FF00AA);
+  //   border: 4px solid #000;            box-shadow: 6px 6px 0 var(--accent)
+  // The rendered button is therefore ACCENT on INK (magenta on black, 5.83:1),
+  // NOT BG on ACCENT (yellow on magenta, 3.00:1 — the default .bright-cta rule
+  // which L does NOT use). This is a per-level CTA override that reflects the
+  // actual rendered button surface. Token values (#FFEE00 / #000 / #FF00AA)
+  // remain untouched per DECISION-LX-LOCKED.
+  //
+  // DECISION-LX-LOCKED also pins card backgrounds to #FFFFFF (not yellow),
+  // so the only place magenta accent text would render directly against
+  // yellow bg is the marquee — and the prototype renders the marquee with
+  // black ink, not magenta. The default `accent inline (ACCENT on BG)` pair
+  // therefore tests a surface L does not ship; we leave it on the default
+  // contract and let the audit surface the conflict for the operator.
+  const lWithCtaOverride = {
+    ...lTokens,
+    ctaOverride: {
+      label: 'ACCENT on INK — L button override',
+      fg: lTokens.ACCENT,
+      bg: lTokens.INK,
+      note:
+        'DECISION-LX-LOCKED: L buttons are background:#000; color:var(--accent). ' +
+        'CTA pair reflects rendered composition (magenta on black), not default .bright-cta.',
+    },
   };
-
-  const title = `SIZE — ${mkt.id.padEnd(12)} | WCAG AA contrast check`;
-  const { failCount } = runTheme(title, tokens);
-
-  themeResults.push({ id: mkt.id, failCount });
+  const { failCount } = runLevel(
+    'SIZE — L Bold        | WCAG AA contrast check',
+    lWithCtaOverride
+  );
+  themeResults.push({ id: 'L', failCount });
   console.log('');
 }
 
