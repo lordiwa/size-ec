@@ -51,8 +51,14 @@ function clearMarket() {
       </div>
     </section>
     <section class="srv-body">
-      <div class="srv-grid">
-        <div v-for="s in allServices" :key="s.id" class="srv-card">
+      <div class="srv-grid" :class="{ 'srv-grid-l': style.code === 'l' }">
+        <div
+          v-for="(s, i) in allServices"
+          :key="s.id"
+          class="srv-card"
+          :class="{ 'l-bold': style.code === 'l' }"
+          :style="style.code === 'l' ? { transform: `rotate(${(i % 3 - 1) * 0.5}deg)` } : undefined"
+        >
           <div class="mono upper srv-card-eyebrow">{{ s.n }} · {{ s.short }}</div>
           <div class="srv-card-name">{{ s.name }}</div>
         </div>
@@ -85,11 +91,13 @@ function clearMarket() {
     </h1>
     <p class="srv-mkt-desc">{{ style.market.desc }}</p>
 
-    <div class="srv-grid">
+    <div class="srv-grid" :class="{ 'srv-grid-l': style.code === 'l' }">
       <article
         v-for="(s, i) in marketServices"
         :key="s.id"
         class="srv-mkt-card"
+        :class="{ 'l-bold': style.code === 'l' }"
+        :style="style.code === 'l' ? { transform: `rotate(${(i % 3 - 1) * 0.6}deg)` } : undefined"
       >
         <div class="mono upper srv-card-eyebrow">
           {{ String(i + 1).padStart(2, '0') }} · {{ s.short }}
@@ -212,5 +220,55 @@ function clearMarket() {
   line-height: 1.55;
   opacity: 0.85;
   margin-top: 12px;
+}
+
+/* ─────────── L (Bold) brutalist card treatment ─────────── */
+/* Matches prototype servicios.jsx: alternating yellow / black / white bg every
+ * 4th card, 4px black borders, 8px chunky shadows, ±0.5° per-card rotation.
+ * The transform is set inline (rotate per index); colors and borders here. */
+
+/* Wider gap between cards in L per prototype (24 vs 16). */
+.srv-grid-l { gap: 24px; }
+
+/* No-market (.srv-card) — bg uses var(--accent) (magenta) on the 4n+1 slot,
+ * #000 on 4n+3, #fff on 4n+2 / 4n. */
+.srv-card.l-bold {
+  border: 4px solid #000;
+  box-shadow: 8px 8px 0 #000;
+  color: #000;
+}
+.srv-card.l-bold:nth-child(4n+1) {
+  background: var(--accent);
+  color: #000;
+}
+.srv-card.l-bold:nth-child(4n+3) {
+  background: #000;
+  color: var(--accent);
+}
+.srv-card.l-bold:nth-child(4n+2),
+.srv-card.l-bold:nth-child(4n) {
+  background: #fff;
+  color: #000;
+}
+
+/* Market mode (.srv-mkt-card) — uses --mkt-primary / --mkt-secondary / #fff
+ * with --mkt-ink shadow + border, per prototype. White copy on the colored
+ * surfaces (4n+1 + 4n+3); black on the white surface. */
+.srv-mkt-card.l-bold {
+  border: 4px solid var(--mkt-ink);
+  box-shadow: 8px 8px 0 var(--mkt-ink);
+}
+.srv-mkt-card.l-bold:nth-child(4n+1) {
+  background: var(--mkt-primary);
+  color: #fff;
+}
+.srv-mkt-card.l-bold:nth-child(4n+3) {
+  background: var(--mkt-secondary);
+  color: #fff;
+}
+.srv-mkt-card.l-bold:nth-child(4n+2),
+.srv-mkt-card.l-bold:nth-child(4n) {
+  background: #fff;
+  color: #000;
 }
 </style>

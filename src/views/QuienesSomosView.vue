@@ -25,7 +25,7 @@ const quoteCode = computed<LevelCode>(() => (style.market ? 'm' : style.levelCod
     <div class="qn-grid">
       <div class="qn-line" aria-hidden="true"></div>
       <article v-for="(p, i) in SIZE_TEAM" :key="p.id" class="qn-person">
-        <div class="qn-photo">
+        <div class="qn-photo" :class="{ 'l-bold': style.code === 'l' }">
           <PortraitPlaceholder :idx="i" />
         </div>
         <div class="qn-dot" aria-hidden="true"></div>
@@ -46,6 +46,7 @@ const quoteCode = computed<LevelCode>(() => (style.market ? 'm' : style.levelCod
         :key="c.id"
         :to="{ name: 'cliente', params: { slug: c.id } }"
         class="qn-client"
+        :class="{ 'l-bold': style.code === 'l' }"
       >
         <div class="qn-client-name">{{ c.name }}</div>
         <div class="mono qn-client-tag">{{ c.tagline }}</div>
@@ -170,4 +171,20 @@ const quoteCode = computed<LevelCode>(() => (style.market ? 'm' : style.levelCod
   .qn-grid { grid-template-columns: 1fr 1fr; }
   .qn-line { display: none; }
 }
+
+/* ─────────── L (Bold) brutalist treatment ─────────── */
+/* Photo borders become 4px black + 6px accent shadow per prototype quienes.jsx.
+ * Client cards alternate yellow / white per the same prototype, with 8px chunky
+ * black shadow. All wired via class binding on style.code === 'l'. */
+.qn-photo.l-bold {
+  border: 4px solid #000;
+  box-shadow: 6px 6px 0 var(--accent);
+}
+.qn-client.l-bold {
+  color: #000;
+  border: 1px solid #000;
+  box-shadow: 8px 8px 0 #000;
+}
+.qn-client.l-bold:nth-child(2n+1) { background: #FFEE00; }
+.qn-client.l-bold:nth-child(2n)   { background: #fff; }
 </style>

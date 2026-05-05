@@ -2,9 +2,11 @@
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { findClient } from '@/data/size-data'
+import { useStyleStore } from '@/stores/style'
 
 const props = defineProps<{ slug: string }>()
 const client = computed(() => findClient(props.slug))
+const style = useStyleStore()
 </script>
 
 <template>
@@ -30,7 +32,12 @@ const client = computed(() => findClient(props.slug))
     <section class="cl-work">
       <div class="mono upper cl-work-eyebrow">Trabajo realizado</div>
       <div class="cl-work-grid">
-        <article v-for="(w, i) in client.work" :key="i" class="cl-work-card">
+        <article
+          v-for="(w, i) in client.work"
+          :key="i"
+          class="cl-work-card"
+          :class="{ 'l-bold': style.code === 'l' }"
+        >
           <div class="mono cl-work-n">0{{ i + 1 }}</div>
           <div class="cl-work-t">{{ w.t }}</div>
           <div class="cl-work-d">{{ w.d }}</div>
@@ -104,4 +111,14 @@ const client = computed(() => findClient(props.slug))
 .cl-work-d { font-size: 13px; opacity: 0.8; }
 
 .cl-foot { padding: 6vh 6vw 4vh; }
+
+/* ─────────── L (Bold) brutalist work cards ─────────── */
+/* Per prototype cliente.jsx: alternate yellow/white with 6px chunky black shadow. */
+.cl-work-card.l-bold {
+  color: #000;
+  border: 1px solid var(--line);
+  box-shadow: 6px 6px 0 #000;
+}
+.cl-work-card.l-bold:nth-child(odd)  { background: #FFEE00; }
+.cl-work-card.l-bold:nth-child(even) { background: #fff; }
 </style>

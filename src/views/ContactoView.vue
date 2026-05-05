@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import ChangeStyleControl from '@/components/ChangeStyleControl.vue'
+import { useStyleStore } from '@/stores/style'
+
+const style = useStyleStore()
 
 interface ChatMsg {
   from: 'bot' | 'user'
@@ -52,7 +55,7 @@ function send() {
   <section class="ct-body">
     <div class="ct-grid">
       <!-- LEFT 40% — channels -->
-      <div class="ct-channels">
+      <div class="ct-channels" :class="{ 'l-bold': style.code === 'l' }">
         <div class="mono upper ct-channels-eyebrow">Canales</div>
         <ul class="ct-list">
           <li v-for="c in channels" :key="c.label" class="ct-list-row">
@@ -66,7 +69,7 @@ function send() {
       </div>
 
       <!-- RIGHT 60% — chatbot stub -->
-      <div class="ct-bot">
+      <div class="ct-bot" :class="{ 'l-bold': style.code === 'l' }">
         <div class="mono upper ct-bot-eyebrow">Pregúntale a la Bruja</div>
         <h3 class="ct-bot-title">¿Qué necesitas?</h3>
 
@@ -205,5 +208,19 @@ function send() {
 
 @media (max-width: 720px) {
   .ct-grid { grid-template-columns: 1fr; }
+}
+
+/* ─────────── L (Bold) brutalist treatment ─────────── */
+/* Per prototype contacto.jsx: channels card BG=#FFEE00 with 8px black shadow,
+ * chatbot card BG=#fff with accent (magenta) shadow. */
+.ct-channels.l-bold {
+  background: #FFEE00;
+  color: #000;
+  box-shadow: 8px 8px 0 #000;
+}
+.ct-bot.l-bold {
+  background: #fff;
+  color: #000;
+  box-shadow: 8px 8px 0 var(--accent);
 }
 </style>
