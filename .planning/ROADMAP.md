@@ -119,9 +119,9 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. Style transitions into XL complete in ~600ms perceived (heavy assets stream in afterwards), and `prefers-reduced-motion` blocks or attenuates motion in XL.
   5. End-to-end bundle audit confirms aggressive code-splitting per intensity level and per market (CON-004): an XS / S / M visitor never downloads L or XL stacks.
   6. **Phaser 3 is locked to DECISION-XL-PHASER in PROJECT.md** as a first-class capability for embedded mini-games, not just decorative WebGL. Three.js + Tone.js + postprocessing remain auxiliary. Phaser is lazy-loaded only when active style is XL.
-**Plans**: 4 plans (1/4 complete)
+**Plans**: 4 plans (2/4 complete)
   - [x] 06-01-PLAN.md — Extend pnpm check:contrast to XL tokens (17/17 WCAG AA via default contract; --accent-2 decorative-only per DEC-063)
-  - [ ] 06-02-PLAN.md — useXlCapability composable + L fallback + toast (WebGL2 gate)
+  - [x] 06-02-PLAN.md — useXlCapability composable + L fallback + toast (WebGL2 gate; DEC-064/065/066/067)
   - [ ] 06-03-PLAN.md — HomeView XL branch (verbatim port of prototype lines 62-76, CSS-only)
   - [ ] 06-04-PLAN.md — UAT sign-off + WebGL2-disabled negative path
 **UI hint**: yes

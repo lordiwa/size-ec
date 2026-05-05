@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Executing Phase 06
-stopped_at: "Plan 06-01 complete. scripts/check-contrast.cjs extended to XL (17 themes total — full SIZE catalog); 06-CONTRAST-RESULTS.md authored with --accent-2 decorative-only rationale (DEC-063). XL passes 5/5 on the default 5-pair contract with zero overrides and zero token tweaks (DEC-062): body 20.38:1, muted 8.77:1, large 20.38:1, CTA 15.42:1, inline 15.42:1. pnpm check:contrast exits 0 with OVERALL 17/17. type-check + build green. The 17-style WCAG AA contract is closed."
-last_updated: "2026-05-04T04:23:42Z"
-last_activity: 2026-05-04 -- Plan 06-01 complete
+stopped_at: "Plan 06-02 complete. WebGL2 capability gate end-to-end: src/composables/useXlCapability.ts authored (probeXlCapability + useXlCapability, pure DOM, module-scope memoized, zero XL-stack imports); src/stores/style.ts extended so setLevel(5) auto-falls back to L (4) when WebGL2 missing, with reactive xlFallback flag + dismissXlFallback() + 3500ms auto-clear timer (DEC-064/067); src/components/XlFallbackToast.vue created with role=status, aria-live=polite, dismiss button, WebGL2-aware copy, token-driven styling (DEC-066); App.vue mounts the toast in the existing Teleport-to-body block alongside ReconfigureOverlay. Bundle audit verifies zero three / @tresjs/core / phaser / tone / postprocessing / cannon-es / rapier in package.json or src/. type-check + build + check:contrast all green (17/17). REQ-xl-capability-detection satisfied at the contract level."
+last_updated: "2026-05-05T04:32:19Z"
+last_activity: 2026-05-05 -- Plan 06-02 complete
 progress:
   total_phases: 9
   completed_phases: 3
-  total_plans: 16
-  completed_plans: 16
+  total_plans: 17
+  completed_plans: 17
   percent: 100
 ---
 
@@ -26,8 +26,8 @@ See: `.planning/PROJECT.md` (updated 2026-05-03)
 ## Current Position
 
 Phase: 06 (tamano-xl-unleashed) — IN PROGRESS
-Plan: 1 of 4 complete (3 remaining: 06-02 WebGL2 gate + L fallback, 06-03 HomeView XL branch, 06-04 UAT)
-Last activity: 2026-05-04 -- Plan 06-01 complete (check:contrast extended to XL — 17/17 themes pass; 06-CONTRAST-RESULTS.md authored with --accent-2 decorative-only rationale; default contract sufficient, zero overrides, zero token tweaks; the 17-style WCAG AA contract is closed)
+Plan: 2 of 4 complete (2 remaining: 06-03 HomeView XL branch, 06-04 UAT)
+Last activity: 2026-05-05 -- Plan 06-02 complete (WebGL2 capability gate end-to-end: useXlCapability composable + Pinia store auto-fallback to L + XlFallbackToast mounted in App.vue; bundle audit verifies zero XL-stack libs imported anywhere; REQ-xl-capability-detection satisfied at the contract level)
 
 Progress: [██████████] 100%
 
@@ -35,9 +35,9 @@ Progress: [██████████] 100%
 
 **Velocity:**
 
-- Total plans completed: 16
-- Average duration: ~10.4 min
-- Total execution time: ~167 min
+- Total plans completed: 17
+- Average duration: ~10 min
+- Total execution time: ~170 min
 
 **By Phase:**
 
@@ -49,12 +49,12 @@ Progress: [██████████] 100%
 | 03-mercados-sobre-m | 2/2 done | ~24 min | ~12 min |
 | 04-tamanos-s-y-l | 3/3 done | ~24 min | ~8 min |
 | 05-tamano-xs-plain | 3/3 done | ~22 min | ~7.3 min |
-| 06-tamano-xl-unleashed | 1/4 done | ~9 min | ~9 min |
+| 06-tamano-xl-unleashed | 2/4 done | ~12 min | ~6 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 05-01 (check:contrast → XS, 16/16 via DEC-052, ~10 min), 05-02 (XS view branches across HomeView + 4 protected views, ~9 min), 05-03 (05-UAT.md sign-off doc, ~3 min), 06-01 (check:contrast → XL, 17/17 default contract, zero overrides, ~9 min)
-- Trend: per-level contrast plans speed up as the parser scaffolding is reused — XL was the easiest because dark-mode + neon clears every threshold by 4-7x and needs no override. DEC-041 (L) and DEC-052 (XS) override patterns were not invoked for XL — first level since M to pass on the default contract alone. Phase 6 plan-1 of 4 lands ahead of pace; remaining 3 plans cover WebGL2 gate (06-02), HomeView XL branch (06-03), and UAT (06-04).
+- Last 5 plans: 05-02 (XS view branches across HomeView + 4 protected views, ~9 min), 05-03 (05-UAT.md sign-off doc, ~3 min), 06-01 (check:contrast → XL, 17/17 default contract, zero overrides, ~9 min), 06-02 (WebGL2 capability gate end-to-end, ~3 min)
+- Trend: pure-Vue infrastructure plans land fastest when the codebase already has the extension points (Teleport-to-body in App.vue, single setLevel() in the store) — 06-02 came in at ~3 min because the contract mapped 1:1 onto existing patterns. Phase 6 is now half done; remaining 2 plans cover the HomeView XL view (06-03) and the operator UAT (06-04).
 
 *Updated after each plan completion*
 
@@ -127,6 +127,13 @@ Decisions from completed plan 04-03 (5×3 view-state UAT + reduced-motion + tran
 
 - **DEC-047** — `04-UAT.md` Section E (Sign-off) includes a DEC-041 escalation flag as the last checkbox: *"During the L walk-through, magenta accent text was observed rendering directly on the yellow body bg…"*. This closes the validation loop Plan 04-01 deferred — at sign-off, an unchecked flag validates DEC-041 (rendered surfaces match DECISION-LX-LOCKED); a checked flag activates the escalation path documented in `04-CONTRAST-RESULTS.md` (remove offending surface OR unlock magenta token for darkening).
 
+Decisions from completed plan 06-02 (WebGL2 capability gate + L fallback toast):
+
+- **DEC-064 (2026-05-05)** — XL → L fallback is owned by the Pinia style store, not the view layer. `setLevel(5)` calls `probeXlCapability()` and rewrites the target to `4` (L) when `supported === false` *before* assigning `level.value`. Views never observe an intermediate XL state on a non-WebGL2 browser; the user's intent (5) becomes the actual level (4) atomically. Honours LOCKED-002's single-mutation contract — same shape as DEC-024 (no store extension when one assignment suffices).
+- **DEC-065 (2026-05-05)** — Capability probe is memoized at module scope via a `let cached: XlCapabilityResult | null = null` outside both the plain `probeXlCapability()` function and the `useXlCapability()` composable. The store calls the plain function directly (no reactivity overhead); views call the composable (gets the same memoized result wrapped in a `ref`). One probe per session, idempotent, SSR-safe (`typeof document === 'undefined'` early return).
+- **DEC-066 (2026-05-05)** — `XlFallbackToast` lives inside `App.vue`'s `<Teleport to="body">` block alongside `ReconfigureOverlay` and `IntensityChooser`. Per-view mounts would drop the toast on route navigation. Mirrors DEC-016 (Reconfigurando overlay placement) and DEC-021 (App.vue owns global UI signals).
+- **DEC-067 (2026-05-05)** — Toast auto-dismiss timer is 3500 ms, owned by the store. Manual `dismissXlFallback()` clears the flag and cancels the timer atomically so user dismissal never leaves a dangling `setTimeout` that would re-clear an already-cleared flag. Component is purely declarative (watches the flag, renders).
+
 Decisions from completed plan 06-01 (extend check:contrast to XL):
 
 - **DEC-062 (2026-05-04)** — XL clears 5/5 on the default 5-pair contract with zero per-level override and zero token tweaks. Body 20.38:1, muted 8.77:1, large heading 20.38:1, accent CTA 15.42:1, accent inline 15.42:1. First level since M to need neither remediation nor structural override (DEC-041 L pattern, DEC-052 XS pattern, DEC-035 has-market derivation all not invoked). XL ships the default `.bright-cta` rule (#050505 on #00ffaa) and accent text inline on the dark body — both rendered surfaces map cleanly onto the default contract. The 17-style WCAG AA contract is now closed.
@@ -176,7 +183,7 @@ None.
 - **03-UAT.md operator sign-off** — Sections A (recognisability), B (48-state matrix), and C (transition smoke) require manual walk-through with `pnpm dev`. Once complete, Phase 3 can be marked fully done.
 - **04-UAT.md operator sign-off** — Sections A (5×3 view-state matrix), B (per-level highlights), C (reduced-motion sweep), D (transition smoke), and E (sign-off + DEC-041 escalation flag) require manual walk-through with `pnpm dev`. Once complete, Phase 4 is fully closed.
 - **05-UAT.md operator sign-off** — Sections A (5-cell XS view-state matrix), B (9 1999-vocab DevTools-verifiable highlights), C (reduced-motion sweep), D (M ↔ XS transition smoke), and E (sign-off + DEC-052 escalation flag) require manual walk-through with `pnpm dev`. Once complete, Phase 5 is fully closed and 16 of 17 styles will be visually validated — only XL (Phase 6) remains. Verified during 05-02: zero red-on-gray accent surfaces in the shipped XS markup, so DEC-052's escalation flag should remain unchecked at sign-off.
-- **06-UAT.md operator sign-off (pending plan 06-04)** — Phase 6 visual UAT will land after 06-02 (WebGL2 gate + L fallback) and 06-03 (HomeView XL branch). 06-01's contrast contract is closed automatically; only the visual XL view + WebGL2 fallback path require operator walk-through.
+- **06-UAT.md operator sign-off (pending plan 06-04)** — Phase 6 visual UAT will land after 06-03 (HomeView XL branch). 06-01's contrast contract is closed automatically; 06-02's WebGL2 fallback is implemented and ready for the operator's DevTools-emulation walk-through; only the visual XL Home view remains to be built before sign-off.
 
 Carried forward from §11 of the brief (acknowledged TBDs):
 
@@ -198,6 +205,6 @@ Carried forward from §11 of the brief (acknowledged TBDs):
 
 ## Session Continuity
 
-Last session: 2026-05-04
-Stopped at: Plan 06-01 complete — `scripts/check-contrast.cjs` extended to read `html.level-xl` from `src/styles/main.css` via the existing `parseLevelTokens('xl')` flow. Header / usage / `--levels-only` / OVERALL all updated to "17 themes (M + 12 markets + S + L + XS + XL)" — the entire SIZE catalog. XL passes 5/5 on the **default** 5-pair contract with zero per-level override (DEC-062): body 20.38:1, muted 8.77:1, large heading 20.38:1, accent CTA `#050505` on `#00ffaa` 15.42:1, accent inline `#00ffaa` on `#050505` 15.42:1. `--accent-2` (#ff00ff) explicitly excluded as decorative-only inside the gradient-clipped `xl-grad-text` rule (DEC-063). `06-CONTRAST-RESULTS.md` authored at `.planning/phases/06-tamano-xl-unleashed/06-CONTRAST-RESULTS.md` mirroring 05-CONTRAST-RESULTS.md format with full `--accent-2` rationale section and operator-readable final-state block. `pnpm check:contrast` exits 0 with `OVERALL 17/17 themes pass`; `pnpm type-check` and `pnpm build` both green. The 17-style WCAG AA contrast contract is closed — every style in the SIZE catalog passes the audit. Phase 6 next: 06-02 (WebGL2 gate + `useXlCapability()` + L fallback toast), 06-03 (HomeView XL branch — verbatim port of prototype lines 62-76), 06-04 (operator UAT).
-Resume file: .planning/phases/06-tamano-xl-unleashed/06-02-PLAN.md (next plan in the deck)
+Last session: 2026-05-05
+Stopped at: Plan 06-02 complete — WebGL2 capability gate end-to-end. `src/composables/useXlCapability.ts` authored with `probeXlCapability()` (plain function, module-scope memoized) + `useXlCapability()` (reactive composable wrapper) — pure DOM probe via `canvas.getContext('webgl2')`, throwaway canvas (zeroed in `finally`), SSR-safe, zero imports from three / @tresjs/core / phaser / tone / postprocessing. `src/stores/style.ts` extended: `setLevel(5)` calls the probe and rewrites the target to `4` (L) when WebGL2 missing (DEC-064); reactive `xlFallback: { active, reason }` exposed; `dismissXlFallback()` method clears flag + cancels timer; auto-clear after 3500 ms (DEC-067). `src/components/XlFallbackToast.vue` created with `role="status"`, `aria-live="polite"`, dismiss button, copy mentioning WebGL2 + L (Bold), token-driven styling via `var(--bg)` / `var(--ink)` / `var(--accent)` so it inherits the active level palette. App.vue mounts the toast inside the existing `<Teleport to="body">` block alongside `ReconfigureOverlay` (DEC-066). Bundle audit verifies zero `three / @tresjs/core / phaser / tone / postprocessing / cannon-es / @dimforge/rapier3d` in `package.json` or any source file in `src/` / `scripts/` — the lazy-load contract holds, Phase 7 will be the first plan to install the XL stack. `pnpm type-check` exits 0; `pnpm build` exits 0 (built in 2.47 s, no XL-stack chunks); `pnpm check:contrast` exits 0 with OVERALL 17/17. REQ-xl-capability-detection satisfied at the contract level. Phase 6 next: 06-03 (HomeView XL branch — verbatim port of prototype lines 62-76 with `xl-grad-text` wordmark + runtime label placeholder), 06-04 (operator UAT — visual XL walk-through + DevTools WebGL2-disabled negative path).
+Resume file: .planning/phases/06-tamano-xl-unleashed/06-03-PLAN.md (next plan in the deck)
