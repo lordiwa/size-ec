@@ -2,7 +2,7 @@
 
 **Gathered:** 2026-05-05
 **Status:** Ready for execution
-**Source:** Approved plan-mode brief (`~/.claude/plans/xs-tiene-que-ser-cheerful-eich.md`) + user clarification 2026-05-05 ("XS tiene que ser HTML puro como en 1999. CSS super básico porque en esa época no habían librerías modernas.")
+**Source:** Direct authoring from PROJECT.md DECISION-XS-RETRO + ROADMAP.md Phase 5 success criteria + ExistingData prototype (`00021082_04_*.js` Home XS branch) + user clarifications recorded inline as DEC-050 / DEC-051 below. (A plan-mode brief was used during planning but is a Claude-Code-harness artifact outside the repo and outside the GSD record; everything load-bearing is duplicated below in the locked decisions and refs.)
 
 <domain>
 ## Phase Boundary
@@ -66,7 +66,6 @@ What's deferred:
 - `.planning/PROJECT.md` — DECISION-XS-RETRO
 - `.planning/ROADMAP.md` — Phase 5 success criteria (lines ~95-106)
 - `.planning/REQUIREMENTS.md` — REQ-sizes-five (XS slice)
-- `~/.claude/plans/xs-tiene-que-ser-cheerful-eich.md` — approved plan-mode brief
 - `ExistingData/SIZE-design-brief-v4.md §6` — XS row of the size table
 - `ExistingData/prototype-extracted/00021082_04_*.js` lines 23-37 — Home XS branch verbatim source
 - `src/styles/main.css:121-144` — `html.level-xs` token block + link/visited overrides
