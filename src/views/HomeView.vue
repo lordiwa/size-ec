@@ -66,8 +66,28 @@ function pickMarket(id: string) {
     </div>
   </section>
 
+  <!-- XS (Plain) — Web 1999 literal: <center>, <marquee>, <hr>, Times New Roman.
+       Verbatim port of prototype home.jsx XS branch (00021082_04 lines 23-37).
+       DO NOT add Tailwind classes, flex/grid, border-radius, or box-shadow here. -->
+  <section v-else-if="style.code === 'xs'" class="home-xs" aria-live="polite">
+    <center>
+      <h1 class="home-xs-mark">★ SIZE ★</h1>
+      <p><i>Publicidad a tu medida.</i></p>
+      <marquee scrollamount="6" class="home-xs-marquee">
+        ✦ Somos tu <RotatingWord :words="words" :idx="wIdx" /> ✦ Bienvenido a SIZE Agency Inc. ✦
+      </marquee>
+      <hr />
+      <p class="home-xs-line">
+        Somos tu <b><RotatingWord :words="words" :idx="wIdx" /></b>.
+      </p>
+      <div class="home-xs-cta">
+        <MarketSelect :code="style.code" :value="style.marketId" @pick="pickMarket" />
+      </div>
+    </center>
+  </section>
+
   <!-- M (Crafted) — default editorial layout. Also serves as fallback for
-       XS / XL until their phases own the per-level branches, and renders when
+       XL until that phase owns the per-level branch, and renders when
        a market is active (style.code is null in that case). -->
   <section v-else class="home" aria-live="polite">
     <h1 class="size-wordmark huge home-mark">SIZE</h1>
@@ -217,5 +237,29 @@ function pickMarket(id: string) {
 
 @media (max-width: 720px) {
   .home-s-rotator { white-space: normal; }
+}
+
+/* ─────────── XS (Plain) — Web 1999 literal ─────────── */
+/* DEC-050 strict CSS vocabulary: only basic CSS allowed. */
+/* No flex, no grid, no transform, no transition, no border-radius, no box-shadow. */
+.home-xs {
+  padding: 12px;
+  font-family: "Times New Roman", serif;
+}
+.home-xs-mark {
+  font-size: 48px;
+  margin: 8px 0;
+}
+.home-xs-marquee {
+  background: #ffff00;
+  border: 2px solid #000;
+  padding: 4px;
+  max-width: 760px;
+}
+.home-xs-line {
+  white-space: nowrap;
+}
+.home-xs-cta {
+  margin-top: 16px;
 }
 </style>
