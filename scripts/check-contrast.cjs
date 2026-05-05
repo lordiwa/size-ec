@@ -9,15 +9,16 @@
  *   - S (Clean) level        — parsed from src/styles/main.css      html.level-s block
  *   - L (Bold)  level        — parsed from src/styles/main.css      html.level-l block
  *   - XS (Plain) level       — parsed from src/styles/main.css      html.level-xs block
+ *   - XL (Unleashed) level   — parsed from src/styles/main.css      html.level-xl block
  *
- * Total: 16 themes (M + 12 markets + S + L + XS).
+ * Total: 17 themes (M + 12 markets + S + L + XS + XL) — the full SIZE catalog.
  *
  * Pure Node — no third-party dependencies.
  *
  * Usage:
- *   node scripts/check-contrast.cjs                # M + 12 markets + S + L + XS (16 themes)
+ *   node scripts/check-contrast.cjs                # M + 12 markets + S + L + XS + XL (17 themes)
  *   node scripts/check-contrast.cjs --markets-only # 12 markets only
- *   node scripts/check-contrast.cjs --levels-only  # M + S + L + XS only (4 themes)
+ *   node scripts/check-contrast.cjs --levels-only  # M + S + L + XS + XL only (5 themes)
  *   pnpm check:contrast
  *
  * Exit 0 if all required pairs in every theme meet their thresholds; non-zero otherwise.
@@ -743,6 +744,41 @@ if (!MARKETS_ONLY) {
     xsWithOverrides
   );
   themeResults.push({ id: 'XS', failCount });
+  console.log('');
+}
+
+// ── XL (Unleashed) level block ────────────────────────────────────────────────
+// Skipped with --markets-only.
+if (!MARKETS_ONLY) {
+  const xlTokens = parseLevelTokens(cssSrc, 'xl');
+  // DEC-006 / DECISION-XL-PHASER: XL ships dark-mode neon — --bg #050505,
+  // --ink #ffffff, --muted #aaaaaa, --accent #00ffaa (neon green), and a
+  // second decorative token --accent-2 #ff00ff (magenta). The `xl-grad-text`
+  // rule in main.css references --accent-2 ONLY inside a linear-gradient that
+  // is then `-webkit-background-clip: text` — the rendered text is a moving
+  // gradient interpolating from --accent through --accent-2 back to --accent,
+  // never a single hex value. A body-pair contrast check on --accent-2 would
+  // be meaningless: the hue at any given pixel depends on the gradient stop +
+  // animation phase, and gradient text is decorative-only by spec (the
+  // SIZE wordmark + rotator span on Home XL).
+  //
+  // Therefore the XL contract uses the default 5-pair contract on --accent
+  // alone:
+  //   - body          (INK on BG)         = #ffffff on #050505 → ~20:1 PASS
+  //   - muted         (MUTED on BG)       = #aaaaaa on #050505 → ~9:1  PASS
+  //   - large heading (INK on BG)         = #ffffff on #050505 → ~20:1 PASS
+  //   - accent CTA    (BG on ACCENT)      = #050505 on #00ffaa → ~17:1 PASS
+  //   - accent inline (ACCENT on BG)      = #00ffaa on #050505 → ~17:1 PASS
+  //
+  // No per-level override is needed: XL ships the default `.bright-cta` rule
+  // (BG on ACCENT) and accent text renders inline on the dark body. Token
+  // values stay LOCKED per DEC-006 / DECISION-XL-PHASER. --accent-2's
+  // decorative-only role is documented in 06-CONTRAST-RESULTS.md.
+  const { failCount } = runLevel(
+    'SIZE — XL Unleashed  | WCAG AA contrast check',
+    xlTokens
+  );
+  themeResults.push({ id: 'XL', failCount });
   console.log('');
 }
 
