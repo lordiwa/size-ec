@@ -82,7 +82,7 @@ function pickMarket(id: string) {
       <div class="home-xl-block">
         <p class="home-xl-tag">Publicidad a tu medida.</p>
         <p class="home-xl-rotator">
-          Somos tu <span class="xl-grad-text"><RotatingWord :words="words" :idx="wIdx" /></span>.
+          Somos tu <span class="home-xl-rotator-word"><RotatingWord :words="words" :idx="wIdx" /></span>.
         </p>
         <div class="home-xl-cta">
           <MarketSelect :code="style.code" :value="style.marketId" @pick="pickMarket" />
@@ -330,6 +330,15 @@ function pickMarket(id: string) {
   font-family: var(--font-display);
   font-size: clamp(32px, 5.5vw, 72px);
   white-space: nowrap;
+}
+/* Solid neon-green accent on the rotating word.
+   `xl-grad-text` does NOT propagate `-webkit-background-clip: text`
+   to <RotatingWord>'s absolute-positioned `.rw-word` descendant —
+   the inherited `color: transparent` left the word invisible on dark.
+   Solid #00ffaa on #050505 ≈ 17:1 PASS WCAG AA. */
+.home-xl-rotator-word {
+  color: var(--accent);
+  font-style: italic;
 }
 .home-xl-cta {
   margin-top: 40px;
