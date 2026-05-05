@@ -4,6 +4,7 @@ import { useStyleStore } from '@/stores/style'
 import { SIZE_HOME_WORDS } from '@/data/size-data'
 import RotatingWord from '@/components/RotatingWord.vue'
 import MarketSelect from '@/components/MarketSelect.vue'
+import LMarquee from '@/components/LMarquee.vue'
 
 const style = useStyleStore()
 
@@ -29,10 +30,46 @@ function pickMarket(id: string) {
 </script>
 
 <template>
-  <!-- Default M (Crafted) home layout: SIZE huge wordmark + 12-col grid with
-       italic serif tagline + display "Somos tu …" + dropdown.
-       Per-level branches (XS / S / L / XL) ship in their respective phases. -->
-  <section class="home" aria-live="polite">
+  <!-- L (Bold) — brutalist: marquee top, huge SIZE, 2-col grid (Publicidad / Somos tu),
+       magenta accent, dropdown below the rotator. Matches prototype home.jsx L branch. -->
+  <section v-if="style.code === 'l'" class="home-l" aria-live="polite">
+    <LMarquee />
+    <h1 class="size-wordmark huge home-l-mark">SIZE</h1>
+    <div class="home-l-grid">
+      <div class="home-l-tag">
+        Publicidad <span class="home-l-tag-accent">a tu medida.</span>
+      </div>
+      <div class="home-l-rotator-block">
+        <p class="home-l-rotator">
+          Somos tu <RotatingWord :words="words" :idx="wIdx" />.
+        </p>
+        <div class="home-l-cta-block">
+          <MarketSelect :code="style.code" :value="style.marketId" @pick="pickMarket" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S (Clean) — centered Apple-clean: huge SIZE, muted tagline, blue accent rotator.
+       Matches prototype home.jsx S branch. -->
+  <section v-else-if="style.code === 's'" class="home-s" aria-live="polite">
+    <h1 class="home-s-mark">SIZE</h1>
+    <p class="home-s-promise">Publicidad a tu medida.</p>
+    <p class="home-s-rotator">
+      Somos tu
+      <span class="home-s-accent">
+        <RotatingWord :words="words" :idx="wIdx" />
+      </span>.
+    </p>
+    <div class="home-s-cta-block">
+      <MarketSelect :code="style.code" :value="style.marketId" @pick="pickMarket" />
+    </div>
+  </section>
+
+  <!-- M (Crafted) — default editorial layout. Also serves as fallback for
+       XS / XL until their phases own the per-level branches, and renders when
+       a market is active (style.code is null in that case). -->
+  <section v-else class="home" aria-live="polite">
     <h1 class="size-wordmark huge home-mark">SIZE</h1>
 
     <div class="home-grid">
@@ -55,6 +92,7 @@ function pickMarket(id: string) {
 </template>
 
 <style scoped>
+/* ─────────── M (default) ─────────── */
 .home {
   padding: 10vh 6vw 6vh;
   min-height: calc(100dvh - 88px);
@@ -98,5 +136,86 @@ function pickMarket(id: string) {
   .home-grid { grid-template-columns: 1fr; }
   .home-block { grid-column: 1; }
   .home-rotator { white-space: normal; }
+}
+
+/* ─────────── L (Bold) ─────────── */
+.home-l {
+  padding: 40px 6vw;
+  min-height: calc(100dvh - 88px);
+}
+.home-l-mark {
+  margin: 0;
+  font-family: var(--font-display);
+  text-align: left;
+}
+.home-l-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 48px;
+  align-items: end;
+}
+.home-l-tag {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 72px);
+  text-transform: uppercase;
+  line-height: 0.9;
+  color: #000;
+}
+.home-l-tag-accent {
+  background: #000;
+  color: #ffee00;
+  padding: 0 8px;
+}
+.home-l-rotator-block { font-weight: 600; }
+.home-l-rotator {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6vw, 84px);
+  text-transform: uppercase;
+  line-height: 1;
+  color: #ff00aa;
+  white-space: nowrap;
+  margin: 0;
+}
+.home-l-cta-block { margin-top: 24px; }
+
+@media (max-width: 720px) {
+  .home-l-grid { grid-template-columns: 1fr; }
+  .home-l-rotator { white-space: normal; }
+}
+
+/* ─────────── S (Clean) ─────────── */
+.home-s {
+  padding: 10vh 6vw;
+  text-align: center;
+  min-height: calc(100dvh - 88px);
+}
+.home-s-mark {
+  font-size: clamp(80px, 16vw, 220px);
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  margin: 0;
+  line-height: 0.85;
+}
+.home-s-promise {
+  font-size: 24px;
+  color: var(--muted);
+  margin-top: 24px;
+}
+.home-s-rotator {
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 600;
+  margin-top: 32px;
+  white-space: nowrap;
+}
+.home-s-accent { color: var(--accent); }
+.home-s-cta-block {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 720px) {
+  .home-s-rotator { white-space: normal; }
 }
 </style>
