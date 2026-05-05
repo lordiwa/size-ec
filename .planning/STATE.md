@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Phase 05 complete — operator UAT pending
-stopped_at: "Plan 05-03 complete. Phase 5 plan deck closed: 05-UAT.md authored (5-cell XS view-state matrix + 9 1999-vocab DevTools-verifiable highlights + reduced-motion sweep + M ↔ XS transition smoke + sign-off table with DEC-052 escalation flag). 23 checkboxes total, mirrors 04-UAT.md sections A/B/C/D/E + automated gates + DEC-### escalation flag, references 05-CONTRAST-RESULTS.md explicitly. Operator UAT walk-through is the only remaining item before Phase 5 is fully closed; Phase 6 (XL) planning is unblocked structurally — the plan-deck artifact contract for Phase 5 is complete."
-last_updated: "2026-05-05T03:30:00Z"
-last_activity: 2026-05-05 -- Plan 05-03 complete
+status: Executing Phase 06
+stopped_at: "Plan 06-01 complete. scripts/check-contrast.cjs extended to XL (17 themes total — full SIZE catalog); 06-CONTRAST-RESULTS.md authored with --accent-2 decorative-only rationale (DEC-063). XL passes 5/5 on the default 5-pair contract with zero overrides and zero token tweaks (DEC-062): body 20.38:1, muted 8.77:1, large 20.38:1, CTA 15.42:1, inline 15.42:1. pnpm check:contrast exits 0 with OVERALL 17/17. type-check + build green. The 17-style WCAG AA contract is closed."
+last_updated: "2026-05-04T04:23:42Z"
+last_activity: 2026-05-04 -- Plan 06-01 complete
 progress:
   total_phases: 9
   completed_phases: 3
-  total_plans: 15
-  completed_plans: 15
+  total_plans: 16
+  completed_plans: 16
   percent: 100
 ---
 
@@ -21,13 +21,13 @@ progress:
 See: `.planning/PROJECT.md` (updated 2026-05-03)
 
 **Core value:** A visitor can pick one of 17 mutually exclusive styles (12 markets + 5 creative sizes) and see the entire site reshape itself — legibly, in place, without reload — to that single style.
-**Current focus:** Phase 05 — tamaño XS Plain
+**Current focus:** Phase 06 — tamaño XL Unleashed
 
 ## Current Position
 
-Phase: 05 (tamano-xs-plain) — PLAN DECK COMPLETE (operator UAT pending)
-Plan: 3 of 3 complete
-Last activity: 2026-05-05 -- Plan 05-03 complete (05-UAT.md authored — 5-cell XS matrix + 9 highlights + reduced-motion + transition + DEC-052 escalation flag; 23 checkboxes; mirrors 04-UAT.md)
+Phase: 06 (tamano-xl-unleashed) — IN PROGRESS
+Plan: 1 of 4 complete (3 remaining: 06-02 WebGL2 gate + L fallback, 06-03 HomeView XL branch, 06-04 UAT)
+Last activity: 2026-05-04 -- Plan 06-01 complete (check:contrast extended to XL — 17/17 themes pass; 06-CONTRAST-RESULTS.md authored with --accent-2 decorative-only rationale; default contract sufficient, zero overrides, zero token tweaks; the 17-style WCAG AA contract is closed)
 
 Progress: [██████████] 100%
 
@@ -35,9 +35,9 @@ Progress: [██████████] 100%
 
 **Velocity:**
 
-- Total plans completed: 15
-- Average duration: ~10.5 min
-- Total execution time: ~158 min
+- Total plans completed: 16
+- Average duration: ~10.4 min
+- Total execution time: ~167 min
 
 **By Phase:**
 
@@ -49,11 +49,12 @@ Progress: [██████████] 100%
 | 03-mercados-sobre-m | 2/2 done | ~24 min | ~12 min |
 | 04-tamanos-s-y-l | 3/3 done | ~24 min | ~8 min |
 | 05-tamano-xs-plain | 3/3 done | ~22 min | ~7.3 min |
+| 06-tamano-xl-unleashed | 1/4 done | ~9 min | ~9 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 04-03 (04-UAT.md sign-off doc, ~2 min), 05-01 (check:contrast → XS, 16/16 via DEC-052, ~10 min), 05-02 (XS view branches across HomeView + 4 protected views, ~9 min), 05-03 (05-UAT.md sign-off doc, ~3 min)
-- Trend: per-level branch plans land in ~9-14 min; UAT doc plans land in ~2-3 min once the 04-UAT.md mirror exists. The sibling-v-if + `<template v-else>` pattern from 05-02 reproduces cleanly across the 4 protected views with zero extra plumbing. DEC-050 vocabulary scan (post-task automated check) catches CSS regressions cheaply. UAT plans inherit the section A/B/C/D/E + DEC-### escalation flag scaffold from the prior phase's UAT.
+- Last 5 plans: 05-01 (check:contrast → XS, 16/16 via DEC-052, ~10 min), 05-02 (XS view branches across HomeView + 4 protected views, ~9 min), 05-03 (05-UAT.md sign-off doc, ~3 min), 06-01 (check:contrast → XL, 17/17 default contract, zero overrides, ~9 min)
+- Trend: per-level contrast plans speed up as the parser scaffolding is reused — XL was the easiest because dark-mode + neon clears every threshold by 4-7x and needs no override. DEC-041 (L) and DEC-052 (XS) override patterns were not invoked for XL — first level since M to pass on the default contract alone. Phase 6 plan-1 of 4 lands ahead of pace; remaining 3 plans cover WebGL2 gate (06-02), HomeView XL branch (06-03), and UAT (06-04).
 
 *Updated after each plan completion*
 
@@ -126,6 +127,11 @@ Decisions from completed plan 04-03 (5×3 view-state UAT + reduced-motion + tran
 
 - **DEC-047** — `04-UAT.md` Section E (Sign-off) includes a DEC-041 escalation flag as the last checkbox: *"During the L walk-through, magenta accent text was observed rendering directly on the yellow body bg…"*. This closes the validation loop Plan 04-01 deferred — at sign-off, an unchecked flag validates DEC-041 (rendered surfaces match DECISION-LX-LOCKED); a checked flag activates the escalation path documented in `04-CONTRAST-RESULTS.md` (remove offending surface OR unlock magenta token for darkening).
 
+Decisions from completed plan 06-01 (extend check:contrast to XL):
+
+- **DEC-062 (2026-05-04)** — XL clears 5/5 on the default 5-pair contract with zero per-level override and zero token tweaks. Body 20.38:1, muted 8.77:1, large heading 20.38:1, accent CTA 15.42:1, accent inline 15.42:1. First level since M to need neither remediation nor structural override (DEC-041 L pattern, DEC-052 XS pattern, DEC-035 has-market derivation all not invoked). XL ships the default `.bright-cta` rule (#050505 on #00ffaa) and accent text inline on the dark body — both rendered surfaces map cleanly onto the default contract. The 17-style WCAG AA contract is now closed.
+- **DEC-063 (2026-05-04)** — `--accent-2` (#ff00ff) is intentionally excluded from XL's body-pair contract because it is consumed only inside the `html.level-xl .xl-grad-text` rule's `linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent))` + `-webkit-background-clip: text` composition. The rendered text colour is a moving function of position + time (animated by `xl-grad` 6s linear infinite), never a single hex value. A body-pair contrast check on `--accent-2` would be meaningless. Captured in 06-CONTRAST-RESULTS.md for auditability; if a future XL view binds `--accent-2` to a flat fill (non-gradient surface), the contract is re-evaluated then. Same shape as M's `--accent-2: #c9a961` — declared for ornamental purposes and outside the contract.
+
 Decisions from completed plan 05-01 (extend check:contrast to XS):
 
 - **DEC-052** — XS gets per-level CTA + inline pair overrides reflecting DECISION-XS-RETRO + DEC-050's actual rendered surfaces: CTA = LINK on BG (`#0000ee` on `#c0c0c0` = 5.17:1, matching `html.level-xs a` rule); inline = INK on marquee `#FFFF00` (`#000` on `#ffff00` = 19.56:1, matching Home XS `<marquee style="background:#FFFF00">`). Token values (`#c0c0c0` / `#000` / `#444` / `#ff0000` / `#0000ee` / `#551a8b`) NOT modified. The accent token `#ff0000` is declared in `html.level-xs` for token-system uniformity but is not consumed as a colour by any rendered XS surface (verified against prototype `home.jsx` XS branch + `.l-xs-button` rule). DEC-052 is the third instance of the rendered-surface-not-default-rule pattern (after DEC-035 has-market muted derivation and DEC-041 L overrides). Operator escalation path documented in `05-CONTRAST-RESULTS.md` if 05-03 UAT contradicts the override.
@@ -170,6 +176,7 @@ None.
 - **03-UAT.md operator sign-off** — Sections A (recognisability), B (48-state matrix), and C (transition smoke) require manual walk-through with `pnpm dev`. Once complete, Phase 3 can be marked fully done.
 - **04-UAT.md operator sign-off** — Sections A (5×3 view-state matrix), B (per-level highlights), C (reduced-motion sweep), D (transition smoke), and E (sign-off + DEC-041 escalation flag) require manual walk-through with `pnpm dev`. Once complete, Phase 4 is fully closed.
 - **05-UAT.md operator sign-off** — Sections A (5-cell XS view-state matrix), B (9 1999-vocab DevTools-verifiable highlights), C (reduced-motion sweep), D (M ↔ XS transition smoke), and E (sign-off + DEC-052 escalation flag) require manual walk-through with `pnpm dev`. Once complete, Phase 5 is fully closed and 16 of 17 styles will be visually validated — only XL (Phase 6) remains. Verified during 05-02: zero red-on-gray accent surfaces in the shipped XS markup, so DEC-052's escalation flag should remain unchecked at sign-off.
+- **06-UAT.md operator sign-off (pending plan 06-04)** — Phase 6 visual UAT will land after 06-02 (WebGL2 gate + L fallback) and 06-03 (HomeView XL branch). 06-01's contrast contract is closed automatically; only the visual XL view + WebGL2 fallback path require operator walk-through.
 
 Carried forward from §11 of the brief (acknowledged TBDs):
 
@@ -191,6 +198,6 @@ Carried forward from §11 of the brief (acknowledged TBDs):
 
 ## Session Continuity
 
-Last session: 2026-05-05
-Stopped at: Plan 05-03 complete — Phase 5 plan deck closed. `05-UAT.md` authored at `.planning/phases/05-tamano-xs-plain/05-UAT.md` with 23 checkboxes total: section A (5-cell XS view-state matrix — Home / Servicios / Quiénes somos / Cliente / Contacto), section B (9 1999-vocab DevTools-verifiable highlights — Times New Roman renders, `<marquee>` scrolls, Servicios `<TABLE>` not `<DIV>` with grid, Quiénes somos team grid `<TABLE>`, Cliente per-cliente `<table border="1">`, Contacto 2-col `<table>` + `<table>`-aligned form, RouterLink → plain blue underlined `<a>`, `<table>` borders 1px solid global vocab spot-check, footer Win95 bevel responds to click), section C (reduced-motion sweep — marquee freezes, rotator keeps swapping, Reconfigurando still flashes, footer bevel still depresses), section D (M → XS → M transition smoke — ~600ms body fade + ~900ms Reconfigurando overlay, no full reload), section E (sign-off table + 4 automated gates + DEC-052 escalation flag). References `05-CONTRAST-RESULTS.md` explicitly; mirrors `04-UAT.md` structure verbatim. Plan verify regex passed (23 boxes ≥ 12 required; all 11 keywords present). Operator UAT walk-through is the only remaining item before Phase 5 is fully closed; Phase 6 (XL) planning is unblocked structurally.
-Resume file: .planning/phases/06-tamano-xl-unleashed/06-CONTEXT.md (to be authored on next /gsd-plan-phase 6 invocation)
+Last session: 2026-05-04
+Stopped at: Plan 06-01 complete — `scripts/check-contrast.cjs` extended to read `html.level-xl` from `src/styles/main.css` via the existing `parseLevelTokens('xl')` flow. Header / usage / `--levels-only` / OVERALL all updated to "17 themes (M + 12 markets + S + L + XS + XL)" — the entire SIZE catalog. XL passes 5/5 on the **default** 5-pair contract with zero per-level override (DEC-062): body 20.38:1, muted 8.77:1, large heading 20.38:1, accent CTA `#050505` on `#00ffaa` 15.42:1, accent inline `#00ffaa` on `#050505` 15.42:1. `--accent-2` (#ff00ff) explicitly excluded as decorative-only inside the gradient-clipped `xl-grad-text` rule (DEC-063). `06-CONTRAST-RESULTS.md` authored at `.planning/phases/06-tamano-xl-unleashed/06-CONTRAST-RESULTS.md` mirroring 05-CONTRAST-RESULTS.md format with full `--accent-2` rationale section and operator-readable final-state block. `pnpm check:contrast` exits 0 with `OVERALL 17/17 themes pass`; `pnpm type-check` and `pnpm build` both green. The 17-style WCAG AA contrast contract is closed — every style in the SIZE catalog passes the audit. Phase 6 next: 06-02 (WebGL2 gate + `useXlCapability()` + L fallback toast), 06-03 (HomeView XL branch — verbatim port of prototype lines 62-76), 06-04 (operator UAT).
+Resume file: .planning/phases/06-tamano-xl-unleashed/06-02-PLAN.md (next plan in the deck)

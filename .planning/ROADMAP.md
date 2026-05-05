@@ -119,7 +119,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. Style transitions into XL complete in ~600ms perceived (heavy assets stream in afterwards), and `prefers-reduced-motion` blocks or attenuates motion in XL.
   5. End-to-end bundle audit confirms aggressive code-splitting per intensity level and per market (CON-004): an XS / S / M visitor never downloads L or XL stacks.
   6. **Phaser 3 is locked to DECISION-XL-PHASER in PROJECT.md** as a first-class capability for embedded mini-games, not just decorative WebGL. Three.js + Tone.js + postprocessing remain auxiliary. Phaser is lazy-loaded only when active style is XL.
-**Plans**: TBD
+**Plans**: 4 plans (1/4 complete)
+  - [x] 06-01-PLAN.md — Extend pnpm check:contrast to XL tokens (17/17 WCAG AA via default contract; --accent-2 decorative-only per DEC-063)
+  - [ ] 06-02-PLAN.md — useXlCapability composable + L fallback + toast (WebGL2 gate)
+  - [ ] 06-03-PLAN.md — HomeView XL branch (verbatim port of prototype lines 62-76, CSS-only)
+  - [ ] 06-04-PLAN.md — UAT sign-off + WebGL2-disabled negative path
 **UI hint**: yes
 
 
@@ -180,7 +184,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 3. Mercados sobre M | 0/TBD | Not started | - |
 | 4. Tamaños S y L | 3/3 | Code complete (UAT pending) | - |
 | 5. Tamaño XS (Plain) | 3/3 | Code complete (UAT pending) | - |
-| 6. Tamaño XL (Unleashed) | 0/TBD | Not started | - |
+| 6. Tamaño XL (Unleashed) | 1/4 | In progress | - |
 | 7. Contenido | 0/TBD | Not started | - |
 | 8. Integraciones | 0/TBD | Not started | - |
 | 9. Cierre + Despliegue | 1/4 | Not started | - |
