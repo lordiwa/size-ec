@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Executing Phase 05 — tamaño XS Plain
-stopped_at: "Plan 05-02 complete. XS treatment shipped across all 5 protected views: HomeView verbatim port from prototype (00021082_04 lines 23-37) — <center>, ★ SIZE ★, italic tagline, <marquee> #FFFF00, <hr/>, RotatingWord, MarketSelect — between the existing S and M-default branches (order L → S → XS → M-default). The 4 protected views (Servicios, QuienesSomos, Cliente, Contacto) use sibling v-if=\"style.code === 'xs'\" with M/S/L wrapped in <template v-else>: Servicios renders all 11 services as a single <table border=\"1\">; QuienesSomos uses a 4-column <table> team grid (driven by teamRows computed) + clients <table>; Cliente renders one <table border=\"1\"> per cliente listing trabajos as rows; Contacto uses a 2-column <table> for Canales/Chatbot + a 1999 <form @submit.prevent> with table-aligned inputs. All 5 new XS scoped CSS blocks honor DEC-050 vocabulary verbatim — zero matches for display:flex/grid, border-radius, box-shadow, transform, transition, color-mix, gap. DEC-053 (sibling v-if pattern), DEC-054 (nested <table> photo frame instead of inline-block span), DEC-055 (@submit.prevent no-op form). All four gates green: type-check exit 0, build exit 0, check:contrast OVERALL 16/16. Plan 05-03 (XS UAT) is next."
-last_updated: "2026-05-05T03:12:00Z"
-last_activity: 2026-05-05 -- Plan 05-02 complete
+status: Phase 05 complete — operator UAT pending
+stopped_at: "Plan 05-03 complete. Phase 5 plan deck closed: 05-UAT.md authored (5-cell XS view-state matrix + 9 1999-vocab DevTools-verifiable highlights + reduced-motion sweep + M ↔ XS transition smoke + sign-off table with DEC-052 escalation flag). 23 checkboxes total, mirrors 04-UAT.md sections A/B/C/D/E + automated gates + DEC-### escalation flag, references 05-CONTRAST-RESULTS.md explicitly. Operator UAT walk-through is the only remaining item before Phase 5 is fully closed; Phase 6 (XL) planning is unblocked structurally — the plan-deck artifact contract for Phase 5 is complete."
+last_updated: "2026-05-05T03:30:00Z"
+last_activity: 2026-05-05 -- Plan 05-03 complete
 progress:
   total_phases: 9
   completed_phases: 3
   total_plans: 15
-  completed_plans: 14
-  percent: 93
+  completed_plans: 15
+  percent: 100
 ---
 
 # Project State
@@ -25,19 +25,19 @@ See: `.planning/PROJECT.md` (updated 2026-05-03)
 
 ## Current Position
 
-Phase: 05 (tamano-xs-plain) — IN PROGRESS
-Plan: 2 of 3 complete
-Last activity: 2026-05-05 -- Plan 05-02 complete (XS view branches shipped across all 5 protected views; HomeView verbatim port + 4 sibling-v-if branches; DEC-053/054/055 logged; all four gates green)
+Phase: 05 (tamano-xs-plain) — PLAN DECK COMPLETE (operator UAT pending)
+Plan: 3 of 3 complete
+Last activity: 2026-05-05 -- Plan 05-03 complete (05-UAT.md authored — 5-cell XS matrix + 9 highlights + reduced-motion + transition + DEC-052 escalation flag; 23 checkboxes; mirrors 04-UAT.md)
 
-Progress: [█████████▎] 93%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 14
-- Average duration: ~11 min
-- Total execution time: ~155 min
+- Total plans completed: 15
+- Average duration: ~10.5 min
+- Total execution time: ~158 min
 
 **By Phase:**
 
@@ -48,12 +48,12 @@ Progress: [█████████▎] 93%
 | 02-mensaje-y-contacto | 2/2 done | ~25 min | ~12 min |
 | 03-mercados-sobre-m | 2/2 done | ~24 min | ~12 min |
 | 04-tamanos-s-y-l | 3/3 done | ~24 min | ~8 min |
-| 05-tamano-xs-plain | 2/3 done | ~19 min | ~9.5 min |
+| 05-tamano-xs-plain | 3/3 done | ~22 min | ~7.3 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 04-02 (HomeView per-level branches + LMarquee + L card treatments, ~14 min), 04-03 (04-UAT.md sign-off doc, ~2 min), 05-01 (check:contrast → XS, 16/16 via DEC-052, ~10 min), 05-02 (XS view branches across HomeView + 4 protected views, ~9 min)
-- Trend: per-level branch plans land in ~9-14 min; the sibling-v-if + <template v-else> pattern from 05-02 reproduces cleanly across the 4 protected views with zero extra plumbing. DEC-050 vocabulary scan (post-task automated check) catches CSS regressions cheaply.
+- Last 5 plans: 04-03 (04-UAT.md sign-off doc, ~2 min), 05-01 (check:contrast → XS, 16/16 via DEC-052, ~10 min), 05-02 (XS view branches across HomeView + 4 protected views, ~9 min), 05-03 (05-UAT.md sign-off doc, ~3 min)
+- Trend: per-level branch plans land in ~9-14 min; UAT doc plans land in ~2-3 min once the 04-UAT.md mirror exists. The sibling-v-if + `<template v-else>` pattern from 05-02 reproduces cleanly across the 4 protected views with zero extra plumbing. DEC-050 vocabulary scan (post-task automated check) catches CSS regressions cheaply. UAT plans inherit the section A/B/C/D/E + DEC-### escalation flag scaffold from the prior phase's UAT.
 
 *Updated after each plan completion*
 
@@ -130,6 +130,10 @@ Decisions from completed plan 05-01 (extend check:contrast to XS):
 
 - **DEC-052** — XS gets per-level CTA + inline pair overrides reflecting DECISION-XS-RETRO + DEC-050's actual rendered surfaces: CTA = LINK on BG (`#0000ee` on `#c0c0c0` = 5.17:1, matching `html.level-xs a` rule); inline = INK on marquee `#FFFF00` (`#000` on `#ffff00` = 19.56:1, matching Home XS `<marquee style="background:#FFFF00">`). Token values (`#c0c0c0` / `#000` / `#444` / `#ff0000` / `#0000ee` / `#551a8b`) NOT modified. The accent token `#ff0000` is declared in `html.level-xs` for token-system uniformity but is not consumed as a colour by any rendered XS surface (verified against prototype `home.jsx` XS branch + `.l-xs-button` rule). DEC-052 is the third instance of the rendered-surface-not-default-rule pattern (after DEC-035 has-market muted derivation and DEC-041 L overrides). Operator escalation path documented in `05-CONTRAST-RESULTS.md` if 05-03 UAT contradicts the override.
 
+Decisions from completed plan 05-03 (5-cell XS UAT + DEC-052 escalation flag):
+
+- **Mirror discipline (Phase 5)** — `05-UAT.md` follows `04-UAT.md`'s section structure verbatim (A/B/C/D/E + automated gates + DEC-### escalation flag) so an operator who signed off Phase 4 walks Phase 5 with the same vocabulary and procedure. Matrix shape variation: 5×1 single-column (XS only) vs. Phase 4's 5×3 (S/M/L). Highlights count expanded to 9 (vs. Phase 4's 7) because DEC-050's HTML-vocabulary-discipline contract requires DevTools-verifiable assertions (`<TABLE>` tag not `<DIV>` with grid, Times New Roman, link styling, marquee surface, footer Win95 bevel) in addition to per-view layout markers. The DEC-052 escalation flag at sign-off mirrors DEC-047's pattern (Phase 4 DEC-041 escalation flag) — closes the validation loop 05-01 deferred to operator walk-through.
+
 Decisions from completed plan 05-02 (XS view branches across 5 protected views):
 
 - **DEC-053 (2026-05-05)** — Sibling `v-if="style.code === 'xs'"` pattern with `<template v-else>` wrap is the standard for the 4 protected views (Servicios, QuienesSomos, Cliente, Contacto). HomeView remains the exception with `v-else-if="style.code === 'xs'"` because Phase 4 already established a per-level branch chain (L → S → M-default) there. Final HomeView order: L → S → XS → M-default (per D-01).
@@ -161,11 +165,11 @@ None.
 
 ### Blockers/Concerns
 
-**Active (Phase 03 + Phase 04 + Phase 05 — UATs pending; Phase 05 mid-flight):**
+**Active (Phase 03 + Phase 04 + Phase 05 — operator UATs pending across all three; plan decks complete):**
 
 - **03-UAT.md operator sign-off** — Sections A (recognisability), B (48-state matrix), and C (transition smoke) require manual walk-through with `pnpm dev`. Once complete, Phase 3 can be marked fully done.
 - **04-UAT.md operator sign-off** — Sections A (5×3 view-state matrix), B (per-level highlights), C (reduced-motion sweep), D (transition smoke), and E (sign-off + DEC-041 escalation flag) require manual walk-through with `pnpm dev`. Once complete, Phase 4 is fully closed.
-- **Phase 5 in-flight** — 05-01 (check:contrast → XS, 16/16 via DEC-052) and 05-02 (XS view branches across HomeView + 4 protected views, with DEC-053/054/055 authored) shipped. 05-03 (XS UAT — 5-cell view-state matrix + reduced-motion sweep + transition smoke + DEC-052 escalation flag) is next. Verified during 05-02: zero red-on-gray accent surfaces in the shipped XS markup, so DEC-052's escalation flag is not currently triggered — 05-03 confirms this in operator walk-through.
+- **05-UAT.md operator sign-off** — Sections A (5-cell XS view-state matrix), B (9 1999-vocab DevTools-verifiable highlights), C (reduced-motion sweep), D (M ↔ XS transition smoke), and E (sign-off + DEC-052 escalation flag) require manual walk-through with `pnpm dev`. Once complete, Phase 5 is fully closed and 16 of 17 styles will be visually validated — only XL (Phase 6) remains. Verified during 05-02: zero red-on-gray accent surfaces in the shipped XS markup, so DEC-052's escalation flag should remain unchecked at sign-off.
 
 Carried forward from §11 of the brief (acknowledged TBDs):
 
@@ -188,5 +192,5 @@ Carried forward from §11 of the brief (acknowledged TBDs):
 ## Session Continuity
 
 Last session: 2026-05-05
-Stopped at: Plan 05-02 complete — XS treatment shipped across all 5 protected views. HomeView received a verbatim `v-else-if="style.code === 'xs'"` port from prototype 00021082_04 lines 23-37 (`<center>` ★ SIZE ★ heading + italic tagline + `<marquee>` #FFFF00 + `<hr/>` + `Somos tu [rotator]` + MarketSelect) inserted between S and M-default → final order L → S → XS → M-default. The 4 protected views (Servicios, QuienesSomos, Cliente, Contacto) received sibling `v-if="style.code === 'xs'"` branches above their existing markup, with the M/S/L blocks wrapped in a single `<template v-else>`: Servicios renders all 11 canonical services as a `<table border="1">`; QuienesSomos uses a 4-column `<table>` team grid driven by a `teamRows` computed (handles 4-member team today + future 4×5 = 20) with nested `<table>` photo frames, plus a clients `<table>`; Cliente uses an `xsClients` computed (single cliente or all 3 SIZE_CLIENTS) and renders one `<table border="1">` per cliente listing trabajos as rows; Contacto uses a 2-column `<table>` for Canales / Chatbot (TBD Phase 8 placeholder) plus a 1999 `<form @submit.prevent>` with table-aligned `<label>` / `<input>` / `<textarea>` rows and an `<input type="submit">` no-op. All 5 new XS scoped CSS blocks honor DEC-050 vocabulary verbatim — automated post-task scan confirmed zero matches for `display:flex/grid`, `border-radius`, `box-shadow`, `transform:`, `transition:`, `color-mix`, `gap:`. New decisions: DEC-053 (sibling-v-if pattern), DEC-054 (nested table photo frame), DEC-055 (`@submit.prevent` form no-op). All four gates green: `pnpm type-check` exit 0, `pnpm build` exit 0, `pnpm check:contrast` OVERALL 16/16. Plan 05-03 (XS UAT — 5-cell view-state matrix + reduced-motion sweep + transition smoke + DEC-052 escalation flag) is unblocked.
-Resume file: .planning/phases/05-tamano-xs-plain/05-03-PLAN.md (to be authored)
+Stopped at: Plan 05-03 complete — Phase 5 plan deck closed. `05-UAT.md` authored at `.planning/phases/05-tamano-xs-plain/05-UAT.md` with 23 checkboxes total: section A (5-cell XS view-state matrix — Home / Servicios / Quiénes somos / Cliente / Contacto), section B (9 1999-vocab DevTools-verifiable highlights — Times New Roman renders, `<marquee>` scrolls, Servicios `<TABLE>` not `<DIV>` with grid, Quiénes somos team grid `<TABLE>`, Cliente per-cliente `<table border="1">`, Contacto 2-col `<table>` + `<table>`-aligned form, RouterLink → plain blue underlined `<a>`, `<table>` borders 1px solid global vocab spot-check, footer Win95 bevel responds to click), section C (reduced-motion sweep — marquee freezes, rotator keeps swapping, Reconfigurando still flashes, footer bevel still depresses), section D (M → XS → M transition smoke — ~600ms body fade + ~900ms Reconfigurando overlay, no full reload), section E (sign-off table + 4 automated gates + DEC-052 escalation flag). References `05-CONTRAST-RESULTS.md` explicitly; mirrors `04-UAT.md` structure verbatim. Plan verify regex passed (23 boxes ≥ 12 required; all 11 keywords present). Operator UAT walk-through is the only remaining item before Phase 5 is fully closed; Phase 6 (XL) planning is unblocked structurally.
+Resume file: .planning/phases/06-tamano-xl-unleashed/06-CONTEXT.md (to be authored on next /gsd-plan-phase 6 invocation)
