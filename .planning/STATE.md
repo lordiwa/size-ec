@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Phase 04 complete — operator UAT pending
-stopped_at: "Plan 04-03 complete. Phase 4 ships at the code level: 04-01 (15/15 WCAG AA via DEC-041), 04-02 (HomeView per-level branches + LMarquee + L card treatments × 4 views), 04-03 (04-UAT.md sign-off doc — 5×3 matrix + 7 highlights + reduced-motion + transition smoke + DEC-041 escalation flag = 31 checkboxes). Operator UAT walkthrough pending; Phase 5 (XS) planning can begin in parallel."
-last_updated: "2026-05-05T01:16:16Z"
-last_activity: 2026-05-05 -- Plan 04-03 complete
+status: Executing Phase 05 — tamaño XS Plain
+stopped_at: "Plan 05-01 complete. XS WCAG AA token-level audit shipped via DEC-052: scripts/check-contrast.cjs extended to 16 themes (M + 12 markets + S + L + XS), per-level CTA + inline overrides for XS (LINK on BG = 5.17:1; INK on marquee #FFFF00 = 19.56:1), DECISION-XS-RETRO palette preserved exactly (zero token changes). 05-CONTRAST-RESULTS.md authored. OVERALL 16/16 PASS, type-check + build green. Phase 5 next: 05-02 (XS view branches across HomeView + 4 protected views)."
+last_updated: "2026-05-04T00:00:00Z"
+last_activity: 2026-05-04 -- Plan 05-01 complete
 progress:
   total_phases: 9
   completed_phases: 3
-  total_plans: 12
-  completed_plans: 12
-  percent: 100
+  total_plans: 15
+  completed_plans: 13
+  percent: 87
 ---
 
 # Project State
@@ -21,23 +21,23 @@ progress:
 See: `.planning/PROJECT.md` (updated 2026-05-03)
 
 **Core value:** A visitor can pick one of 17 mutually exclusive styles (12 markets + 5 creative sizes) and see the entire site reshape itself — legibly, in place, without reload — to that single style.
-**Current focus:** Phase 04 — tamanos-s-y-l
+**Current focus:** Phase 05 — tamaño XS Plain
 
 ## Current Position
 
-Phase: 04 (tamanos-s-y-l) — CODE COMPLETE (operator UAT pending)
-Plan: 3 of 3 complete
-Last activity: 2026-05-05 -- Plan 04-03 complete (04-UAT.md sign-off doc: 5×3 matrix + 7 highlights + reduced-motion + transition smoke + DEC-041 escalation flag, 31 checkboxes)
+Phase: 05 (tamano-xs-plain) — IN PROGRESS
+Plan: 1 of 3 complete
+Last activity: 2026-05-04 -- Plan 05-01 complete (check:contrast extended to XS = 16/16 via DEC-052; 05-CONTRAST-RESULTS.md authored)
 
-Progress: [██████████] 100%
+Progress: [████████▊░] 87%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 12
+- Total plans completed: 13
 - Average duration: ~11 min
-- Total execution time: ~136 min
+- Total execution time: ~146 min
 
 **By Phase:**
 
@@ -48,11 +48,12 @@ Progress: [██████████] 100%
 | 02-mensaje-y-contacto | 2/2 done | ~25 min | ~12 min |
 | 03-mercados-sobre-m | 2/2 done | ~24 min | ~12 min |
 | 04-tamanos-s-y-l | 3/3 done | ~24 min | ~8 min |
+| 05-tamano-xs-plain | 1/3 done | ~10 min | ~10 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 03-02 (service integrity + UAT, 3 min), 04-01 (check:contrast → S+L, 15/15 via DEC-041, 8 min), 04-02 (HomeView per-level branches + LMarquee + L card treatments, ~14 min), 04-03 (04-UAT.md sign-off doc, ~2 min)
-- Trend: docs-only plans (like 04-03) clear in ≤3 min; tooling plans in single digits; view-touching plans (04-02 across 6 files) settle around ~14 min when the prototype is verbatim-extracted upstream
+- Last 5 plans: 04-01 (check:contrast → S+L, 15/15 via DEC-041, 8 min), 04-02 (HomeView per-level branches + LMarquee + L card treatments, ~14 min), 04-03 (04-UAT.md sign-off doc, ~2 min), 05-01 (check:contrast → XS, 16/16 via DEC-052, ~10 min)
+- Trend: tooling plans that extend the contrast checker land in ~8-10 min; the rendered-surface override pattern (DEC-035 → DEC-041 → DEC-052) is now muscle memory and adds ~2 min for the inline-pair documentation on top of the parser hookup
 
 *Updated after each plan completion*
 
@@ -125,6 +126,10 @@ Decisions from completed plan 04-03 (5×3 view-state UAT + reduced-motion + tran
 
 - **DEC-047** — `04-UAT.md` Section E (Sign-off) includes a DEC-041 escalation flag as the last checkbox: *"During the L walk-through, magenta accent text was observed rendering directly on the yellow body bg…"*. This closes the validation loop Plan 04-01 deferred — at sign-off, an unchecked flag validates DEC-041 (rendered surfaces match DECISION-LX-LOCKED); a checked flag activates the escalation path documented in `04-CONTRAST-RESULTS.md` (remove offending surface OR unlock magenta token for darkening).
 
+Decisions from completed plan 05-01 (extend check:contrast to XS):
+
+- **DEC-052** — XS gets per-level CTA + inline pair overrides reflecting DECISION-XS-RETRO + DEC-050's actual rendered surfaces: CTA = LINK on BG (`#0000ee` on `#c0c0c0` = 5.17:1, matching `html.level-xs a` rule); inline = INK on marquee `#FFFF00` (`#000` on `#ffff00` = 19.56:1, matching Home XS `<marquee style="background:#FFFF00">`). Token values (`#c0c0c0` / `#000` / `#444` / `#ff0000` / `#0000ee` / `#551a8b`) NOT modified. The accent token `#ff0000` is declared in `html.level-xs` for token-system uniformity but is not consumed as a colour by any rendered XS surface (verified against prototype `home.jsx` XS branch + `.l-xs-button` rule). DEC-052 is the third instance of the rendered-surface-not-default-rule pattern (after DEC-035 has-market muted derivation and DEC-041 L overrides). Operator escalation path documented in `05-CONTRAST-RESULTS.md` if 05-03 UAT contradicts the override.
+
 Decisions from plan 03-02 (service integrity + UAT):
 
 - **DEC-038** — Task 2 (smoke) requires no commit; it is verification-only per plan spec. 6/6 checks pass from existing code (App.vue + main.css).
@@ -150,10 +155,11 @@ None.
 
 ### Blockers/Concerns
 
-**Active (Phase 03 + Phase 04 — UATs pending):**
+**Active (Phase 03 + Phase 04 + Phase 05 — UATs pending; Phase 05 mid-flight):**
 
 - **03-UAT.md operator sign-off** — Sections A (recognisability), B (48-state matrix), and C (transition smoke) require manual walk-through with `pnpm dev`. Once complete, Phase 3 can be marked fully done.
-- **04-UAT.md operator sign-off** — Sections A (5×3 view-state matrix), B (per-level highlights), C (reduced-motion sweep), D (transition smoke), and E (sign-off + DEC-041 escalation flag) require manual walk-through with `pnpm dev`. Once complete, Phase 4 is fully closed and Phase 5 (XS) merge unblocks (Phase 5 *planning* can proceed in parallel with the walkthrough — XS doesn't touch S or L surfaces).
+- **04-UAT.md operator sign-off** — Sections A (5×3 view-state matrix), B (per-level highlights), C (reduced-motion sweep), D (transition smoke), and E (sign-off + DEC-041 escalation flag) require manual walk-through with `pnpm dev`. Once complete, Phase 4 is fully closed.
+- **Phase 5 in-flight** — 05-01 (check:contrast → XS, 16/16 via DEC-052) shipped. 05-02 (XS view branches across HomeView + 4 protected views) is next; 05-03 will author 05-UAT.md including the DEC-052 escalation flag for red-on-gray surface detection.
 
 Carried forward from §11 of the brief (acknowledged TBDs):
 
@@ -175,6 +181,6 @@ Carried forward from §11 of the brief (acknowledged TBDs):
 
 ## Session Continuity
 
-Last session: 2026-05-05
-Stopped at: Plan 04-03 complete — Phase 4 ships at the code level. `04-UAT.md` authored: 5×3 view-state matrix (15 cells across Home / Servicios / Quiénes / Cliente / Contacto × S / M / L) + 7 per-level highlights (5 L surfaces from DECISION-LX-LOCKED, 2 S clean-spec surfaces) + reduced-motion sweep (L marquee freeze, hover transform mute, rotator freeze, Reconfigurando preserved) + M → S → L → M transition smoke (~600ms body fade + ~900ms overlay) + 4 automated-gate checkboxes + DEC-041 escalation flag = 31 checkboxes total (≥21 required). One new decision: DEC-047 (escalation flag closes Plan 04-01's deferred validation loop). Verify regex passes (`ok 31 boxes`). All Phase 4 plans done; operator UAT walkthrough is the only remaining work in Phase 4. Phase 5 (XS) planning unblocked.
-Resume file: .planning/phases/05-tamano-xs/ (Phase 5 planning) OR `.planning/phases/04-tamanos-s-y-l/04-UAT.md` (operator walkthrough)
+Last session: 2026-05-04
+Stopped at: Plan 05-01 complete — XS WCAG AA token-level audit shipped via DEC-052. `scripts/check-contrast.cjs` extended to 16 themes (M + 12 markets + S + L + XS) with two per-level overrides for XS (CTA = LINK on BG = 5.17:1; inline = INK on marquee #FFFF00 = 19.56:1). DECISION-XS-RETRO palette preserved exactly (zero token changes). `05-CONTRAST-RESULTS.md` authored with the rendered-surface rationale, DEC-052 documentation, and operator escalation path for 05-03 UAT (escalation triggers if any red-on-gray accent surface ships in XS markup). `--levels-only` now prints 4 blocks (M + S + L + XS); OVERALL line reads N/16. All four gates green: `pnpm check:contrast` 16/16, `pnpm type-check` exit 0, `pnpm build` exit 0. Plan 05-02 (XS view branches across HomeView + 4 protected views: Home `<marquee>` + `★ SIZE ★` heading + ServiciosView `<table border="1">` + QuienesSomosView `<table>` 4×5 photo grid + ClienteView per-cliente trabajos table + ContactoView 2-column `<table>` channels + form) is unblocked.
+Resume file: .planning/phases/05-tamano-xs-plain/05-02-PLAN.md

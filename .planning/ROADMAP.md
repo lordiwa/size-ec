@@ -102,7 +102,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. XS works in legacy environments down to IE11 (ironic intent per CON-006), and the size never breaks the gate flow on any modern browser.
   4. WCAG AA legibility holds in XS (body ≥ 4.5:1, large text ≥ 3:1) — the 1999 aesthetic does not become an accessibility regression.
   5. **XS is locked to DECISION-XS-RETRO in PROJECT.md** — full 1999, not a retro accent. Times New Roman everywhere, raised/inset bevels, `<table>` layouts, `<hr>` rules, blue underlined links.
-**Plans**: TBD
+**Plans**: 3 plans (1/3 complete)
+  - [x] 05-01-PLAN.md — Extend pnpm check:contrast to XS tokens (16/16 WCAG AA via DEC-052)
+  - [ ] 05-02-PLAN.md — XS view branches across HomeView + 4 protected views (1999 markup vocabulary)
+  - [ ] 05-03-PLAN.md — 5-cell XS view-state UAT matrix + 1999 highlights + reduced-motion + transition smoke
 **UI hint**: yes
 
 ### Phase 6: Tamaño XL (Unleashed)
@@ -176,7 +179,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 2. Tamaño M (Crafted) consolidado | 2/2 | Complete | 2026-05-04 |
 | 3. Mercados sobre M | 0/TBD | Not started | - |
 | 4. Tamaños S y L | 3/3 | Code complete (UAT pending) | - |
-| 5. Tamaño XS (Plain) | 0/TBD | Not started | - |
+| 5. Tamaño XS (Plain) | 1/3 | In progress | - |
 | 6. Tamaño XL (Unleashed) | 0/TBD | Not started | - |
 | 7. Contenido | 0/TBD | Not started | - |
 | 8. Integraciones | 0/TBD | Not started | - |
