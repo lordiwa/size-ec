@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { defineAsyncComponent, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useStyleStore } from '@/stores/style'
 import { SIZE_HOME_WORDS } from '@/data/size-data'
 import RotatingWord from '@/components/RotatingWord.vue'
 import MarketSelect from '@/components/MarketSelect.vue'
 import LMarquee from '@/components/LMarquee.vue'
+
+// XL chaos canvas (Phaser) is loaded ONLY when an XL visitor reaches Home.
+// defineAsyncComponent makes Vite split this into its own chunk so XS/S/M/L
+// bundles never download Phaser. See plan 06-05 + DEC-071.
+const XlChaos = defineAsyncComponent(() => import('@/components/XlChaos.vue'))
 
 const style = useStyleStore()
 
@@ -70,15 +75,18 @@ function pickMarket(id: string) {
        Phase 6 ships the visual identity (CSS-only); Phase 7 wires the Three.js scene
        underneath this layer (Three.js / Phaser / Tone.js stacks deferred per DEC-060). -->
   <section v-else-if="style.code === 'xl'" class="home-xl" aria-live="polite">
-    <div class="mono upper home-xl-runtime">[ home.scene · runtime ]</div>
-    <h1 class="size-wordmark huge xl-grad-text home-xl-mark">SIZE</h1>
-    <div class="home-xl-block">
-      <p class="home-xl-tag">Publicidad a tu medida.</p>
-      <p class="home-xl-rotator">
-        Somos tu <span class="xl-grad-text"><RotatingWord :words="words" :idx="wIdx" /></span>.
-      </p>
-      <div class="home-xl-cta">
-        <MarketSelect :code="style.code" :value="style.marketId" @pick="pickMarket" />
+    <XlChaos />
+    <div class="home-xl-content">
+      <div class="mono upper home-xl-runtime">[ home.scene · runtime ]</div>
+      <h1 class="size-wordmark huge xl-grad-text home-xl-mark">SIZE</h1>
+      <div class="home-xl-block">
+        <p class="home-xl-tag">Publicidad a tu medida.</p>
+        <p class="home-xl-rotator">
+          Somos tu <span class="xl-grad-text"><RotatingWord :words="words" :idx="wIdx" /></span>.
+        </p>
+        <div class="home-xl-cta">
+          <MarketSelect :code="style.code" :value="style.marketId" @pick="pickMarket" />
+        </div>
       </div>
     </div>
   </section>
@@ -281,11 +289,24 @@ function pickMarket(id: string) {
 }
 
 /* ─────────── XL (Unleashed) — verbatim port of prototype 00021082_04 lines 62-76 ─────────── */
-/* Phase 6 ships the CSS-only identity; xl-grad-text + size-wordmark live in main.css. */
-/* Three.js scene + Phaser mini-game land in Phase 7 per DEC-060. */
+/* Phase 6 ships the CSS identity + lazy-loaded Phaser chaos canvas (06-05, DEC-071). */
+/* Three.js / Tone.js / postprocessing / physics still deferred to Phase 7 per DEC-060. */
 .home-xl {
+  position: relative;     /* anchors absolutely-positioned XlChaos canvas at z-index: 0 */
   padding: 8vh 6vw;
   min-height: 100vh;
+}
+/* Content layer floats above the chaos canvas with a soft black scrim
+   under each glyph. The shadow is invisible against the dark XL bg
+   (#050505) but kicks in to keep text legible whenever a bright Phaser
+   shape passes behind. LOCKED-001 (WCAG AA) is preserved regardless of
+   what is animating in the background. */
+.home-xl-content {
+  position: relative;
+  z-index: 1;
+  text-shadow:
+    0 0 18px rgba(0, 0, 0, 0.85),
+    0 0 4px rgba(0, 0, 0, 0.95);
 }
 .home-xl-runtime {
   font-size: 11px;
