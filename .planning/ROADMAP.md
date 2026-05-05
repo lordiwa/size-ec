@@ -179,7 +179,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 2. Tamaño M (Crafted) consolidado | 2/2 | Complete | 2026-05-04 |
 | 3. Mercados sobre M | 0/TBD | Not started | - |
 | 4. Tamaños S y L | 3/3 | Code complete (UAT pending) | - |
-| 5. Tamaño XS (Plain) | 1/3 | In progress | - |
+| 5. Tamaño XS (Plain) | 2/3 | In progress | - |
 | 6. Tamaño XL (Unleashed) | 0/TBD | Not started | - |
 | 7. Contenido | 0/TBD | Not started | - |
 | 8. Integraciones | 0/TBD | Not started | - |

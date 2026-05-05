@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Executing Phase 05 — tamaño XS Plain
-stopped_at: "Plan 05-01 complete. XS WCAG AA token-level audit shipped via DEC-052: scripts/check-contrast.cjs extended to 16 themes (M + 12 markets + S + L + XS), per-level CTA + inline overrides for XS (LINK on BG = 5.17:1; INK on marquee #FFFF00 = 19.56:1), DECISION-XS-RETRO palette preserved exactly (zero token changes). 05-CONTRAST-RESULTS.md authored. OVERALL 16/16 PASS, type-check + build green. Phase 5 next: 05-02 (XS view branches across HomeView + 4 protected views)."
-last_updated: "2026-05-04T00:00:00Z"
-last_activity: 2026-05-04 -- Plan 05-01 complete
+stopped_at: "Plan 05-02 complete. XS treatment shipped across all 5 protected views: HomeView verbatim port from prototype (00021082_04 lines 23-37) — <center>, ★ SIZE ★, italic tagline, <marquee> #FFFF00, <hr/>, RotatingWord, MarketSelect — between the existing S and M-default branches (order L → S → XS → M-default). The 4 protected views (Servicios, QuienesSomos, Cliente, Contacto) use sibling v-if=\"style.code === 'xs'\" with M/S/L wrapped in <template v-else>: Servicios renders all 11 services as a single <table border=\"1\">; QuienesSomos uses a 4-column <table> team grid (driven by teamRows computed) + clients <table>; Cliente renders one <table border=\"1\"> per cliente listing trabajos as rows; Contacto uses a 2-column <table> for Canales/Chatbot + a 1999 <form @submit.prevent> with table-aligned inputs. All 5 new XS scoped CSS blocks honor DEC-050 vocabulary verbatim — zero matches for display:flex/grid, border-radius, box-shadow, transform, transition, color-mix, gap. DEC-053 (sibling v-if pattern), DEC-054 (nested <table> photo frame instead of inline-block span), DEC-055 (@submit.prevent no-op form). All four gates green: type-check exit 0, build exit 0, check:contrast OVERALL 16/16. Plan 05-03 (XS UAT) is next."
+last_updated: "2026-05-05T03:12:00Z"
+last_activity: 2026-05-05 -- Plan 05-02 complete
 progress:
   total_phases: 9
   completed_phases: 3
   total_plans: 15
-  completed_plans: 13
-  percent: 87
+  completed_plans: 14
+  percent: 93
 ---
 
 # Project State
@@ -26,18 +26,18 @@ See: `.planning/PROJECT.md` (updated 2026-05-03)
 ## Current Position
 
 Phase: 05 (tamano-xs-plain) — IN PROGRESS
-Plan: 1 of 3 complete
-Last activity: 2026-05-04 -- Plan 05-01 complete (check:contrast extended to XS = 16/16 via DEC-052; 05-CONTRAST-RESULTS.md authored)
+Plan: 2 of 3 complete
+Last activity: 2026-05-05 -- Plan 05-02 complete (XS view branches shipped across all 5 protected views; HomeView verbatim port + 4 sibling-v-if branches; DEC-053/054/055 logged; all four gates green)
 
-Progress: [████████▊░] 87%
+Progress: [█████████▎] 93%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 13
+- Total plans completed: 14
 - Average duration: ~11 min
-- Total execution time: ~146 min
+- Total execution time: ~155 min
 
 **By Phase:**
 
@@ -48,12 +48,12 @@ Progress: [████████▊░] 87%
 | 02-mensaje-y-contacto | 2/2 done | ~25 min | ~12 min |
 | 03-mercados-sobre-m | 2/2 done | ~24 min | ~12 min |
 | 04-tamanos-s-y-l | 3/3 done | ~24 min | ~8 min |
-| 05-tamano-xs-plain | 1/3 done | ~10 min | ~10 min |
+| 05-tamano-xs-plain | 2/3 done | ~19 min | ~9.5 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 04-01 (check:contrast → S+L, 15/15 via DEC-041, 8 min), 04-02 (HomeView per-level branches + LMarquee + L card treatments, ~14 min), 04-03 (04-UAT.md sign-off doc, ~2 min), 05-01 (check:contrast → XS, 16/16 via DEC-052, ~10 min)
-- Trend: tooling plans that extend the contrast checker land in ~8-10 min; the rendered-surface override pattern (DEC-035 → DEC-041 → DEC-052) is now muscle memory and adds ~2 min for the inline-pair documentation on top of the parser hookup
+- Last 5 plans: 04-02 (HomeView per-level branches + LMarquee + L card treatments, ~14 min), 04-03 (04-UAT.md sign-off doc, ~2 min), 05-01 (check:contrast → XS, 16/16 via DEC-052, ~10 min), 05-02 (XS view branches across HomeView + 4 protected views, ~9 min)
+- Trend: per-level branch plans land in ~9-14 min; the sibling-v-if + <template v-else> pattern from 05-02 reproduces cleanly across the 4 protected views with zero extra plumbing. DEC-050 vocabulary scan (post-task automated check) catches CSS regressions cheaply.
 
 *Updated after each plan completion*
 
@@ -130,6 +130,12 @@ Decisions from completed plan 05-01 (extend check:contrast to XS):
 
 - **DEC-052** — XS gets per-level CTA + inline pair overrides reflecting DECISION-XS-RETRO + DEC-050's actual rendered surfaces: CTA = LINK on BG (`#0000ee` on `#c0c0c0` = 5.17:1, matching `html.level-xs a` rule); inline = INK on marquee `#FFFF00` (`#000` on `#ffff00` = 19.56:1, matching Home XS `<marquee style="background:#FFFF00">`). Token values (`#c0c0c0` / `#000` / `#444` / `#ff0000` / `#0000ee` / `#551a8b`) NOT modified. The accent token `#ff0000` is declared in `html.level-xs` for token-system uniformity but is not consumed as a colour by any rendered XS surface (verified against prototype `home.jsx` XS branch + `.l-xs-button` rule). DEC-052 is the third instance of the rendered-surface-not-default-rule pattern (after DEC-035 has-market muted derivation and DEC-041 L overrides). Operator escalation path documented in `05-CONTRAST-RESULTS.md` if 05-03 UAT contradicts the override.
 
+Decisions from completed plan 05-02 (XS view branches across 5 protected views):
+
+- **DEC-053 (2026-05-05)** — Sibling `v-if="style.code === 'xs'"` pattern with `<template v-else>` wrap is the standard for the 4 protected views (Servicios, QuienesSomos, Cliente, Contacto). HomeView remains the exception with `v-else-if="style.code === 'xs'"` because Phase 4 already established a per-level branch chain (L → S → M-default) there. Final HomeView order: L → S → XS → M-default (per D-01).
+- **DEC-054 (2026-05-05)** — PortraitPlaceholder XS sizing in QuienesSomosView's team grid uses a nested 1×1 `<table>` frame (`<table cellpadding="0" cellspacing="0"><tr><td>{placeholder}</td></tr></table>` with `width: 120px; height: 160px` on the inner `<td>`) instead of a `<span class="qn-xs-photo">` with `display: inline-block`. Keeps DEC-050 vocabulary strict — only browser-default `display` values appear in the new XS scoped CSS. The PortraitPlaceholder's own `.pp-xs { display: flex }` lives in that component's scoped block from Phase 1, out of scope and unchanged. The nested-table trick is genuinely 1999-pure (Geocities-era logo/photo framing).
+- **DEC-055 (2026-05-05)** — ContactoView XS form uses `<form @submit.prevent>` to make the 1999-authentic `<input type="submit">` a true no-op until Phase 9 wires Firestore. The HTML markup is preserved verbatim (`<input type="submit" value="Enviar">`); only the submission intent is suppressed at the Vue event-binding layer. When the backend lands, the form's structure does not change — only the handler does. Honours the "one-shot Phase 8/9 wiring" invariant.
+
 Decisions from plan 03-02 (service integrity + UAT):
 
 - **DEC-038** — Task 2 (smoke) requires no commit; it is verification-only per plan spec. 6/6 checks pass from existing code (App.vue + main.css).
@@ -159,7 +165,7 @@ None.
 
 - **03-UAT.md operator sign-off** — Sections A (recognisability), B (48-state matrix), and C (transition smoke) require manual walk-through with `pnpm dev`. Once complete, Phase 3 can be marked fully done.
 - **04-UAT.md operator sign-off** — Sections A (5×3 view-state matrix), B (per-level highlights), C (reduced-motion sweep), D (transition smoke), and E (sign-off + DEC-041 escalation flag) require manual walk-through with `pnpm dev`. Once complete, Phase 4 is fully closed.
-- **Phase 5 in-flight** — 05-01 (check:contrast → XS, 16/16 via DEC-052) shipped. 05-02 (XS view branches across HomeView + 4 protected views) is next; 05-03 will author 05-UAT.md including the DEC-052 escalation flag for red-on-gray surface detection.
+- **Phase 5 in-flight** — 05-01 (check:contrast → XS, 16/16 via DEC-052) and 05-02 (XS view branches across HomeView + 4 protected views, with DEC-053/054/055 authored) shipped. 05-03 (XS UAT — 5-cell view-state matrix + reduced-motion sweep + transition smoke + DEC-052 escalation flag) is next. Verified during 05-02: zero red-on-gray accent surfaces in the shipped XS markup, so DEC-052's escalation flag is not currently triggered — 05-03 confirms this in operator walk-through.
 
 Carried forward from §11 of the brief (acknowledged TBDs):
 
@@ -181,6 +187,6 @@ Carried forward from §11 of the brief (acknowledged TBDs):
 
 ## Session Continuity
 
-Last session: 2026-05-04
-Stopped at: Plan 05-01 complete — XS WCAG AA token-level audit shipped via DEC-052. `scripts/check-contrast.cjs` extended to 16 themes (M + 12 markets + S + L + XS) with two per-level overrides for XS (CTA = LINK on BG = 5.17:1; inline = INK on marquee #FFFF00 = 19.56:1). DECISION-XS-RETRO palette preserved exactly (zero token changes). `05-CONTRAST-RESULTS.md` authored with the rendered-surface rationale, DEC-052 documentation, and operator escalation path for 05-03 UAT (escalation triggers if any red-on-gray accent surface ships in XS markup). `--levels-only` now prints 4 blocks (M + S + L + XS); OVERALL line reads N/16. All four gates green: `pnpm check:contrast` 16/16, `pnpm type-check` exit 0, `pnpm build` exit 0. Plan 05-02 (XS view branches across HomeView + 4 protected views: Home `<marquee>` + `★ SIZE ★` heading + ServiciosView `<table border="1">` + QuienesSomosView `<table>` 4×5 photo grid + ClienteView per-cliente trabajos table + ContactoView 2-column `<table>` channels + form) is unblocked.
-Resume file: .planning/phases/05-tamano-xs-plain/05-02-PLAN.md
+Last session: 2026-05-05
+Stopped at: Plan 05-02 complete — XS treatment shipped across all 5 protected views. HomeView received a verbatim `v-else-if="style.code === 'xs'"` port from prototype 00021082_04 lines 23-37 (`<center>` ★ SIZE ★ heading + italic tagline + `<marquee>` #FFFF00 + `<hr/>` + `Somos tu [rotator]` + MarketSelect) inserted between S and M-default → final order L → S → XS → M-default. The 4 protected views (Servicios, QuienesSomos, Cliente, Contacto) received sibling `v-if="style.code === 'xs'"` branches above their existing markup, with the M/S/L blocks wrapped in a single `<template v-else>`: Servicios renders all 11 canonical services as a `<table border="1">`; QuienesSomos uses a 4-column `<table>` team grid driven by a `teamRows` computed (handles 4-member team today + future 4×5 = 20) with nested `<table>` photo frames, plus a clients `<table>`; Cliente uses an `xsClients` computed (single cliente or all 3 SIZE_CLIENTS) and renders one `<table border="1">` per cliente listing trabajos as rows; Contacto uses a 2-column `<table>` for Canales / Chatbot (TBD Phase 8 placeholder) plus a 1999 `<form @submit.prevent>` with table-aligned `<label>` / `<input>` / `<textarea>` rows and an `<input type="submit">` no-op. All 5 new XS scoped CSS blocks honor DEC-050 vocabulary verbatim — automated post-task scan confirmed zero matches for `display:flex/grid`, `border-radius`, `box-shadow`, `transform:`, `transition:`, `color-mix`, `gap:`. New decisions: DEC-053 (sibling-v-if pattern), DEC-054 (nested table photo frame), DEC-055 (`@submit.prevent` form no-op). All four gates green: `pnpm type-check` exit 0, `pnpm build` exit 0, `pnpm check:contrast` OVERALL 16/16. Plan 05-03 (XS UAT — 5-cell view-state matrix + reduced-motion sweep + transition smoke + DEC-052 escalation flag) is unblocked.
+Resume file: .planning/phases/05-tamano-xs-plain/05-03-PLAN.md (to be authored)
