@@ -360,6 +360,14 @@ html.level-l .lvl-mini .tick.active {
   color: #000000;
 }
 
+/* XL — active tick uses black text for contrast on the neon green accent.
+   Default rule paints the active tick white-on-#00ffaa (~1.2:1, FAIL WCAG).
+   Black-on-#00ffaa ≈ 10:1 PASS. Mirrors the XS (#000080+white) and
+   L (#ff00aa+black) overrides above. */
+html.level-xl .lvl-mini .tick.active {
+  color: #000000;
+}
+
 @media (max-width: 720px) {
   .footer-nav {
     grid-template-columns: 1fr;
