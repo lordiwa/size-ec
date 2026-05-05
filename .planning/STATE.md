@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Executing Phase 04
-stopped_at: "Plan 04-01 complete. check:contrast extended to 15 themes (M + 12 markets + S + L); OVERALL 15/15 PASS via DEC-041 (per-level CTA + inline overrides for L; tokens untouched per DECISION-LX-LOCKED). Ready for plan 04-02 (HomeView per-level branches + LMarquee + L card treatments)."
-last_updated: "2026-05-05T00:57:07Z"
-last_activity: 2026-05-05 -- Plan 04-01 complete
+stopped_at: "Plan 04-02 complete. HomeView now branches on style.code (L brutalist with LMarquee + 2-col grid + magenta rotator; S Apple-clean centered with blue accent; M as v-else fallback). The 4 protected views (Servicios / Quiénes / Cliente / Contacto) carry .l-bold class bindings + scoped CSS that match the prototype's brutalist treatment. All gates green: type-check 0, build 0, check:contrast 15/15. Ready for plan 04-03 (5x3 view-state UAT + reduced-motion smoke + transition smoke)."
+last_updated: "2026-05-04T00:00:00Z"
+last_activity: 2026-05-04 -- Plan 04-02 complete
 progress:
   total_phases: 9
   completed_phases: 3
   total_plans: 12
-  completed_plans: 10
-  percent: 83
+  completed_plans: 11
+  percent: 92
 ---
 
 # Project State
@@ -26,18 +26,18 @@ See: `.planning/PROJECT.md` (updated 2026-05-03)
 ## Current Position
 
 Phase: 04 (tamanos-s-y-l) — EXECUTING
-Plan: 1 of 3 complete
-Last activity: 2026-05-05 -- Plan 04-01 complete (check:contrast 15/15 PASS via DEC-041)
+Plan: 2 of 3 complete
+Last activity: 2026-05-04 -- Plan 04-02 complete (HomeView per-level branches + LMarquee + L card treatments across 4 views)
 
-Progress: [█████████░] 83%
+Progress: [█████████░] 92%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 10
+- Total plans completed: 11
 - Average duration: ~12 min
-- Total execution time: ~120 min
+- Total execution time: ~134 min
 
 **By Phase:**
 
@@ -47,12 +47,12 @@ Progress: [█████████░] 83%
 | 01-paridad-prototipo | 4/4 done | 56 min | 14 min |
 | 02-mensaje-y-contacto | 2/2 done | ~25 min | ~12 min |
 | 03-mercados-sobre-m | 2/2 done | ~24 min | ~12 min |
-| 04-tamanos-s-y-l | 1/3 done | 8 min | 8 min |
+| 04-tamanos-s-y-l | 2/3 done | ~22 min | ~11 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 03-01 (12-market WCAG audit + token remediation), 03-02 (service integrity + UAT, 3 min), 04-01 (check:contrast → S+L, 15/15 via DEC-041, 8 min)
-- Trend: faster — tooling-only plans clear in single-digit minutes
+- Last 5 plans: 03-02 (service integrity + UAT, 3 min), 04-01 (check:contrast → S+L, 15/15 via DEC-041, 8 min), 04-02 (HomeView per-level branches + LMarquee + L card treatments, ~14 min)
+- Trend: tooling-only plans clear in single-digit minutes; view-touching plans (like 04-02 across 6 files) settle around ~14 min when the prototype is verbatim-extracted upstream
 
 *Updated after each plan completion*
 
@@ -115,6 +115,12 @@ Decisions from completed plan 04-01 (extend check:contrast to S + L):
 - **DEC-042** — Levels read `--muted` verbatim from `html.level-*` block; the has-market 55%-derivation does NOT apply in level mode. `level-l` declares `--muted: #000` intentionally (no muted hierarchy in brutalist treatment); `level-s` uses Apple grey `#6e6e73`.
 - **DEC-043** — `--levels-only` and `--markets-only` are mutually exclusive CLI flags (script exits 2 if both passed). `--levels-only` prints exactly M + S + L = 3 blocks.
 
+Decisions from completed plan 04-02 (HomeView per-level branches + LMarquee + L card treatments):
+
+- **DEC-044** — LMarquee duplicates the 8-token row in the DOM (16 tokens total) so a `translateX(0) → translateX(-50%)` 30s loop is seamless. Industry-standard CSS marquee pattern; no JS, respects `prefers-reduced-motion` via the existing global rule in main.css.
+- **DEC-045** — `@keyframes l-marquee` was NOT actually present in `src/styles/main.css` despite Plan 04-02's read_first and 04-CONTEXT.md D-01 both stating it lived "at line ~140 from the Phase 1 port." Added inline as Rule 3 auto-fix during Task 1; the keyframe is `from { transform: translateX(0) } to { transform: translateX(-50%) }` and lives just before the `@media (prefers-reduced-motion: reduce)` block.
+- **DEC-046** — HomeView's M `v-else` branch intentionally serves three roles: (a) the M (Crafted) default, (b) the fallback for XS / XL until their phases own per-level branches (Phase 5 / Phase 6), and (c) the active-market mode where `style.code === null` (picking a market on Home keeps the user on Home with the M structural layout but the market token block applied to `<body>`).
+
 Decisions from plan 03-02 (service integrity + UAT):
 
 - **DEC-038** — Task 2 (smoke) requires no commit; it is verification-only per plan spec. 6/6 checks pass from existing code (App.vue + main.css).
@@ -164,6 +170,6 @@ Carried forward from §11 of the brief (acknowledged TBDs):
 
 ## Session Continuity
 
-Last session: 2026-05-05
-Stopped at: Plan 04-01 complete. check:contrast extended to 15 themes (M + 12 markets + S + L); OVERALL 15/15 PASS via DEC-041 (per-level CTA + inline overrides for L; tokens untouched per DECISION-LX-LOCKED). Automated gates: check:contrast 15/15, check:markets 12/12, type-check 0, build 0 — all green. Ready for plan 04-02 (HomeView per-level branches + LMarquee + L card treatments).
-Resume file: .planning/phases/04-tamanos-s-y-l/04-02-PLAN.md
+Last session: 2026-05-04
+Stopped at: Plan 04-02 complete. HomeView now renders three distinct per-level layouts (L brutalist with LMarquee + 2-col grid + magenta rotator; S Apple-clean centered with blue accent; M as v-else fallback covering XS/XL/active-market). The 4 protected views (Servicios / Quiénes / Cliente / Contacto) carry .l-bold class bindings + scoped CSS that match the prototype's brutalist treatment verbatim — alternating yellow/black/white cards on Servicios with per-card rotation, 4px+6px-accent photo borders + alternating yellow/white client cards on Quiénes, alternating yellow/white work cards on Cliente, yellow channels card + accent-shadowed chatbot on Contacto. Three new decisions: DEC-044 (LMarquee duplicates row for seamless 50%-translate loop), DEC-045 (added missing @keyframes l-marquee), DEC-046 (M branch is the catch-all for XS/XL/market mode). All gates green: check:contrast 15/15, type-check 0, build 0. Ready for plan 04-03 (5×3 view-state UAT + reduced-motion + transition smoke).
+Resume file: .planning/phases/04-tamanos-s-y-l/04-03-PLAN.md (when authored)
