@@ -372,6 +372,16 @@ html.level-l .lvl-mini .tick.active {
   }
 }
 
+/* ─── L brutalist marquee keyframes ─── */
+/* Used by src/components/LMarquee.vue (HomeView L branch). The animation
+ * scrolls the inner row left by 50% so that with the row content duplicated
+ * the marquee loops seamlessly. prefers-reduced-motion below collapses
+ * animation-duration globally — no per-component override needed. */
+@keyframes l-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
 /* ─── Reduced motion ─── */
 
 @media (prefers-reduced-motion: reduce) {
