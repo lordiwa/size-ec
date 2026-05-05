@@ -86,8 +86,8 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. Style transitions into S and L complete in ~600ms; `prefers-reduced-motion` attenuates or blocks L animations.
   5. The 60-combination invariant still holds: choosing S or L resets any prior market; no merging of S/L with a market style.
   6. **L visual treatment is locked to DECISION-LX-LOCKED in PROJECT.md** — match the prototype CSS (`level-l`, `l-l-card`, `l-l-button`, `l-l-marquee`) exactly: `#FFEE00`/`#000`/`#FF00AA`, Archivo Black, 4px borders, 8px+6px chunky shadows with hover translate, 30s marquee. (DEC-019: L ships CSS-only in Phase 4; GSAP+Lottie deferred to Phase 7 polish or later.)
-**Plans**: 3 plans
-  - [ ] 04-01-PLAN.md — Extend pnpm check:contrast to S + L tokens (15/15 WCAG AA)
+**Plans**: 3 plans (1/3 complete)
+  - [x] 04-01-PLAN.md — Extend pnpm check:contrast to S + L tokens (15/15 WCAG AA via DEC-041)
   - [ ] 04-02-PLAN.md — HomeView per-level branches + LMarquee + L card treatments across the 4 protected views
   - [ ] 04-03-PLAN.md — 5×3 view-state UAT matrix + reduced-motion + transition smoke
 **UI hint**: yes

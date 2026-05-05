@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Executing Phase 04
-stopped_at: "Plan 03-02 complete. Operator must walk 03-UAT.md before Phase 4 planning. Automated gates: check:contrast 13/13, check:markets 12/12, type-check 0, build 0 — all green."
-last_updated: "2026-05-04T23:00:08.863Z"
-last_activity: 2026-05-04 -- Phase 04 execution started
+stopped_at: "Plan 04-01 complete. check:contrast extended to 15 themes (M + 12 markets + S + L); OVERALL 15/15 PASS via DEC-041 (per-level CTA + inline overrides for L; tokens untouched per DECISION-LX-LOCKED). Ready for plan 04-02 (HomeView per-level branches + LMarquee + L card treatments)."
+last_updated: "2026-05-05T00:57:07Z"
+last_activity: 2026-05-05 -- Plan 04-01 complete
 progress:
   total_phases: 9
   completed_phases: 3
   total_plans: 12
-  completed_plans: 9
-  percent: 75
+  completed_plans: 10
+  percent: 83
 ---
 
 # Project State
@@ -26,18 +26,18 @@ See: `.planning/PROJECT.md` (updated 2026-05-03)
 ## Current Position
 
 Phase: 04 (tamanos-s-y-l) — EXECUTING
-Plan: 1 of ?
-Last activity: 2026-05-04 -- Phase 04 execution started
+Plan: 1 of 3 complete
+Last activity: 2026-05-05 -- Plan 04-01 complete (check:contrast 15/15 PASS via DEC-041)
 
-Progress: [█████████░] 90%
+Progress: [█████████░] 83%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 4
-- Average duration: 14 min
-- Total execution time: 53 min
+- Total plans completed: 10
+- Average duration: ~12 min
+- Total execution time: ~120 min
 
 **By Phase:**
 
@@ -45,11 +45,14 @@ Progress: [█████████░] 90%
 |-------|-------|-------|----------|
 | 09-cierre-deploy | 1/4 done (was 01-setup before restructure) | 15 min | 15 min |
 | 01-paridad-prototipo | 4/4 done | 56 min | 14 min |
+| 02-mensaje-y-contacto | 2/2 done | ~25 min | ~12 min |
+| 03-mercados-sobre-m | 2/2 done | ~24 min | ~12 min |
+| 04-tamanos-s-y-l | 1/3 done | 8 min | 8 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 09-01 (firebase hosting bootstrap, 15 min), 01-01 (markets token CSS, 15 min), 01-02 (MarketsGrid + rotator crossfade, 18 min), 01-03 (gate routing + M-tick reset, 18 min), 01-04 (Vitest smoke layer, 5 min)
-- Trend: steady
+- Last 5 plans: 03-01 (12-market WCAG audit + token remediation), 03-02 (service integrity + UAT, 3 min), 04-01 (check:contrast → S+L, 15/15 via DEC-041, 8 min)
+- Trend: faster — tooling-only plans clear in single-digit minutes
 
 *Updated after each plan completion*
 
@@ -106,6 +109,12 @@ Decisions from completed plan 02-02 (WCAG AA check + UAT):
 - **DEC-033** — MUTED is checked at the 4.5:1 body-text threshold (not 3:1) because it is used for readable copy, not decorative text — passes at 5.71:1.
 - **DEC-034** — LINE and LINE_STRONG are separator/border tokens excluded from contrast pairs; documented in the script token table for auditability.
 
+Decisions from completed plan 04-01 (extend check:contrast to S + L):
+
+- **DEC-041** — L gets per-level CTA + inline pair overrides reflecting DECISION-LX-LOCKED's actual rendered surfaces: CTA = ACCENT on INK (`#ff00aa` on `#000` = 5.83:1, matching DECISION-LX-LOCKED button spec); inline = ACCENT on CARD `#fff` (3.60:1, matching DECISION-LX-LOCKED card spec). Token values (`#ffee00` / `#000` / `#ff00aa`) NOT modified. Operator escalation path documented in 04-CONTRAST-RESULTS.md if 04-03 UAT contradicts the override.
+- **DEC-042** — Levels read `--muted` verbatim from `html.level-*` block; the has-market 55%-derivation does NOT apply in level mode. `level-l` declares `--muted: #000` intentionally (no muted hierarchy in brutalist treatment); `level-s` uses Apple grey `#6e6e73`.
+- **DEC-043** — `--levels-only` and `--markets-only` are mutually exclusive CLI flags (script exits 2 if both passed). `--levels-only` prints exactly M + S + L = 3 blocks.
+
 Decisions from plan 03-02 (service integrity + UAT):
 
 - **DEC-038** — Task 2 (smoke) requires no commit; it is verification-only per plan spec. 6/6 checks pass from existing code (App.vue + main.css).
@@ -155,6 +164,6 @@ Carried forward from §11 of the brief (acknowledged TBDs):
 
 ## Session Continuity
 
-Last session: 2026-05-04
-Stopped at: Plan 03-02 complete. Operator must walk 03-UAT.md before Phase 4 planning. Automated gates: check:contrast 13/13, check:markets 12/12, type-check 0, build 0 — all green.
-Resume file: None — resume after operator signs off 03-UAT.md.
+Last session: 2026-05-05
+Stopped at: Plan 04-01 complete. check:contrast extended to 15 themes (M + 12 markets + S + L); OVERALL 15/15 PASS via DEC-041 (per-level CTA + inline overrides for L; tokens untouched per DECISION-LX-LOCKED). Automated gates: check:contrast 15/15, check:markets 12/12, type-check 0, build 0 — all green. Ready for plan 04-02 (HomeView per-level branches + LMarquee + L card treatments).
+Resume file: .planning/phases/04-tamanos-s-y-l/04-02-PLAN.md
