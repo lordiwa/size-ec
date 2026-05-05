@@ -2,6 +2,7 @@
 import StickyFooter from '@/components/StickyFooter.vue'
 import IntensityChooser from '@/components/IntensityChooser.vue'
 import ReconfigureOverlay from '@/components/ReconfigureOverlay.vue'
+import XlFallbackToast from '@/components/XlFallbackToast.vue'
 import { useStyleStore } from '@/stores/style'
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
@@ -82,5 +83,6 @@ watch(
   <Teleport to="body">
     <IntensityChooser v-if="gateRequired && !reconfiguring" />
     <ReconfigureOverlay v-if="reconfiguring" />
+    <XlFallbackToast />
   </Teleport>
 </template>
